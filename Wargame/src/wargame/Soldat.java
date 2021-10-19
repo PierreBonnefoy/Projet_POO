@@ -1,8 +1,7 @@
 package wargame;
 
-public class Soldat {
+public class Soldat extends Element {
 	int getPoints() {
-		
 	}
 	int getTour() {
 		
