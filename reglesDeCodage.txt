@@ -1,0 +1,25 @@
+Pour Tout : 
+	- Camelcase (ceciEstUneFonction)
+
+		[2_tab]/*-- liste_variables --*/ (cette structure de com def le titre des blocks ex : variables, constructeur, méthode)
+	public static int z;
+	public int x;
+	[3_espaces]/* Ceci est un com normal */
+	public char y;
+	   /* Ceci est un com normal */
+
+		/*-- liste_constructeur --*/
+	constructeur1
+	constructeur2
+		...
+
+		/*-- liste_méthode --*/ 
+	methode1{
+		if(x<y){
+			liste_instruction (même pour une instruction);
+		}
+	}
+	methode2
+		...
+
+	
