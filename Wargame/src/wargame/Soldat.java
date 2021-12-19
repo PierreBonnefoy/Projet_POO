@@ -1,21 +1,13 @@
 package wargame;
 
-public class Soldat extends Element {
-	int getPoints() {
-	}
-	int getTour() {
+public class Soldat implements ISoldat{
+	public void joueTour(int tour) {
 		
 	}
-	int getPortee() {
+	public void combat(Soldat soldat) {
 		
 	}
-	void joueTour(int tour) {
-		
-	}
-	void combat(Soldat soldat) {
-		
-	}
-	void seDeplace(Position newPos) {
+	public void seDeplace(Position newPos) {
 		
 	}
 }
