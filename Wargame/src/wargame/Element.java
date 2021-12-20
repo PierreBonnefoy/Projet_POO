@@ -16,13 +16,21 @@ public class Element {
 		}
 	}
 	
-	public getOccupe() {
-		return Element.occupe;
+	public int getOccupe() {
+		return this.occupe;
 	}
-	public setOccupe(int n) {
+	public void setOccupe(int n) {
 		this.occupe = n;
 	}
 	/*le reste est à faire*/
 	
+	/*-- Ajoute pour la map --*/
+	
+	public int getNature() {
+		return this.nature;
+	}
+	public void setNature(int n) {
+		this.nature=n;
+	}
 	
 }
