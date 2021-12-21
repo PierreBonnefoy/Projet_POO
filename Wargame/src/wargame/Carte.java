@@ -36,31 +36,31 @@ public class Carte implements ICarte{
 	}
 	
 	public Position trouvePositionVide(Position pos) {
-		/*-- Vérification qu'il y ai au moins une place libre --*/
-		boolean test=true;
+		/*-- Vérification qu'il y ait au moins une place libre --*/
+		boolean test=false;
 		/*-- haut gauche --*/
-		if(this.carte[pos.getX()][pos.getY()+1].getOccupe()!=0) {
-			test=false;
+		if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+			test=true;
 		}
 		/*-- haut droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()!=0) {
-			test=false;
+		else if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0) {
+			test=true;
 		}
 		/*-- gauche --*/
-		else if(this.carte[pos.getX()-1][pos.getY()].getOccupe()!=0) {
-			test=false;
+		else if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0) {
+			test=true;
 		}
 		/*-- droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()].getOccupe()!=0) {
-			test=false;
+		else if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0) {
+			test=true;
 		}
 		/*-- bas gauche --*/
-		else if(this.carte[pos.getX()][pos.getY()-1].getOccupe()!=0) {
-			test=false;
+		else if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+			test=true;
 		}
 		/*-- haut droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()!=0) {
-			test=false;
+		else if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0) {
+			test=true;
 		}
 		
 		if(!test) {
