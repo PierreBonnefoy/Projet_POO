@@ -113,12 +113,7 @@ public class Carte implements ICarte{
 	public Heros trouveHeros(Position pos) {
 		// Trouve un héros choisi aléatoirement
 	}
-	*/
-
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
-		
-	}
-	public void mort(Soldat perso) {
 		
 	}
 	public boolean actionHeros(Position pos, Position pos2) {
@@ -127,6 +122,11 @@ public class Carte implements ICarte{
 	public void jouerSoldats(PanneauJeu pj) {
 		
 	}
+	public void mort(Personnage perso) {
+		
+	}*/
+	
+	
 	public void toutDessiner(Graphics g) {
 		
 	}

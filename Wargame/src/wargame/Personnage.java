@@ -17,7 +17,7 @@ public class Personnage {
 	private int pm; //(Point de Marche)la vitesse restante du monstre, ne peut dépasser vitesse
 	private int riposte; //le nombre de riposte restante du monstre (soit 1, soit 0, sauf cas particulier)
 	private int nemesis ; //l'ID du nemesis du monstre
-	private int[] position; //position x et y du personnage
+	private Position position; //position x et y du personnage
 	private int exp; //l'expérience actuelle du personnage
 	private int niveau; //le niveau du personnage (commence à 0)
 	private int etat; //vivant ou mort
@@ -35,17 +35,12 @@ public class Personnage {
 	public void setNiveau(int n){
 		this.niveau = n;
 	}
-	public int getX(){
-		return this.position[0];
+	public void setPos(Position n){
+		this.position.setX(n.getX());
+		this.position.setY(n.getY());
 	}
-	public void setX(int n){
-		this.position[0] = n;
-	}
-	public int getY(){
-		return this.position[1];
-	}
-	public void setY(int n){
-		this.position[1] = n;
+	public Position getPos(){
+		return this.position;
 	}
 	public int getExp(){
 		return this.exp;
@@ -297,7 +292,7 @@ public class Personnage {
 		this.soin(5+0 /*entre 1 et 6*/);
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
-		this.encouragement() ; 
+		this.encouragement(); 
 	}
 	
 	/*Le personnage A augmente se soigne d'un montant egal a valeur*/
