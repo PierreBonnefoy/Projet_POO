@@ -2,6 +2,7 @@ package wargame;
 
 public class Personnage {
 	/*Cette classe est TEMPORAIRE : on decidera plus tard de si on la conserve sous ce nom ou si on met les fonctions dans une autre classe.*/
+	
 	private int pvMax;  //les PV totaux du personnage
 	private int pvActuel; //les PV actuels du personnage, ne peut pas dépasser pvMax
 	private int degat; //les dégats lorsque le personnage attaque
@@ -22,6 +23,8 @@ public class Personnage {
 	private int niveau; //le niveau du personnage (commence à 0)
 	private int etat; //vivant ou mort
 
+	/*-- Constructeur --*/
+	
 	/*-- accesseurs et mutateurs --*/
 	public int getEtat(){
 		return this.etat;
@@ -125,6 +128,7 @@ public class Personnage {
 	}
 	
 	/*-- méthode spéciale des Personnages --*/
+	
 	/*Si le personnage est le destructeur, augmente de 1 ses degats*/
 	public void rage(){
 		if(this.id == 4){
@@ -132,11 +136,12 @@ public class Personnage {
 		}
 	}
 	
-	/*Si le personnage est un chasseur/bête de guerre et que ses PV sont supérieur à ceux passé en paramètres, il augmente de 1 sa vitesse, mais réduit de 1 ses dégâts*/
+	/*Si le personnage est un chasseur/bête de guerre et que ses PV sont supérieur à ceux passé en paramètres, 
+	 * il augmente de 1 sa vitesse, mais réduit de 1 ses dégâts si ces PV sont inférieurs à 50% de ses PV de départ*/
 	public void course(int pvavant){
 		if(this.id == 2 || this.id == 9){
 			if((pvavant > (this.pvMax/2)) && (this.pvActuel < (this.pvMax/2))){
-			/*on sais ici que this viens de perdre plus de 50% de ses PV max*/
+			/*on sais ici que this viens de perdre plus de 50% de ses PV max : on active la capacité Course*/
 				this.degat -= 1;
 				this.vitesse += 1;
 			}
@@ -160,7 +165,8 @@ public class Personnage {
 		}
 	}
 	
-	/*Si le personnage est un éclaireur, renvoi vrai*/
+	/*Si le personnage est un éclaireur, renvoi vrai
+	 cette méthode est appelée lorsqu'un monstre tente de se déplacer sur un terrain (element) dont la nature est différente de 0*/
 	public boolean chemin(){
 		if(this.id == 10){
 			return true;
@@ -168,7 +174,8 @@ public class Personnage {
 		return false;
 	}
 	
-	/*Si l'attaquant est un assassin (chasseur ou artilleur) et si la cible D à 50%- de PV, renvois des dégâts supplémentaires, 0 sinon */
+	/*Si l'attaquant est un assassin (chasseur ou artilleur) et si la cible D à 50%- de PV, 
+	 renvois des dégâts supplémentaires (5), 0 sinon */
 	public int assassin(Personnage D){
 		if(this.id == 9 || this.id == 7){
 			if(D.pvActuel <= D.pvMax/2){
@@ -181,7 +188,7 @@ public class Personnage {
 	/*si le Personnage this est le Gardien, il se soigne.*/
 	public void regeneration(){
 		if(this.id == 1){
-			this.soin(3);
+			this.soin(2+(int)(Math.random()*6));
 		}
 	}
 	/*Si le personnage this est le Gardien/Combattant, renvoi vrai */ 
@@ -236,16 +243,18 @@ public class Personnage {
 		return true;
 	}
 	
-	/*le personnage this riposte : inflige une contre-attaque au personnage A*/
+	/*le personnage this riposte s'il le peut : inflige une contre-attaque au personnage A*/
 	public void Riposte(Personnage A){
-		this.setRiposte(this.getRiposte()-1);
-		this.attaque(A);
+		if(this.peutRiposter(A)) {
+			this.setRiposte(this.getRiposte()-1);
+			this.attaque(A);
+		}
 	}
 
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public void attaque(Personnage D){
 		/*mise en place des deg*/
-		int degat = this.degat + 0 /*(valeur aléatoire entre 1 et 6)*/ + this.assassin(D) - this.distance(D);
+		int degat = this.degat + 1 + (int)(Math.random()*6) /*(valeur aléatoire entre 1 et 6)*/ + this.assassin(D) - this.distance(D);
 	
 		if(this.estNemesis(D)){
 			/*Le défenseur est le némésis de l'attaquant : bonus de dégât*/
@@ -254,7 +263,7 @@ public class Personnage {
 
 		/*les  degats vont etre reduit par l'armure de la cible D, si l'A est un incendiaire (ID = 3) ou un destructeur (ID= 4), alors cette partie est sautée*/
 		if(!this.perceArmure()){
-			if(0 /*entre 1 et 100*/ <= D.protection){
+			if(1+(int)(Math.random()*100) <= D.protection){
 				degat -= D.blindage; 
 				if(degat < 0){
 					degat = 0;
@@ -266,16 +275,17 @@ public class Personnage {
 		int pvactuel =  D.pvActuel;
 		D.setPvActuel(D.pvActuel-degat);
 	
-		/*on appelle la fonction qui augmente des degats si le destructeur est attaque, 
+		/*on appelle les fonctions de personnage :
+		 * celle qui augmente des degats si le destructeur est attaqué, 
 		 * celle qui augmente la vitesse sur le Chasseur/Bête de guerre, 
 		 * celle qui ralentie la cible si l'attaquant est une bête de guerre, 
-		 * etcelle qui soigne un allie proche si l'attaquant est un enchanteur*/
+		 * celle qui soigne un allie proche si l'attaquant est un enchanteur*/
 		D.rage();
 		D.course(pvactuel);
 		this.meurtrissure(D); 
 		this.vigueur();
 	
-		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp*/
+		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
 		if(D.deces()){
 			degat += 50;
 			if(this.estNemesis(D)){
@@ -289,25 +299,25 @@ public class Personnage {
 	public void repos(){
 		this.setAttaque(0);
 		this.setPm(0);
-		this.soin(5+0 /*entre 1 et 6*/);
+		this.soin(6+(int)(Math.random()*6));
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
 		this.encouragement(); 
 	}
 	
-	/*Le personnage A augmente se soigne d'un montant egal a valeur*/
+	/*Le personnage A se soigne d'un montant egal a valeur*/
 	public void soin(int valeur){
 		this.setPvActuel(this.pvActuel + valeur);
-		this.gainExp(valeur);
 		if(this.pvActuel > this.pvMax){
+			valeur -= this.pvActuel - this.pvMax;
 			this.setPvActuel(this.pvMax);
 		}
+		this.gainExp(valeur);
 	}
 	
 	/*Le personnage gagne de l'experience, on verifie alors s'il passe un niveau et on applique ses bonus. */
 	public void gainExp(int valeur){
 		this.setExp(this.exp + valeur);
-
 		this.gainNiveau();	
 	}
 	
@@ -345,4 +355,6 @@ public class Personnage {
 		}
 		return false;
 	}
+	
+	
 }
