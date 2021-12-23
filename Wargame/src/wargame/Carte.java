@@ -4,14 +4,10 @@ import java.awt.Graphics;
 public class Carte implements ICarte{
 	private Element[][] carte;
 	private int taille;
-	
 	public Carte(int n) {
 		int tmp1,tmp2;
 		carte=new Element[n][n];
 		this.taille=n;
-		for(int i=0;i<n;i+=2) {
-			carte[0][i]=new Element(Bord);
-		}
 		
 		/*Remplissage avec la plaine*/
 		for (int k = 0; k < n; k++) {
@@ -23,18 +19,394 @@ public class Carte implements ICarte{
 		}
 		
 		/*Nombre de riviere*/
-		tmp1=((int)Math.random()*2)+1;
+		tmp1=(int) (Math.random() * (MaxRiviere - 1)) + 1;
 		for(int k=0;k<tmp1;k++) {
-			int l =(int) Math.random()*(n-1);
-			int positiony =(int) Math.random()*(n-1);
-			tmp2=(int)(Math.random()*((n-1) - l)) + l;
-			/*Taille de la riviere(droite pour l'instant*/
-			for(l=l;l<tmp2;l++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
 				carte[l][positiony]=new Element(Riviere);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de riviere !");
+				}
 			}
 		}
 		
-		System.out.println("Fin de la création de la carte");
+		
+		/*Creation des montagnes*/
+		tmp1=(int) (Math.random() * (MaxMontagne - 1)) + 1;
+		for(int k=0;k<tmp1;k++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
+				carte[l][positiony]=new Element(Montagne);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de montagne !");
+				}
+			}
+		}
+		
+		/*Creation des forets*/
+		tmp1=(int) (Math.random() * (MaxForet - 1)) + 1;
+		for(int k=0;k<tmp1;k++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
+				carte[l][positiony]=new Element(Foret);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de foret !");
+				}
+			}
+		}
+		for(int i=0;i<n;i+=2) {
+			carte[0][i]=new Element(Bord);
+		}
+	}
+	public void drawHexagon(int posx,int posy,Graphics g) {
+		int xPoints[]=new int[6],yPoints[]=new int[6];
+		xPoints[0]=posx;
+		yPoints[0]=posy;
+		xPoints[1]=posx+6;
+		yPoints[1]=posy+4;
+		xPoints[2]=posx+6;
+		yPoints[2]=posy+8;
+		xPoints[3]=posx;
+		yPoints[3]=posy+12;
+		xPoints[4]=posx-6;
+		yPoints[4]=posy+4;
+		xPoints[5]=posx-6;
+		yPoints[5]=posy+8;
+		g.fillPolygon(xPoints,yPoints,6);
+	}
+	
+	public Carte(int n,int nbRiviere,int nbMontagne,int nbForet) {
+		int tmp1,tmp2;
+		carte=new Element[n][n];
+		this.taille=n;
+		
+		/*Remplissage avec la plaine*/
+		for (int k = 0; k < n; k++) {
+			for (int l = 0; l < n; l++) {
+				if (carte[k][l] == null) {
+					carte[k][l] = new Element(Plaine);
+				}
+			}
+		}
+		
+		/*Nombre de riviere*/
+		for(int k=0;k<nbRiviere;k++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
+				carte[l][positiony]=new Element(Riviere);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de riviere !");
+				}
+			}
+		}
+		
+		
+		/*Creation des montagnes*/
+		for(int k=0;k<nbMontagne;k++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
+				carte[l][positiony]=new Element(Montagne);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de montagne !");
+				}
+			}
+		}
+		
+		/*Creation des forets*/
+		for(int k=0;k<nbForet;k++) {
+			int l =(int)(Math.random() * (n - 1)) + 1;;
+			int positiony =(int)(Math.random() * (n - 1)) + 1;
+			tmp2=(int)(Math.random() * ((n-l) - 1)) + 1;
+			for(int m=0;m<=tmp2;m++) {
+				carte[l][positiony]=new Element(Foret);
+				int alea;
+				alea=(int)(Math.random()*5);
+				switch(alea) {
+					case 0 : 
+						/*-- Case haut gauche --*/
+						if(positiony<n-1)
+						{
+							positiony+=1;
+						}
+						break;
+					case 1 : 
+						/*-- Case haut droite --*/
+						if(l<n-1 && positiony<n-1) {
+							l+=1;
+							positiony+=1;
+						}
+						break;
+					case 2 : 
+						/*-- Case gauche --*/
+						if(l>0)
+						{
+							l-=1;
+						}
+						break;
+					case 3 : 
+						/*-- Case droite --*/
+						if(l<n-1)
+						{
+							l+=1;
+						}	
+						break;
+					case 4 : 
+						/*-- Case bas gauche --*/
+						if(positiony>0)
+						{
+							positiony-=1;
+						}
+						break;
+					case 5 : 
+						/*-- Case bas gauche --*/
+						if(l<n-1 && positiony>0) {
+							l+=1;
+							positiony-=1;
+						}
+						break;
+					default :
+						System.out.println("Erreur dans la recherche de foret !");
+				}
+			}
+		}
+		for(int i=0;i<n;i+=2) {
+			carte[0][i]=new Element(Bord);
+		}
 	}
 	
 	public Element getElement(Position pos) {
@@ -145,7 +517,14 @@ public class Carte implements ICarte{
 	
 	
 	public void toutDessiner(Graphics g,int size) {
+		int debut;
 		for(int i=0;i<size;i++) {
+			if(Math.floorMod(i,2)==0) {
+				debut =12;
+			}
+			else {
+				debut =6;
+			}
 			for(int j=0;j<size;j++) {
 				switch(carte[i][j].getNature()) {
 				case Bord:
@@ -164,7 +543,7 @@ public class Carte implements ICarte{
 					g.setColor(java.awt.Color.green);
 					break;
 				}
-				g.fillRect(i*10,j*10,10,10);
+				drawHexagon(i*8,debut+(j*12),g);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package wargame;
 import java.awt.Graphics;
 public interface ICarte {
 	int Plaine=0,Foret=1,Riviere=2,Montagne=3,Bord=99;
+	int MaxRiviere=4,MaxMontagne=3,MaxForet=3;
 	Element getElement(Position pos);
 	Position trouvePositionVide(); // Trouve aléatoirement une position vide sur la carte
 	Position trouvePositionVide(Position pos); // Trouve une position vide choisie

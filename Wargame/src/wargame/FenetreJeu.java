@@ -11,7 +11,7 @@ public class FenetreJeu {
 				frame.setBackground(Color.white);
 				frame.setLocation(100,100);
 				frame.setResizable(false);
-				frame.setPreferredSize(new Dimension(500,500));
+				frame.setPreferredSize(new Dimension(PanneauJeu.taille_fenetre,PanneauJeu.taille_fenetre));
 				PanneauJeu panneau = new PanneauJeu();
 				frame.setContentPane(panneau);
 				frame.pack();
