@@ -11,10 +11,53 @@ public class Carte implements ICarte{
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<n;j++) {
 				if(Math.floorMod(i,2)==1 & j==0) {
-					this.carte[i][j].setNature(Bord);
+					carte[i][j]=new Element(Bord);
 				}
 				else {
+					/*Création des riviers(entre 1 et 3(modifiables par la suite))*/
+					for(int k=0;k<((int)Math.random()*3)+1;k++) {
+						int positionDebutx=(int)Math.random()*n;
+						int positionDebuty=(int)Math.random()*n;
+						/*Taile de chaque rivière,entre 1 et taille/2*/
+						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
+							carte[positionDebutx][positionDebuty]=new Element(Riviere);
+							positionDebutx=((int)Math.random()*2)-1;
+							positionDebuty=((int)Math.random()*2)-1;
+						}
+					}
 					
+					/*Création des montagne (entre 1 et 3 aussi a modifié)*/
+					for(int k=0;k<((int)Math.random()*3)+1;k++) {
+						int positionDebutx=(int)Math.random()*n;
+						int positionDebuty=(int)Math.random()*n;
+						/*Taile de chaque Montagne,entre 1 et taille/2*/
+						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
+							carte[positionDebutx][positionDebuty]=new Element(Montagne);
+							positionDebutx=((int)Math.random()*2)-1;
+							positionDebuty=((int)Math.random()*2)-1;
+						}
+					}
+					
+					/*Création des Forets (entre 1 et 3)*/
+					for(int k=0;k<((int)Math.random()*3)+1;k++) {
+						int positionDebutx=(int)Math.random()*n;
+						int positionDebuty=(int)Math.random()*n;
+						/*Taile de chaque foret,entre 1 et taille/2*/
+						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
+							carte[positionDebutx][positionDebuty]=new Element(Foret);
+							positionDebutx=((int)Math.random()*2)-1;
+							positionDebuty=((int)Math.random()*2)-1;
+						}
+					}
+					
+					/*Remplissage du reste avec plaine*/
+					for(int k=0;k<n;k++) {
+						for(int l=0;l<n;l++) {
+							if(carte[k][l]==null) {
+								carte[k][l]=new Element(Plaine);
+							}
+						}
+					}
 				}
 			}
 		}
