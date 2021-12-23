@@ -10,7 +10,7 @@ public class Carte implements ICarte{
 		this.taille=n;
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<n;j++) {
-				if(Math.floorMod(j,2)==1 & i==0) {
+				if(Math.floorMod(i,2)==1 & j==0) {
 					this.carte[i][j].setNature(Bord);
 				}
 				else {
