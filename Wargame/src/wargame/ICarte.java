@@ -16,5 +16,5 @@ public interface ICarte {
 	
 	
 	
-	void toutDessiner(Graphics g);
+	void toutDessiner(Graphics g,int size);
 }

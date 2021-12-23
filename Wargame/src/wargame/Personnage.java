@@ -200,11 +200,11 @@ public class Personnage {
 	}
 	
 	/*si le personnage this est l'artilleur, alors elle gagne de l'experience selon la distance à laquelle elle tire sur sa cible D*/
-	public int precision(Personnage D){
+	/*public int precision(Personnage D){
 		if(this.id == 7){
 			this.gainExp(this.distance(D));
 		}
-	}
+	}*/
 	
 	/*si le personnage est le Destructeur ou l'Incendiaire, renvois vrais.*/
 	public boolean perceArmure(){
@@ -236,25 +236,24 @@ public class Personnage {
 	
 	/*indique si le personnage D peut riposter contre le personnage this en fonction de son nombre de riposte restant et de sa portée d'attaque. 
 	Rappel : le personne ne peut pas riposter si l'attaquant est un incendiaire*/
-	public boolean peutRiposter(Personnage D){
+	/*public boolean peutRiposter(Personnage D){
 		if((D.distance(this) > D.portee) || (D.riposte == 0) || this.embrasement()){
 			return false;
 		}
 		return true;
-	}
+	}*/
 	
 	/*le personnage this riposte s'il le peut : inflige une contre-attaque au personnage A*/
-	public void Riposte(Personnage A){
+	/*public void Riposte(Personnage A){
 		if(this.peutRiposter(A)) {
 			this.setRiposte(this.getRiposte()-1);
 			this.attaque(A);
 		}
-	}
-
+	}*/
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public void attaque(Personnage D){
 		/*mise en place des deg*/
-		int degat = this.degat + 1 + (int)(Math.random()*6) /*(valeur aléatoire entre 1 et 6)*/ + this.assassin(D) - this.distance(D);
+		int degat = this.degat + 1 + (int)(Math.random()*6) /*(valeur aléatoire entre 1 et 6)*/ + this.assassin(D); /* -this.distance(D);*/
 	
 		if(this.estNemesis(D)){
 			/*Le défenseur est le némésis de l'attaquant : bonus de dégât*/
@@ -283,7 +282,7 @@ public class Personnage {
 		D.rage();
 		D.course(pvactuel);
 		this.meurtrissure(D); 
-		this.vigueur();
+		/*this.vigueur();*/
 	
 		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
 		if(D.deces()){
@@ -302,7 +301,7 @@ public class Personnage {
 		this.soin(6+(int)(Math.random()*6));
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
-		this.encouragement(); 
+		/*this.encouragement(); */
 	}
 	
 	/*Le personnage A se soigne d'un montant egal a valeur*/

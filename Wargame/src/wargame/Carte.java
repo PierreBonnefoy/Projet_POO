@@ -1,5 +1,4 @@
 package wargame;
-
 import java.awt.Graphics;
 
 public class Carte implements ICarte{
@@ -7,60 +6,35 @@ public class Carte implements ICarte{
 	private int taille;
 	
 	public Carte(int n) {
+		int tmp1,tmp2;
+		carte=new Element[n][n];
 		this.taille=n;
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				if(Math.floorMod(i,2)==1 & j==0) {
-					carte[i][j]=new Element(Bord);
-				}
-				else {
-					/*Création des riviers(entre 1 et 3(modifiables par la suite))*/
-					for(int k=0;k<((int)Math.random()*3)+1;k++) {
-						int positionDebutx=(int)Math.random()*n;
-						int positionDebuty=(int)Math.random()*n;
-						/*Taile de chaque rivière,entre 1 et taille/2*/
-						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
-							carte[positionDebutx][positionDebuty]=new Element(Riviere);
-							positionDebutx=((int)Math.random()*2)-1;
-							positionDebuty=((int)Math.random()*2)-1;
-						}
-					}
-					
-					/*Création des montagne (entre 1 et 3 aussi a modifié)*/
-					for(int k=0;k<((int)Math.random()*3)+1;k++) {
-						int positionDebutx=(int)Math.random()*n;
-						int positionDebuty=(int)Math.random()*n;
-						/*Taile de chaque Montagne,entre 1 et taille/2*/
-						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
-							carte[positionDebutx][positionDebuty]=new Element(Montagne);
-							positionDebutx=((int)Math.random()*2)-1;
-							positionDebuty=((int)Math.random()*2)-1;
-						}
-					}
-					
-					/*Création des Forets (entre 1 et 3)*/
-					for(int k=0;k<((int)Math.random()*3)+1;k++) {
-						int positionDebutx=(int)Math.random()*n;
-						int positionDebuty=(int)Math.random()*n;
-						/*Taile de chaque foret,entre 1 et taille/2*/
-						for(int l=0;l<((int)Math.random()*(n/2))+1;l++) {
-							carte[positionDebutx][positionDebuty]=new Element(Foret);
-							positionDebutx=((int)Math.random()*2)-1;
-							positionDebuty=((int)Math.random()*2)-1;
-						}
-					}
-					
-					/*Remplissage du reste avec plaine*/
-					for(int k=0;k<n;k++) {
-						for(int l=0;l<n;l++) {
-							if(carte[k][l]==null) {
-								carte[k][l]=new Element(Plaine);
-							}
-						}
-					}
+		for(int i=0;i<n;i+=2) {
+			carte[0][i]=new Element(Bord);
+		}
+		
+		/*Remplissage avec la plaine*/
+		for (int k = 0; k < n; k++) {
+			for (int l = 0; l < n; l++) {
+				if (carte[k][l] == null) {
+					carte[k][l] = new Element(Plaine);
 				}
 			}
 		}
+		
+		/*Nombre de riviere*/
+		tmp1=((int)Math.random()*2)+1;
+		for(int k=0;k<tmp1;k++) {
+			int l =(int) Math.random()*(n-1);
+			int positiony =(int) Math.random()*(n-1);
+			tmp2=(int)(Math.random()*((n-1) - l)) + l;
+			/*Taille de la riviere(droite pour l'instant*/
+			for(l=l;l<tmp2;l++) {
+				carte[l][positiony]=new Element(Riviere);
+			}
+		}
+		
+		System.out.println("Fin de la création de la carte");
 	}
 	
 	public Element getElement(Position pos) {
@@ -72,8 +46,8 @@ public class Carte implements ICarte{
 		/*-- Cherche une position, sur le plateau, libre aleatoirement --*/
 		int aleaX,aleaY;
 		do {
-		aleaX=(int)(Math.random()*this.taille);
-		aleaY=(int)(Math.random()*this.taille);
+		aleaX=(int)(Math.random()*this.taille-1);
+		aleaY=(int)(Math.random()*this.taille-1);
 		}while(this.carte[aleaX][aleaY].getOccupe()!=0);
 		return(new Position(aleaX,aleaY));
 	}
@@ -114,7 +88,7 @@ public class Carte implements ICarte{
 		/*-- Tirage d'une des 6 position possible --*/
 		int alea,tmpX=0,tmpY=0;
 		do{
-			alea=(int)(Math.random()*6);
+			alea=(int)(Math.random()*5);
 			switch(alea) {
 				case 0 : 
 					/*-- Case haut gauche --*/
@@ -170,7 +144,28 @@ public class Carte implements ICarte{
 	}*/
 	
 	
-	public void toutDessiner(Graphics g) {
-		
+	public void toutDessiner(Graphics g,int size) {
+		for(int i=0;i<size;i++) {
+			for(int j=0;j<size;j++) {
+				switch(carte[i][j].getNature()) {
+				case Bord:
+					g.setColor(java.awt.Color.black);
+					break;
+				case Riviere:
+					g.setColor(java.awt.Color.blue);
+					break;
+				case Montagne:
+					g.setColor(java.awt.Color.gray);
+					break;
+				case Foret:
+					g.setColor(java.awt.Color.yellow);
+					break;
+				case Plaine:
+					g.setColor(java.awt.Color.green);
+					break;
+				}
+				g.fillRect(i*10,j*10,10,10);
+			}
+		}
 	}
 }
