@@ -1,6 +1,6 @@
 package wargame;
 
-public class Personnage {
+public class Personnage implements IConfig {
 	/*Cette classe est TEMPORAIRE : on decidera plus tard de si on la conserve sous ce nom ou si on met les fonctions dans une autre classe.*/
 	
 	private int pvMax;  //les PV totaux du personnage
@@ -24,6 +24,220 @@ public class Personnage {
 	private int etat; //vivant ou mort
 
 	/*-- Constructeur --*/
+	public Personnage(int id, int joueur) {
+		switch(id) {
+		case GARDIEN:
+			this.pvMax = 65;
+			this.pvActuel = 65;
+			this.degat = 10;
+			this.attaque = 1;
+			this.protection = 80;
+			this.blindage = 8;
+			this.taille = 3;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 1;
+			this.vision = 2;
+			this.vitesse = 3;
+			this.pm = 3;
+			this.riposte = 1;
+			this.nemesis = DANCELAME;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case BETE:
+			this.pvMax = 65;
+			this.pvActuel = 65;
+			this.degat = 10;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 5;
+			this.taille = 3;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 1;
+			this.vision = 4;
+			this.vitesse = 5;
+			this.pm = 5;
+			this.riposte = 1;
+			this.nemesis = CHASSEUR;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case INCENDIAIRE:
+			this.pvMax = 45;
+			this.pvActuel = 45;
+			this.degat = 10;
+			this.attaque = 1;
+			this.protection = 60;
+			this.blindage = 4;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 3;
+			this.vision = 4;
+			this.vitesse = 3;
+			this.pm = 3;
+			this.riposte = 1;
+			this.nemesis = COMBATTANT;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case DESTRUCTEUR:
+			this.pvMax = 50;
+			this.pvActuel = 50;
+			this.degat = 15;
+			this.attaque = 1;
+			this.protection = 60;
+			this.blindage = 4;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 1;
+			this.vision = 3;
+			this.vitesse = 4;
+			this.pm = 4;
+			this.riposte = 1;
+			this.nemesis = GARDIEN;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case ENCHANTEUR:
+			this.pvMax = 45;
+			this.pvActuel = 45;
+			this.degat = 8;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 3;
+			this.taille = 1;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 3;
+			this.vision = 4;
+			this.vitesse = 4;
+			this.pm = 4;
+			this.riposte = 1;
+			this.nemesis = DESTRUCTEUR;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case COMBATTANT:
+			this.pvMax = 55;
+			this.pvActuel = 55;
+			this.degat = 12;
+			this.attaque = 1;
+			this.protection = 60;
+			this.blindage = 6;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 1;
+			this.vision = 4;
+			this.vitesse = 4;
+			this.pm = 4;
+			this.riposte = 1;
+			this.nemesis = BETE;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case ARTILLEUR:
+			this.pvMax = 50;
+			this.pvActuel = 50;
+			this.degat = 8;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 4;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 6;
+			this.vision = 4;
+			this.vitesse = 4;
+			this.pm = 4;
+			this.riposte = 1;
+			this.nemesis = ECLAIREUR;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case DANCELAME:
+			this.pvMax = 50;
+			this.pvActuel = 50;
+			this.degat = 12;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 3;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 2;
+			this.vision = 3;
+			this.vitesse = 5;
+			this.pm = 5;
+			this.riposte = 1;
+			this.nemesis = INCENDIAIRE;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case CHASSEUR:
+			this.pvMax = 45;
+			this.pvActuel = 45;
+			this.degat = 15;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 4;
+			this.taille = 2;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 1;
+			this.vision = 4;
+			this.vitesse = 7;
+			this.pm = 7;
+			this.riposte = 1;
+			this.nemesis = ARTILLEUR;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;
+		case ECLAIREUR:
+			this.pvMax = 40;
+			this.pvActuel = 40;
+			this.degat = 8;
+			this.attaque = 1;
+			this.protection = 40;
+			this.blindage = 3;
+			this.taille = 1;
+			this.id = id;
+			this.joueur = joueur;
+			this.portee = 3;
+			this.vision = 6;
+			this.vitesse = 6;
+			this.pm = 6;
+			this.riposte = 1;
+			this.nemesis = ENCHANTEUR;
+			//this.position = ;
+			this.exp = 0;
+			this.niveau = 0;
+			this.etat = VIVANT;
+			break;	
+		}
+	}
 	
 	/*-- accesseurs et mutateurs --*/
 	public int getEtat(){
@@ -131,7 +345,7 @@ public class Personnage {
 	
 	/*Si le personnage est le destructeur, augmente de 1 ses degats*/
 	public void rage(){
-		if(this.id == 4){
+		if(this.id == DESTRUCTEUR){
 			this.setDegat(this.degat + 1);
 		}
 	}
@@ -139,7 +353,7 @@ public class Personnage {
 	/*Si le personnage est un chasseur/bête de guerre et que ses PV sont supérieur à ceux passé en paramètres, 
 	 * il augmente de 1 sa vitesse, mais réduit de 1 ses dégâts si ces PV sont inférieurs à 50% de ses PV de départ*/
 	public void course(int pvavant){
-		if(this.id == 2 || this.id == 9){
+		if(this.id == BETE || this.id == CHASSEUR){
 			if((pvavant > (this.pvMax/2)) && (this.pvActuel < (this.pvMax/2))){
 			/*on sais ici que this viens de perdre plus de 50% de ses PV max : on active la capacité Course*/
 				this.degat -= 1;
@@ -150,7 +364,7 @@ public class Personnage {
 	
 	/*Si le personnage this est une bête de guerre, il ralentie sa cible D*/
 	public void meurtrissure(Personnage D){
-		if(this.id == 2){
+		if(this.id == BETE){
 			if(D.vitesse > 3){
 				D.setVitesse(D.vitesse-1);
 			}
@@ -160,7 +374,7 @@ public class Personnage {
 	/*Si le personnage this est le Combattant, il gagne de l'experience
 	Cette fonction est appelée à la fin de chaque tour de personnage.*/
 	public void entrainement(){
-		if(this.id == 6){
+		if(this.id == COMBATTANT){
 			this.gainExp(5);
 		}
 	}
@@ -168,7 +382,7 @@ public class Personnage {
 	/*Si le personnage est un éclaireur, renvoi vrai
 	 cette méthode est appelée lorsqu'un monstre tente de se déplacer sur un terrain (element) dont la nature est différente de 0*/
 	public boolean chemin(){
-		if(this.id == 10){
+		if(this.id == ECLAIREUR){
 			return true;
 		}
 		return false;
@@ -177,7 +391,7 @@ public class Personnage {
 	/*Si l'attaquant est un assassin (chasseur ou artilleur) et si la cible D à 50%- de PV, 
 	 renvois des dégâts supplémentaires (5), 0 sinon */
 	public int assassin(Personnage D){
-		if(this.id == 9 || this.id == 7){
+		if(this.id == CHASSEUR || this.id == ARTILLEUR){
 			if(D.pvActuel <= D.pvMax/2){
 				return 5;
 			}
@@ -187,13 +401,13 @@ public class Personnage {
 	
 	/*si le Personnage this est le Gardien, il se soigne.*/
 	public void regeneration(){
-		if(this.id == 1){
+		if(this.id == GARDIEN){
 			this.soin(2+(int)(Math.random()*6));
 		}
 	}
 	/*Si le personnage this est le Gardien/Combattant, renvoi vrai */ 
 	public boolean replique(){
-		if(this.id == 1 || this.id == 6){
+		if(this.id == GARDIEN || this.id == COMBATTANT){
 			return true;
 		}
 		return false;
@@ -208,7 +422,7 @@ public class Personnage {
 	
 	/*si le personnage est le Destructeur ou l'Incendiaire, renvois vrais.*/
 	public boolean perceArmure(){
-		if(this.id == 3 || this.id == 4){
+		if(this.id == INCENDIAIRE || this.id == DESTRUCTEUR){
 			return true;
 		}
 		return false;
@@ -216,13 +430,32 @@ public class Personnage {
 	
 	/*Renvoi vrai si le personnage est l'icendiaire*/
 	public boolean embrasement(){
-		if(this.id == 3){
+		if(this.id == INCENDIAIRE){
 			return true;
 		}
 		return false;
 	}
 	
-	/*-- toutes les autres méthodes --*/
+	/*Renvoi 0 si le personnage parvient a esquiver l'attaque ou degat sinon*/
+	public int esquive(int degat) {
+		int a = 1 + (int)(Math.random()*10);
+		if(a <= 2) {
+			return 0;
+		}
+		return degat;
+	}
+	
+	/*verifie si le personnage est le dance-lame, et le soigne d'une partie de la valeur passée en parametre*/
+	public void drain(int degat) {
+		if(this.id == DANCELAME) {
+			int soin = degat/4;
+			if(soin != 0) {
+				this.soin(soin);
+			}
+		}
+	}
+	
+		/*-- toutes les autres méthodes --*/
 	
 	/*Si le personnage this est le Gardien/Combattant, il regagne 3 de riposte, sinon, il en regagne seulement 1. */
 	public void recupRiposte(){
@@ -253,12 +486,15 @@ public class Personnage {
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public void attaque(Personnage D){
 		/*mise en place des deg*/
-		int degat = this.degat + 1 + (int)(Math.random()*6) /*(valeur aléatoire entre 1 et 6)*/ + this.assassin(D); /* -this.distance(D);*/
+		int degat = this.degat + 1 + (int)(Math.random()*6) + this.assassin(D); /* -this.distance(D);*/
 	
 		if(this.estNemesis(D)){
 			/*Le défenseur est le némésis de l'attaquant : bonus de dégât*/
 			degat += 5;
 		}
+		/*if(!this.peutRiposter(D)) {
+			degat = D.esquive(degat);
+		}*/
 
 		/*les  degats vont etre reduit par l'armure de la cible D, si l'A est un incendiaire (ID = 3) ou un destructeur (ID= 4), alors cette partie est sautée*/
 		if(!this.perceArmure()){
@@ -278,10 +514,12 @@ public class Personnage {
 		 * celle qui augmente des degats si le destructeur est attaqué, 
 		 * celle qui augmente la vitesse sur le Chasseur/Bête de guerre, 
 		 * celle qui ralentie la cible si l'attaquant est une bête de guerre, 
-		 * celle qui soigne un allie proche si l'attaquant est un enchanteur*/
+		 * celle qui soigne un allie proche si l'attaquant est un enchanteur
+		 * celle qui soigne le dancelame d'une partie des degats infliges*/
 		D.rage();
 		D.course(pvactuel);
 		this.meurtrissure(D); 
+		this.drain(degat);
 		/*this.vigueur();*/
 	
 		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
@@ -331,7 +569,7 @@ public class Personnage {
 			this.soin(5);
 			this.setBlindage(this.blindage +1);
 			/*l'artilleur gagne aussi un bonus de portée*/
-			if(this.id == 7){
+			if(this.id == ARTILLEUR){
 				this.setPortee(this.portee +1);
 			}
 		}
@@ -348,7 +586,7 @@ public class Personnage {
 	/*deces test si le personnage a perdu tout ses PV, le tue si c'est le cas, en renvoyant vrai*/
 	public boolean deces() {
 		if(this.pvActuel <= 0) {
-			this.setEtat(0);
+			this.setEtat(MORT);
 			/*IL reste probablement des choses à faire ici...*/
 			return true;
 		}
