@@ -1,6 +1,6 @@
 package wargame;
 
-public class Personnage implements IConfig {
+public class Personnage implements IConfig{
 	/*Cette classe est TEMPORAIRE : on decidera plus tard de si on la conserve sous ce nom ou si on met les fonctions dans une autre classe.*/
 	
 	private int pvMax;  //les PV totaux du personnage
@@ -24,9 +24,10 @@ public class Personnage implements IConfig {
 	private int etat; //vivant ou mort
 
 	/*-- Constructeur --*/
-	public Personnage(int id, int joueur) {
+	public Personnage(int id, int joueur,int x,int y) {
 		switch(id) {
 		case GARDIEN:
+			this.position=new Position(x,y);
 			this.pvMax = 65;
 			this.pvActuel = 65;
 			this.degat = 10;
@@ -42,12 +43,12 @@ public class Personnage implements IConfig {
 			this.pm = 3;
 			this.riposte = 1;
 			this.nemesis = DANCELAME;
-			//this.position = ;
 			this.exp = 0;
 			this.niveau = 0;
 			this.etat = VIVANT;
 			break;
 		case BETE:
+			this.position=new Position(x,y);
 			this.pvMax = 65;
 			this.pvActuel = 65;
 			this.degat = 10;
@@ -69,6 +70,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case INCENDIAIRE:
+			this.position=new Position(x,y);
 			this.pvMax = 45;
 			this.pvActuel = 45;
 			this.degat = 10;
@@ -90,6 +92,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case DESTRUCTEUR:
+			this.position=new Position(x,y);
 			this.pvMax = 50;
 			this.pvActuel = 50;
 			this.degat = 15;
@@ -111,6 +114,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case ENCHANTEUR:
+			this.position=new Position(x,y);
 			this.pvMax = 45;
 			this.pvActuel = 45;
 			this.degat = 8;
@@ -132,6 +136,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case COMBATTANT:
+			this.position=new Position(x,y);
 			this.pvMax = 55;
 			this.pvActuel = 55;
 			this.degat = 12;
@@ -153,6 +158,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case ARTILLEUR:
+			this.position=new Position(x,y);
 			this.pvMax = 50;
 			this.pvActuel = 50;
 			this.degat = 8;
@@ -174,6 +180,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case DANCELAME:
+			this.position=new Position(x,y);
 			this.pvMax = 50;
 			this.pvActuel = 50;
 			this.degat = 12;
@@ -195,6 +202,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case CHASSEUR:
+			this.position=new Position(x,y);
 			this.pvMax = 45;
 			this.pvActuel = 45;
 			this.degat = 15;
@@ -216,6 +224,7 @@ public class Personnage implements IConfig {
 			this.etat = VIVANT;
 			break;
 		case ECLAIREUR:
+			this.position=new Position(x,y);
 			this.pvMax = 40;
 			this.pvActuel = 40;
 			this.degat = 8;

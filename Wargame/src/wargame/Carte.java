@@ -198,6 +198,7 @@ public class Carte implements ICarte{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
+		carte[10][10].rajoutPersonnage(new Personnage(2,2,10,10));
 	}
 	public void drawHexagon(int posx,int posy,Graphics g) {
 		int xPoints[]=new int[6],yPoints[]=new int[6];
@@ -407,6 +408,7 @@ public class Carte implements ICarte{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
+		carte[10][10].rajoutPersonnage(new Personnage(2,2,10,10));
 	}
 	
 	public Element getElement(Position pos) {
@@ -526,22 +528,27 @@ public class Carte implements ICarte{
 				debut =6;
 			}
 			for(int j=0;j<size;j++) {
-				switch(carte[i][j].getNature()) {
-				case Bord:
-					g.setColor(java.awt.Color.black);
-					break;
-				case Riviere:
-					g.setColor(java.awt.Color.blue);
-					break;
-				case Montagne:
-					g.setColor(java.awt.Color.gray);
-					break;
-				case Foret:
-					g.setColor(java.awt.Color.yellow);
-					break;
-				case Plaine:
-					g.setColor(java.awt.Color.green);
-					break;
+				if(carte[i][j].getOccupe()>0) {
+					g.setColor(java.awt.Color.red);
+				}
+				else {
+					switch(carte[i][j].getNature()) {
+					case Bord:
+						g.setColor(java.awt.Color.black);
+						break;
+					case Riviere:
+						g.setColor(java.awt.Color.blue);
+						break;
+					case Montagne:
+						g.setColor(java.awt.Color.gray);
+						break;
+					case Foret:
+						g.setColor(java.awt.Color.yellow);
+						break;
+					case Plaine:
+						g.setColor(java.awt.Color.green);
+						break;
+					}
 				}
 				drawHexagon(i*8,debut+(j*12),g);
 			}

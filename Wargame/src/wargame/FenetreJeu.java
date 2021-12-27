@@ -17,4 +17,13 @@ public class FenetreJeu {
 				frame.pack();
 				frame.setVisible(true);
 	  }
+	
+	public void tourDeJeu() {
+		/*---D'abord deplacement du joueur avec la souris et attaque si possible, personnage par personnage---*/
+		
+		/*---Tour de jeu des ennemies---*/
+		
+		
+		/*---On verifie si pas fi, de partie en verifiant si il reste tout le persos---*/
+	}
 }
