@@ -5,13 +5,73 @@ import javax.swing.*;
 
 public class PanneauJeu extends JPanel{
 	public static final int taille_fenetre=800;
-	public Carte jeu=new Carte(70,8,5,5);;
+	public Carte jeu=new Carte(30,4,2,2);
 	PanneauJeu(){
 		this.setPreferredSize(new Dimension(taille_fenetre,taille_fenetre));
-		
+		clickPosition();
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		jeu.toutDessiner(g,70);
+		jeu.toutDessiner(g,30);
+	}
+	
+	public Position ppV(int x1,int x2,int y1,int y2,int mx,int my,int haut) {
+		Position pos=new Position(0,0),posMouse=new Position(mx,my);
+		int dec1,dec2;
+		double min=1000,tmp;
+		if(haut==1) {
+			dec1=1;
+			dec2=0;
+		}
+		else {
+			dec1=0;
+			dec2=1;
+		}
+		tmp=posMouse.distance(new Position((dec1*12)+x1,y1));
+		if(min>tmp) {
+			min=tmp;
+			pos=(new Position((dec1*12)+x1,y1));
+		}
+		tmp=posMouse.distance(new Position((dec1*12)+x2,y1));
+		if(min>tmp) {
+			min=tmp;
+			pos=(new Position((dec1*12)+x2,y1));
+		}
+		tmp=posMouse.distance(new Position((dec2*12)+x1,y2));
+		if(min>tmp) {
+			min=tmp;
+			pos=(new Position((dec2*12)+x1,y2));
+		}
+		tmp=posMouse.distance(new Position((dec2*12)+x2,y2));
+		if(min>tmp) {
+			min=tmp;
+			pos=(new Position((dec2*12)+x2,y2));
+		}
+		return pos;
+	}
+ 	
+	public Position clickPosition(){
+		Position pos=new Position(0,0);
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				Position pos2=new Position(0,0);
+				int y1,y2,x1,x2,pair;
+				
+				/*---Recupere les y qui entoure---*/
+				y1=12+18*((e.getY()-12)/18);
+				y2=12+18*(1+(e.getY()-12)/18);
+				
+				/*---Verifie si c'est la premiere ou la 2eme lignes qui est decalé---*/
+				pair=Math.floorMod(y1/18,2);
+				/*---Recupere les x qui l'entoure---*/
+				x1=26*((e.getX())/26);
+				x2=26*(1+(e.getX())/26);
+				/*---Verifie parmi les 4 voisins, lequel est le plus proche---*/
+				pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
+				System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
+				System.out.println("case = ["+pos2.getX()/26+","+(pos2.getY()/18)+"]");
+			}
+		});
+		return pos;
 	}
 }
