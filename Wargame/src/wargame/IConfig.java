@@ -15,7 +15,9 @@ public interface IConfig {
 	public int ARTILLEUR = 7, DANCELAME = 8, CHASSEUR = 9, ECLAIREUR = 10;
 	/*Personnage.etat*/
 	public int VIVANT = 1, MORT = 0;
-	
+	/*Personnage.joueur (et plus généralement le joueur dont c'est le tour*/
+	public int JOUEUR = 0;
+	public int IA = 1;
 	
 		/*--- config pour les elements ---*/
 	

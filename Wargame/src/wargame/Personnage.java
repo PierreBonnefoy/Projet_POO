@@ -41,7 +41,7 @@ public class Personnage implements IConfig{
 			this.vision = 2;
 			this.vitesse = 3;
 			this.pm = 3;
-			this.riposte = 1;
+			this.riposte = 3;
 			this.nemesis = DANCELAME;
 			this.exp = 0;
 			this.niveau = 0;
@@ -150,7 +150,7 @@ public class Personnage implements IConfig{
 			this.vision = 4;
 			this.vitesse = 4;
 			this.pm = 4;
-			this.riposte = 1;
+			this.riposte = 3;
 			this.nemesis = BETE;
 			//this.position = ;
 			this.exp = 0;
@@ -423,11 +423,12 @@ public class Personnage implements IConfig{
 	}
 	
 	/*si le personnage this est l'artilleur, alors elle gagne de l'experience selon la distance à laquelle elle tire sur sa cible D*/
-	/*public int precision(Personnage D){
+	public void precision(Personnage D){
 		if(this.id == 7){
-			this.gainExp(this.distance(D));
+			int bonus = 2*D.taille;
+			this.gainExp(bonus);
 		}
-	}*/
+	}
 	
 	/*si le personnage est le Destructeur ou l'Incendiaire, renvois vrais.*/
 	public boolean perceArmure(){
@@ -529,6 +530,7 @@ public class Personnage implements IConfig{
 		D.course(pvactuel);
 		this.meurtrissure(D); 
 		this.drain(degat);
+		this.precision(D);
 		/*this.vigueur();*/
 	
 		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
@@ -596,11 +598,265 @@ public class Personnage implements IConfig{
 	public boolean deces() {
 		if(this.pvActuel <= 0) {
 			this.setEtat(MORT);
-			/*IL reste probablement des choses à faire ici...*/
+			//IL reste probablement des choses à faire ici...
 			return true;
 		}
 		return false;
 	}
+	/*--- Methodes d'affichage et auxiliaires ---*/
 	
+	private String nomPersonnage() {
+		//renvois une chaine de la forme suivante : nomPersonnage (classePersonnage-campPersonnage)
+		String chaine ="";
+		switch(this.id) {
+		case GARDIEN:
+			if(this.joueur == 0) {
+				chaine = "GOLEM (gardien-donjon)\n";
+			}
+			else {
+				chaine = "ABOMINATION (gardien-enfer)\n";
+			}
+			break;
+		case BETE:
+			if(this.joueur == 0) {
+				chaine = "HYDRE (bête de guerre-donjon)\n";
+			}
+			else {
+				chaine = "MUTILATEUR (bête de guerre-enfer)\n";
+			}
+			break;
+		case INCENDIAIRE:
+			if(this.joueur == 0) {
+				chaine = "DRAKE (incendiaire-donjon)\n";
+			}
+			else {
+				chaine = "DEMONISTE (incendiaire-enfer)\n";
+			}
+			break;
+		case DESTRUCTEUR:
+			if(this.joueur == 0) {
+				chaine = "MINOTAURE (destructeur-donjon)\n";
+			}
+			else {
+				chaine = "PRINCE DEMON (destructeur-enfer)\n";
+			}
+			break;
+		case ENCHANTEUR:
+			if(this.joueur == 0) {
+				chaine = "MAGE GRENOUILLE (enchanteur-donjon)\n";
+			}
+			else {
+				chaine = "DIABLOTIN (enchanteur-enfer)\n";
+			}
+			break;
+		case COMBATTANT:
+			if(this.joueur == 0) {
+				chaine = "ARMURE ANIMEE (combattant-donjon)\n";
+			}
+			else {
+				chaine = "GUERRIER DU CHAOS (combattant-enfer)\n";
+			}
+			break;
+		case ARTILLEUR:
+			if(this.joueur == 0) {
+				chaine = "HOMME-LEZARD (artilleur-donjon)\n";
+			}
+			else {
+				chaine = "SUCCUBE (artilleur-enfer)\n";
+			}
+			break;
+		case DANCELAME:
+			if(this.joueur == 0) {
+				chaine = "VAMPYRION (dancelame-donjon)\n";
+			}
+			else {
+				chaine = "INCUBE (dancelame-enfer)\n";
+			}
+			break;
+		case CHASSEUR:
+			if(this.joueur == 0) {
+				chaine = "PREDATOR (chasseur-donjon)\n";
+			}
+			else {
+				chaine = "CHIEN DES ENFERS (chasseur-enfer)\n";
+			}
+			break;
+		case ECLAIREUR:
+			if(this.joueur == 0) {
+				chaine = "WORM (eclaireur-donjon)\n";
+			}
+			else {
+				chaine ="OEIL DU DIABLE (eclaireur-enfer)\n";
+			}
+			break;
+		}
+		return chaine;
+	}
+	
+	private String nomNemesis() {
+		//renvois une chaine contenant le nom du Nemesis du Personnage this
+		String chaine ="";
+		switch(this.nemesis) {
+		case GARDIEN:
+			if(this.joueur == 0) {
+				chaine = "ABOMINATION\n";
+			}
+			else {
+				chaine = "GOLEM\n";
+			}
+			break;
+		case BETE:
+			if(this.joueur == 0) {
+				chaine = "MUTILATEUR\n";
+			}
+			else {
+				chaine = "HYDRE\n";
+			}
+			break;
+		case INCENDIAIRE:
+			if(this.joueur == 0) {
+				chaine = "DEMONISTE\n";
+			}
+			else {
+				chaine = "DRAKE\n";
+			}
+			break;
+		case DESTRUCTEUR:
+			if(this.joueur == 0) {
+				chaine = "PRINCE DEMON\n";
+			}
+			else {
+				chaine = "MINOTAURE\n";
+			}
+			break;
+		case ENCHANTEUR:
+			if(this.joueur == 0) {
+				chaine = "DIABLOTIN\n";
+			}
+			else {
+				chaine = "MAGE GRENOUILLE\n";
+			}
+			break;
+		case COMBATTANT:
+			if(this.joueur == 0) {
+				chaine = "GUERRIER DU CHAOS\n";
+			}
+			else {
+				chaine = "ARMURE ANIMEE\n";
+			}
+			break;
+		case ARTILLEUR:
+			if(this.joueur == 0) {
+				chaine = "SUCCUBE\n";
+			}
+			else {
+				chaine = "HOMME-LEZARD\n";
+			}
+			break;
+		case DANCELAME:
+			if(this.joueur == 0) {
+				chaine = "INCUBE\n";
+			}
+			else {
+				chaine = "VAMPYRION\n";
+			}
+			break;
+		case CHASSEUR:
+			if(this.joueur == 0) {
+				chaine = "CHIEN DES ENFERS\n";
+			}
+			else {
+				chaine = "PREDATOR\n";
+			}
+			break;
+		case ECLAIREUR:
+			if(this.joueur == 0) {
+				chaine = "OEIL DU DIABLE\n";
+			}
+			else {
+				chaine ="WORM\n";
+			}
+			break;
+		}
+		return chaine;
+	}
+	
+	private String capacite() {
+		//renvois une chaine contenant le nom de la description des capacites du Personnage this
+		String chaine ="";
+		switch(this.id) {
+		case GARDIEN:
+			chaine = "	Réplique : possède 3 ripostes au lieu d'une seule.\n"
+					+ "	Régénération : au début de chaque tour, se soigne de 1+1D6.";
+			break;
+		case BETE:
+			chaine = "	Course : Augmente de 1 sa vitesse après avoir perdu 50% de ses PV max (cumulable).\n"
+					+ "	Meurtrissure : Ralentie de 1 les ennemis attaqué (jusqu'à une vitesse de 3).";
+			break;
+		case INCENDIAIRE:
+			chaine = "	Perce-armure : Les attaques ignorent la défense ennemie.\n"
+					+ "	Embrasement : les attaques ne peuvent pas générer de riposte ennemie.";
+			break;
+		case DESTRUCTEUR:
+			chaine = "	Perce-armure : Les attaques ignorent la défense ennemie.\n"
+					+ "	Rage : augmente de 1 ses dégâts à chaque attaque subie (cumulable).";
+			break;
+		case ENCHANTEUR:
+			chaine = "	Vigueur : Les attaques soignent un Personnage allié à 2 de distance de 5 PV.\n"
+					+ "	Encouragement : Se reposer confère 5 d'Expérience aux alliés à 2 de distance.";
+			break;
+		case COMBATTANT:
+			chaine = "	Réplique : possède 3 ripostes au lieu d'une seule.\n"
+					+ "	Entrainement : au début de chaque tour, gagne 5 d'Expérience.";
+			break;
+		case ARTILLEUR:
+			chaine = "	Assassin : Inflige 5 dégât supplémentaire aux ennemis avec moins de 50% de leurs PV max.\n"
+					+ "	Précision : gagne de l'Expérience bonus selon la taille des cibles attaquées. Augmente sa portée en gagnant un niveau.";
+			break;
+		case DANCELAME:
+			chaine = "	Drain : se soigne de 25% des dégâts infligés.\n"
+					+ "	Esquive : Lorsqu'il ne riposte pas, il possède 20% de chance d'esquiver l'attaque subie.";
+			break;
+		case CHASSEUR:
+			chaine = "	Course : Augmente de 1 sa vitesse après avoir perdu 50% de ses PV max (cumulable).\n"
+					+ "	Assassin : Inflige 5 dégât supplémentaire aux ennemis avec moins de 50% de leurs PV max..";
+			break;
+		case ECLAIREUR:
+			chaine = "	Maître des chemin : Peut se déplacer sur n'importe quel terrain.\n"
+					+ "	Foudroiement : En attaquant, inflige 3+1D6 dégâts à tout les ennemis supplémlentaires à 6 de distance";
+			break;
+		}
+		return chaine;
+	}
+	
+	/*Affiche les informations à propos de Personnage this*/
+	public String toString() {
+		String chaine = "   ";
+		/*on construit la chaine petit à petit à partir de toutes les informations du Personnage*/
+		//d'abord : on veut afficher le nom, le titre et le camp de la créature :
+		chaine = chaine + this.nomPersonnage();
+		//TEMPORAIRE : position du personnage : 
+		chaine = chaine+"Position = "+this.position.getX()+":"+this.position.getY()+"\n";
+		//maintenant, on génère un tableau contenant les informations caractéristiques sur la créature :
+		chaine = chaine+"__________________________________________________________________________________\n";
+		chaine = chaine+"|   PV   |  ATK  |   DEF   | TAILLE |  I  |  P  |  V  | R |   PM   |  EXP  | Niv |\n";
+		chaine = chaine+"__________________________________________________________________________________\n";
+		chaine = chaine+"|  "+this.getPvActuel()+"/"+this.getPvMax()+" |  "
+						+this.getDegat()+"   |   "
+						+this.getProtection()+"/"+this.getBlindage()+"  |   "
+						+this.getTaille()+"    |  "
+						+this.getId()+"  |  "
+						+this.getPortee()+"  |  "
+						+this.getVision()+"  | "
+						+this.getRiposte()+" |  "
+						+this.getPm()+"/"+this.getVitesse()+"   | "
+						+this.getExp()+"/100 |  "
+						+this.getNiveau()+"  |\n";
+		//on ajoute les informations complémentaires : nemesis et capacités spéciales 
+		chaine = chaine+"Nemesis = "+this.nomNemesis();
+		chaine = chaine+"Capacité :\n";
+		chaine = chaine+this.capacite()+"\n";
+		return chaine;
+	}
 	
 }
