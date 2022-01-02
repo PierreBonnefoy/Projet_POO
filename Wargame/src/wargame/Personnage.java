@@ -124,7 +124,7 @@ public class Personnage implements IConfig{
 			this.taille = 1;
 			this.id = id;
 			this.joueur = joueur;
-			this.portee = 3;
+			this.portee = 4;
 			this.vision = 4;
 			this.vitesse = 4;
 			this.pm = 4;
@@ -356,6 +356,7 @@ public class Personnage implements IConfig{
 	public void rage(){
 		if(this.id == DESTRUCTEUR){
 			this.setDegat(this.degat + 1);
+			System.out.println(this.nomPersonnage()+" active Rage : +1 Dégât.");
 		}
 	}
 	
@@ -367,6 +368,7 @@ public class Personnage implements IConfig{
 			/*on sais ici que this viens de perdre plus de 50% de ses PV max : on active la capacité Course*/
 				this.degat -= 1;
 				this.vitesse += 1;
+				System.out.println(this.nomPersonnage()+" active Course : -1 Dégât et +1 Vitesse.");
 			}
 		}	
 	}
@@ -376,6 +378,7 @@ public class Personnage implements IConfig{
 		if(this.id == BETE){
 			if(D.vitesse > 3){
 				D.setVitesse(D.vitesse-1);
+				System.out.println(this.nomPersonnage()+" meurtrie "+D.nomPersonnage()+" : -1 Vitesse. ("+D.getVitesse());
 			}
 		}
 	}
@@ -384,6 +387,7 @@ public class Personnage implements IConfig{
 	Cette fonction est appelée à la fin de chaque tour de personnage.*/
 	public void entrainement(){
 		if(this.id == COMBATTANT){
+			System.out.println(this.nomPersonnage()+" active Entrainement : + 5 EXP.");
 			this.gainExp(5);
 		}
 	}
@@ -402,6 +406,7 @@ public class Personnage implements IConfig{
 	public int assassin(Personnage D){
 		if(this.id == CHASSEUR || this.id == ARTILLEUR){
 			if(D.pvActuel <= D.pvMax/2){
+				System.out.println(this.nomPersonnage()+" active Assassin : inflige 5 dégât supplémentaire.");
 				return 5;
 			}
 		}
@@ -411,28 +416,32 @@ public class Personnage implements IConfig{
 	/*si le Personnage this est le Gardien, il se soigne.*/
 	public void regeneration(){
 		if(this.id == GARDIEN){
+			System.out.println(this.nomPersonnage()+" active Régénération.");
 			this.soin(2+(int)(Math.random()*6));
 		}
 	}
 	/*Si le personnage this est le Gardien/Combattant, renvoi vrai */ 
 	public boolean replique(){
 		if(this.id == GARDIEN || this.id == COMBATTANT){
+			System.out.println(this.nomPersonnage()+" active Réplique : +2 riposte\n");
 			return true;
 		}
 		return false;
 	}
 	
 	/*si le personnage this est l'artilleur, alors elle gagne de l'experience selon la distance à laquelle elle tire sur sa cible D*/
-	public void precision(Personnage D){
+	public int precision(Personnage D){
 		if(this.id == 7){
 			int bonus = 2*D.taille;
-			this.gainExp(bonus);
+			return bonus;
 		}
+		return 0;
 	}
 	
 	/*si le personnage est le Destructeur ou l'Incendiaire, renvois vrais.*/
 	public boolean perceArmure(){
 		if(this.id == INCENDIAIRE || this.id == DESTRUCTEUR){
+			System.out.println(this.nomPersonnage()+" ignore l'armure de la cible.");
 			return true;
 		}
 		return false;
@@ -441,6 +450,7 @@ public class Personnage implements IConfig{
 	/*Renvoi vrai si le personnage est l'icendiaire*/
 	public boolean embrasement(){
 		if(this.id == INCENDIAIRE){
+			System.out.println(this.nomPersonnage()+" empèche les ripostes.");
 			return true;
 		}
 		return false;
@@ -448,9 +458,12 @@ public class Personnage implements IConfig{
 	
 	/*Renvoi 0 si le personnage parvient a esquiver l'attaque ou degat sinon*/
 	public int esquive(int degat) {
-		int a = 1 + (int)(Math.random()*10);
-		if(a <= 2) {
-			return 0;
+		if(this.id == DANCELAME) {
+			int a = 1 + (int)(Math.random()*10);
+			if(a <= 2) {
+				System.out.println(this.nomPersonnage()+" parvient à esquiver l'attaque.");
+				return 0;
+			}
 		}
 		return degat;
 	}
@@ -460,7 +473,9 @@ public class Personnage implements IConfig{
 		if(this.id == DANCELAME) {
 			int soin = degat/4;
 			if(soin != 0) {
-				this.soin(soin);
+				if(this.pvActuel != this.pvMax) {
+					this.soin(soin);
+				}
 			}
 		}
 	}
@@ -505,49 +520,66 @@ public class Personnage implements IConfig{
 		/*if(!this.peutRiposter(D)) {
 			degat = D.esquive(degat);
 		}*/
-
-		/*les  degats vont etre reduit par l'armure de la cible D, si l'A est un incendiaire (ID = 3) ou un destructeur (ID= 4), alors cette partie est sautée*/
-		if(!this.perceArmure()){
-			if(1+(int)(Math.random()*100) <= D.protection){
-				degat -= D.blindage; 
-				if(degat < 0){
-					degat = 0;
-				}
-			} 
-		}
-		/*l'attaquant inflige donc ses degats à la cible et gagne l'experience correspondante
-	On enregistre les pvactuels du D pour les utiliser dans la D.course()*/
-		int pvactuel =  D.pvActuel;
-		D.setPvActuel(D.pvActuel-degat);
+		degat = D.esquive(degat);
+		
+		if(degat != 0) {
+			/*les  degats vont etre reduit par l'armure de la cible D, si l'A est un incendiaire (ID = 3) ou un destructeur (ID= 4), alors cette partie est sautée*/
+			if(!this.perceArmure()){
+				if(1+(int)(Math.random()*100) <= D.protection){
+					System.out.println(D.nomPersonnage()+" réduit de "+D.blindage+" les dégâts subies.");
+					degat -= D.blindage; 
+					D.gainExp(D.blindage);
+					if(degat < 0){
+						degat = 0;
+					}
+				} 
+			}
+			/*l'attaquant inflige donc ses degats à la cible et gagne l'experience correspondante
+		On enregistre les pvactuels du D pour les utiliser dans la D.course()*/
+			int pvactuel =  D.pvActuel;
+			D.setPvActuel(D.pvActuel-degat);
+			
+			System.out.println(this.nomPersonnage()+"inflige "+degat+" degats à "+D.nomPersonnage()+".");
 	
-		/*on appelle les fonctions de personnage :
-		 * celle qui augmente des degats si le destructeur est attaqué, 
-		 * celle qui augmente la vitesse sur le Chasseur/Bête de guerre, 
-		 * celle qui ralentie la cible si l'attaquant est une bête de guerre, 
-		 * celle qui soigne un allie proche si l'attaquant est un enchanteur
-		 * celle qui soigne le dancelame d'une partie des degats infliges*/
-		D.rage();
-		D.course(pvactuel);
-		this.meurtrissure(D); 
-		this.drain(degat);
-		this.precision(D);
-		/*this.vigueur();*/
-	
-		/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
-		if(D.deces()){
-			degat += 50;
-			if(this.estNemesis(D)){
+			/*on appelle les fonctions de personnage qui s'active seulement si l'attaque blesse :
+			 * celle qui soigne le dancelame d'une partie des degats infliges
+			 * celle qui augmente la vitesse sur le Chasseur/Bête de guerre*/
+			D.course(pvactuel);
+			this.drain(degat);
+		
+			/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
+			if(D.deces()){
 				degat += 50;
+				if(this.estNemesis(D)){
+					degat += 50;
+				}
 			}
 		}
-		this.gainExp(degat);
+		/*on appelle les fonctions de personnage qui s'active même si l'attaque rate ou n'inflige pas de dégât:
+		 * celle qui augmente des degats si le destructeur est attaqué 
+		 * celle qui ralentie la cible si l'attaquant est une bête de guerre, 
+		 * celle qui soigne un allie proche si l'attaquant est un enchanteur*/
+		D.rage();
+		this.meurtrissure(D); 
+		degat += this.precision(D);
+		/*this.vigueur();*/
+		/*porter une attaque rapport toujours un léger bonus d'expérience.*/
+		degat += 5;
+	
+		/*au final, le personnage gagne de l'EXP.*/
+		if(degat != 0) {
+			this.gainExp(degat);
+		}
+		System.out.println("\n");
 	}
 	
 	/*Le personnage passe son tour pour se reposer et se soigner*/
 	public void repos(){
 		this.setAttaque(0);
 		this.setPm(0);
+		System.out.println(this.nomPersonnage()+" se repose :");
 		this.soin(6+(int)(Math.random()*6));
+		System.out.println("\n");
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
 		/*this.encouragement(); */
@@ -555,29 +587,35 @@ public class Personnage implements IConfig{
 	
 	/*Le personnage A se soigne d'un montant egal a valeur*/
 	public void soin(int valeur){
-		this.setPvActuel(this.pvActuel + valeur);
-		if(this.pvActuel > this.pvMax){
-			valeur -= this.pvActuel - this.pvMax;
-			this.setPvActuel(this.pvMax);
+		if(this.pvActuel != this.pvMax) {
+			this.setPvActuel(this.pvActuel + valeur);
+			System.out.println(this.nomPersonnage()+" se soigne de "+valeur+"PV.");
+			if(this.pvActuel > this.pvMax){
+				valeur -= this.pvActuel - this.pvMax;
+				this.setPvActuel(this.pvMax);
+			}
+			this.gainExp(valeur);
 		}
-		this.gainExp(valeur);
 	}
 	
 	/*Le personnage gagne de l'experience, on verifie alors s'il passe un niveau et on applique ses bonus. */
 	public void gainExp(int valeur){
 		this.setExp(this.exp + valeur);
+		System.out.println(this.nomPersonnage()+" gagne "+valeur+" EXP.");
 		this.gainNiveau();	
 	}
 	
 	/*Si le personnage depasse 100 d'exp, il gagne un niveau*/
 	public void gainNiveau(){
 		if(this.exp >= 100){
+			System.out.println(this.nomPersonnage()+" gagne un niveau !\n");
 			this.setNiveau(this.niveau + 1);
 			this.setExp(this.exp -100);
-
+			/*Il peut arriver que le personnage gagne tant d'EXP en une fois qu'il gagne 2 niveaux : on verifie*/
+			this.gainNiveau();
 			this.setDegat(this.degat +1);
 			this.setPvMax(this.pvMax + 5);
-			this.soin(5);
+			this.setPvActuel(this.pvActuel + 5);
 			this.setBlindage(this.blindage +1);
 			/*l'artilleur gagne aussi un bonus de portée*/
 			if(this.id == ARTILLEUR){
@@ -597,7 +635,9 @@ public class Personnage implements IConfig{
 	/*deces test si le personnage a perdu tout ses PV, le tue si c'est le cas, en renvoyant vrai*/
 	public boolean deces() {
 		if(this.pvActuel <= 0) {
+			System.out.println(this.nomPersonnage()+" est mort !");
 			this.setEtat(MORT);
+			this.setPvActuel(0);
 			//IL reste probablement des choses à faire ici...
 			return true;
 		}
@@ -611,82 +651,82 @@ public class Personnage implements IConfig{
 		switch(this.id) {
 		case GARDIEN:
 			if(this.joueur == 0) {
-				chaine = "GOLEM (gardien-donjon)\n";
+				chaine = "GOLEM (gardien-donjon)";
 			}
 			else {
-				chaine = "ABOMINATION (gardien-enfer)\n";
+				chaine = "ABOMINATION (gardien-enfer)";
 			}
 			break;
 		case BETE:
 			if(this.joueur == 0) {
-				chaine = "HYDRE (bête de guerre-donjon)\n";
+				chaine = "HYDRE (bête de guerre-donjon)";
 			}
 			else {
-				chaine = "MUTILATEUR (bête de guerre-enfer)\n";
+				chaine = "MUTILATEUR (bête de guerre-enfer)";
 			}
 			break;
 		case INCENDIAIRE:
 			if(this.joueur == 0) {
-				chaine = "DRAKE (incendiaire-donjon)\n";
+				chaine = "DRAKE (incendiaire-donjon)";
 			}
 			else {
-				chaine = "DEMONISTE (incendiaire-enfer)\n";
+				chaine = "DEMONISTE (incendiaire-enfer)";
 			}
 			break;
 		case DESTRUCTEUR:
 			if(this.joueur == 0) {
-				chaine = "MINOTAURE (destructeur-donjon)\n";
+				chaine = "MINOTAURE (destructeur-donjon)";
 			}
 			else {
-				chaine = "PRINCE DEMON (destructeur-enfer)\n";
+				chaine = "PRINCE DEMON (destructeur-enfer)";
 			}
 			break;
 		case ENCHANTEUR:
 			if(this.joueur == 0) {
-				chaine = "MAGE GRENOUILLE (enchanteur-donjon)\n";
+				chaine = "MAGE GRENOUILLE (enchanteur-donjon)";
 			}
 			else {
-				chaine = "DIABLOTIN (enchanteur-enfer)\n";
+				chaine = "DIABLOTIN (enchanteur-enfer)";
 			}
 			break;
 		case COMBATTANT:
 			if(this.joueur == 0) {
-				chaine = "ARMURE ANIMEE (combattant-donjon)\n";
+				chaine = "ARMURE ANIMEE (combattant-donjon)";
 			}
 			else {
-				chaine = "GUERRIER DU CHAOS (combattant-enfer)\n";
+				chaine = "GUERRIER DU CHAOS (combattant-enfer)";
 			}
 			break;
 		case ARTILLEUR:
 			if(this.joueur == 0) {
-				chaine = "HOMME-LEZARD (artilleur-donjon)\n";
+				chaine = "HOMME-LEZARD (artilleur-donjon)";
 			}
 			else {
-				chaine = "SUCCUBE (artilleur-enfer)\n";
+				chaine = "SUCCUBE (artilleur-enfer)";
 			}
 			break;
 		case DANCELAME:
 			if(this.joueur == 0) {
-				chaine = "VAMPYRION (dancelame-donjon)\n";
+				chaine = "VAMPYRION (dancelame-donjon)";
 			}
 			else {
-				chaine = "INCUBE (dancelame-enfer)\n";
+				chaine = "INCUBE (dancelame-enfer)";
 			}
 			break;
 		case CHASSEUR:
 			if(this.joueur == 0) {
-				chaine = "PREDATOR (chasseur-donjon)\n";
+				chaine = "PREDATOR (chasseur-donjon)";
 			}
 			else {
-				chaine = "CHIEN DES ENFERS (chasseur-enfer)\n";
+				chaine = "CHIEN DES ENFERS (chasseur-enfer)";
 			}
 			break;
 		case ECLAIREUR:
 			if(this.joueur == 0) {
-				chaine = "WORM (eclaireur-donjon)\n";
+				chaine = "WORM (eclaireur-donjon)";
 			}
 			else {
-				chaine ="OEIL DU DIABLE (eclaireur-enfer)\n";
+				chaine ="OEIL DU DIABLE (eclaireur-enfer)";
 			}
 			break;
 		}
@@ -836,7 +876,7 @@ public class Personnage implements IConfig{
 		//d'abord : on veut afficher le nom, le titre et le camp de la créature :
 		chaine = chaine + this.nomPersonnage();
 		//TEMPORAIRE : position du personnage : 
-		chaine = chaine+"Position = "+this.position.getX()+":"+this.position.getY()+"\n";
+		chaine = chaine+"\nPosition = "+this.position.getX()+":"+this.position.getY()+"\n";
 		//maintenant, on génère un tableau contenant les informations caractéristiques sur la créature :
 		chaine = chaine+"__________________________________________________________________________________\n";
 		chaine = chaine+"|   PV   |  ATK  |   DEF   | TAILLE |  I  |  P  |  V  | R |   PM   |  EXP  | Niv |\n";

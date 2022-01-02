@@ -50,8 +50,21 @@ public class Element implements IConfig{
 		}
 	}
 	
-	public void enleverPersonnage() {
-		/*---Probleme , comment savoir lequel des personnages est le bon, sinon juste a faire un decalage sur la gauche des perso---*/
+	public Personnage getPersonnage(int i) {
+		/*renvoi le personnage à l'indice i s'il existe dans l'element, ou null sinon*/
+		if(this.personnage[i]!=null) {
+			return this.personnage[i];
+		}
+		return null;
+	}
+	
+	public void enleverPersonnage(int id, int joueur) {
+		/*---On enlève le personnage possédant la bonne id et le bon joueur---*/
+		int i;
+		for(i = 0;this.personnage[i].getId()!=id && this.personnage[i].getJoueur()!=joueur;i++) {
+		}
+		this.occupe-=this.personnage[i].getTaille();
+		this.personnage[i]=null;
 	}
 	
 	public int getOccupe() {

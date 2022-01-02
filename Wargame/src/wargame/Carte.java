@@ -1,7 +1,10 @@
 package wargame;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
-public class Carte implements ICarte{
+public class Carte implements ICarte,IConfig{
 	private Element[][] carte;
 	private int taille;
 	
@@ -134,7 +137,16 @@ public class Carte implements ICarte{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		carte[10][10].rajoutPersonnage(new Personnage(2,2,10,10));
+		//carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
+		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
+		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
+		carte[6][9].rajoutPersonnage(new Personnage(5,1,7,7));
+		carte[6][10].rajoutPersonnage(new Personnage(6,1,7,6));
+		carte[6][11].rajoutPersonnage(new Personnage(7,1,6,7));
+		carte[6][12].rajoutPersonnage(new Personnage(8,1,7,5));
+		carte[6][13].rajoutPersonnage(new Personnage(9,1,5,7));
+		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
 	}
 
 	public void drawHexagon(int posx,int posy,Graphics g) {
@@ -211,7 +223,16 @@ public class Carte implements ICarte{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		carte[10][10].rajoutPersonnage(new Personnage(2,2,10,10));
+		//carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
+		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
+		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
+		carte[6][9].rajoutPersonnage(new Personnage(5,1,7,7));
+		carte[6][10].rajoutPersonnage(new Personnage(6,1,7,6));
+		carte[6][11].rajoutPersonnage(new Personnage(7,1,6,7));
+		carte[6][12].rajoutPersonnage(new Personnage(8,1,7,5));
+		carte[6][13].rajoutPersonnage(new Personnage(9,1,5,7));
+		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
 	}
 	
 	public Element getElement(Position pos) {
@@ -319,7 +340,7 @@ public class Carte implements ICarte{
 	public void mort(Personnage perso) {
 		
 	}*/
-	
+	/*
 	public void toutDessiner(Graphics g,int size) {
 		int debut;
 		for(int i=0;i<size;i++) {
@@ -353,6 +374,277 @@ public class Carte implements ICarte{
 					}
 				}
 				drawHexagon(debut+(i*26),j*18,g);
+			}
+		}
+	}*/
+	
+	public void affichePerso(Graphics g, int debut, int i, int j, Personnage perso) {
+		/*affiche le personnage à l'aide des infos passés en paramètre*/
+		/*on veut savoir son id et son joueur pour connaître l'image à afficher*/
+		File file;
+		BufferedImage img;
+		switch(perso.getId()) {
+		case GARDIEN:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_guerrierChaos.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_guerrierChaos.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case BETE:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_mutilateur.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_mutilateur.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case INCENDIAIRE:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_demoniste.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_demoniste.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case DESTRUCTEUR:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_princeDemon.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_princeDemon.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case ENCHANTEUR:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_diablotin.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_diablotin.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case COMBATTANT:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_guerrierChaos.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_guerrierChaos.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case ARTILLEUR:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_succube.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_succube.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case DANCELAME:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_incube.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_incube.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case CHASSEUR:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_chienEnfer.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_chienEnfer.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case ECLAIREUR:
+			if(perso.getJoueur() == 0) {
+				try {
+					file = new File("./image/m_oeilDiable.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				try {
+					file = new File("./image/m_oeilDiable.png");
+					img = ImageIO.read(file);
+					g.drawImage(img, debut+(i*28), j*24, null);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		}
+	}
+	
+	public void toutDessiner(Graphics g,int size) {
+		int debut;
+		for(int i=0;i<size;i++) {
+			for(int j=0;j<size;j++) {
+				if(Math.floorMod(j,2)==0) {
+					debut =0;
+				}
+				else {
+					debut =14;
+				}
+				switch(carte[i][j].getNature()) {
+				case Bord:
+					g.setColor(java.awt.Color.white);
+					break;
+				case Riviere:
+					try {
+						File file = new File("./image/m_eau_1.png");
+						BufferedImage img = ImageIO.read(file);
+						g.drawImage(img, debut+(i*28), j*24, null);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				case Montagne:
+					try {
+						File file = new File("./image/m_montagne_1.png");
+						BufferedImage img = ImageIO.read(file);
+						g.drawImage(img, debut+(i*28), j*24, null);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				case Foret:
+					try {
+						File file = new File("./image/m_foret_1.png");
+						BufferedImage img = ImageIO.read(file);
+						g.drawImage(img, debut+(i*28), j*24, null);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				case Plaine:
+					try {
+						File file = new File("./image/m_plaine_1.png");
+						BufferedImage img = ImageIO.read(file);
+						g.drawImage(img, debut+(i*28), j*24, null);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				}
+				/*on affiche ensuite les personnages*/
+				if(carte[i][j].getOccupe()>0) {
+					/*on affiche tout les personnages présent sur cette case*/
+					for(int y=0;carte[i][j].getPersonnage(y)!=null;y++) {
+						affichePerso(g,debut,i,j,carte[i][j].getPersonnage(y));
+					}
+				}
 			}
 		}
 	}
