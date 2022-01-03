@@ -70,6 +70,8 @@ public class PanneauJeu extends JPanel{
 				pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
 				System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
 				System.out.println("case = ["+pos2.getX()/26+","+(pos2.getY()/18)+"]");
+				jeu.getElement(new Position(pos2.getX()/26,pos2.getY()/18)).rajoutPersonnage(new Personnage(2,2,10,10));
+				repaint();
 			}
 		});
 		return pos;
