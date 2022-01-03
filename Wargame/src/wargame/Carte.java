@@ -339,6 +339,120 @@ public class Carte implements ICarte,IConfig{
 		
 	}
 	
+	public Position[] PositionPossible(Position pos) {
+		Position[] tmp=new Position[6];
+		if(pos.getY()>0 && pos.getY()>0)
+		{
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()-1][pos.getY()-1].getOccupe()==0) {
+					tmp[0].setX(pos.getX()-1);
+					tmp[0].setY(pos.getY()-1);
+				}
+				else {
+					tmp[0]=null;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+					tmp[0].setX(pos.getX());
+					tmp[0].setY(pos.getY()-1);
+				}
+				else {
+					tmp[0]=null;
+				}
+			}
+		} 
+		/*-- Case haut droite --*/
+		if(pos.getX()<this.taille-1 && pos.getY()>0) {
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+					tmp[1].setX(pos.getX());
+					tmp[1].setY(pos.getY()-1);
+				}
+				else {
+					tmp[1]=null;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0) {
+					tmp[1].setX(pos.getX()+1);
+					tmp[1].setY(pos.getY()-1);
+				}
+				else {
+					tmp[1]=null;
+				}
+				
+			}
+		}
+		/*-- Case gauche --*/
+		if(pos.getX()>0)
+		{
+			if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0) {
+				tmp[2].setX(pos.getX()-1);
+				tmp[2].setY(pos.getY());
+			}
+			else {
+				tmp[2]=null;
+			}
+		}
+		/*-- Case droite --*/
+		if(pos.getX()<this.taille-1)
+		{
+			if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0) {
+				tmp[3].setX(pos.getX()+1);
+				tmp[3].setY(pos.getY());
+			}
+			else {
+				tmp[3]=null;
+			}
+		}	
+		/*-- Case bas gauche --*/
+		if(pos.getY()<this.taille-1 && pos.getX()>0)
+		{
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()-1][pos.getY()+1].getOccupe()==0) {
+					tmp[4].setX(pos.getX()-1);
+					tmp[4].setY(pos.getY()+1);
+				}
+				else {
+					tmp[4]=null;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+					tmp[4].setX(pos.getX());
+					tmp[4].setY(pos.getY()+1);
+				}
+				else {
+					tmp[4]=null;
+				}
+			}
+		}
+		/*-- Case bas droite --*/
+		if(pos.getY()<this.taille-1 && pos.getX()<this.taille-1) {
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+					tmp[5].setX(pos.getX());
+					tmp[5].setY(pos.getY()+1);
+				}
+				else {
+					tmp[5]=null;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0) {
+					tmp[5].setX(pos.getX()+1);
+					tmp[5].setY(pos.getY()+1);
+				}
+				else {
+					tmp[5]=null;
+				}
+			}
+		}
+		return tmp;
+		
+	}
+	
 	/*
 	public Heros trouveHeros() {
 		// Trouve al�atoirement un h�ros sur la carte
