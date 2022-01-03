@@ -251,32 +251,78 @@ public class Carte implements ICarte,IConfig{
 	}
 	
 	public Position trouvePositionVide(Position pos) {
-		/*-- V�rification qu'il y ait au moins une place libre --*/
+		/*-- Vérification qu'il y ait au moins une place libre --*/
 		boolean test=false;
-		/*-- haut gauche --*/
-		if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
-			test=true;
+		
+		/*-- Case haut gauche --*/
+		if(pos.getY()>0 && pos.getY()>0)
+		{
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()-1][pos.getY()-1].getOccupe()==0) {
+					test=true;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+					test=true;
+				}
+			}
+		} 
+		/*-- Case haut droite --*/
+		if(pos.getX()<this.taille-1 && pos.getY()>0) {
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+					test=true;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0) {
+					test=true;
+				}
+			}
 		}
-		/*-- haut droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0) {
-			test=true;
+		/*-- Case gauche --*/
+		if(pos.getX()>0)
+		{
+			if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0) {
+				test=true;
+			}
 		}
-		/*-- gauche --*/
-		else if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0) {
-			test=true;
+		/*-- Case droite --*/
+		if(pos.getX()<this.taille-1)
+		{
+			if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0) {
+				test=true;
+			}
+		}	
+		/*-- Case bas gauche --*/
+		if(pos.getY()<this.taille-1 && pos.getX()>0)
+		{
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()-1][pos.getY()+1].getOccupe()==0) {
+					test=true;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+					test=true;
+				}
+			}
 		}
-		/*-- droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0) {
-			test=true;
+		/*-- Case bas droite --*/
+		if(pos.getY()<this.taille-1 && pos.getX()<this.taille-1) {
+			if(Math.floorMod(pos.getY(), 2)==0) {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+					test=true;
+				}
+			}
+			else {
+				if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0) {
+					test=true;
+				}
+			}
 		}
-		/*-- bas gauche --*/
-		else if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
-			test=true;
-		}
-		/*-- haut droite --*/
-		else if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0) {
-			test=true;
-		}
+		/*-------------------------------------------*/
 		
 		if(!test) {
 			/*-- retour si aucune case n'est libre --*/
@@ -284,41 +330,27 @@ public class Carte implements ICarte,IConfig{
 		}
 		
 		/*-- Tirage d'une des 6 position possible --*/
-		int alea,tmpX=0,tmpY=0;
+		Position tmp;
 		do{
-			alea=(int)(Math.random()*5);
-			switch(alea) {
-				case 0 : 
-					/*-- Case haut gauche --*/
-					tmpX=(pos.getX()); 
-					tmpY=(pos.getY()+1);
-					break;
-				case 1 : 
-					/*-- Case haut droite --*/
-					tmpX=(pos.getX()+1); 
-					tmpY=(pos.getY()+1);
-				case 2 : 
-					/*-- Case gauche --*/
-					tmpX=(pos.getX()-1); 
-					tmpY=(pos.getY());
-				case 3 : 
-					/*-- Case droite --*/
-					tmpX=(pos.getX()+1); 
-					tmpY=(pos.getY());
-				case 4 : 
-					/*-- Case bas gauche --*/
-					tmpX=(pos.getX()); 
-					tmpY=(pos.getY()-1);
-				case 5 : 
-					/*-- Case bas gauche --*/
-					tmpX=(pos.getX()+1); 
-					tmpY=(pos.getY()-1);
-				default :
-					System.out.println("Erreur dans la recherche de case !");
-			}
-		}while((this.carte[tmpX][tmpY].getOccupe())!=0);
-		return(new Position(tmpX,tmpY));
+			tmp=this.voisineAlea(pos.getX(), pos.getY(), this.taille);
+			
+		}while((this.carte[tmp.getX()][tmp.getY()].getOccupe())!=0);
+		return(tmp);
 		
+	}
+
+	public Personnage trouvePerso() {
+		int i,j;
+		for(i=0;i<this.taille;i++) {
+			for(j=0;j<this.taille;j++) {
+				if(this.carte[i][j].getPersonnage(0)!=null) {
+					if(this.carte[i][j].getPersonnage(0).getPm()!=0) {
+						return(this.carte[i][j].getPersonnage(0));
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	/*
