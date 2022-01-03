@@ -338,20 +338,6 @@ public class Carte implements ICarte,IConfig{
 		return(tmp);
 		
 	}
-
-	public Personnage trouvePerso() {
-		int i,j;
-		for(i=0;i<this.taille;i++) {
-			for(j=0;j<this.taille;j++) {
-				if(this.carte[i][j].getPersonnage(0)!=null) {
-					if(this.carte[i][j].getPersonnage(0).getPm()!=0) {
-						return(this.carte[i][j].getPersonnage(0));
-					}
-				}
-			}
-		}
-		return null;
-	}
 	
 	/*
 	public Heros trouveHeros() {
