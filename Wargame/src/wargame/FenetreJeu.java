@@ -11,9 +11,11 @@ public class FenetreJeu {
 				PanneauMenu menu = new PanneauMenu();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setResizable(false);
-				frame.setPreferredSize(new Dimension(PanneauJeu.taille_fenetre,PanneauJeu.taille_fenetre));
+				frame.setPreferredSize(new Dimension(1400,PanneauJeu.taille_fenetre));
 				JSplitPane contenu = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-				contenu.setDividerLocation(600);
+				JSplitPane contenu2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+				contenu.setDividerLocation(1000);
+				contenu2.setDividerLocation(400);
 				contenu.add(jeu);
 				contenu.add(menu);
 				frame.getContentPane().add(contenu);

@@ -27,25 +27,25 @@ public class PanneauJeu extends JPanel{
 			dec1=0;
 			dec2=1;
 		}
-		tmp=posMouse.distance(new Position((dec1*12)+x1,y1));
+		tmp=posMouse.distance(new Position((dec1*14)+x1,y1));
 		if(min>tmp) {
 			min=tmp;
-			pos=(new Position((dec1*12)+x1,y1));
+			pos=(new Position((dec1*14)+x1,y1));
 		}
-		tmp=posMouse.distance(new Position((dec1*12)+x2,y1));
+		tmp=posMouse.distance(new Position((dec1*14)+x2,y1));
 		if(min>tmp) {
 			min=tmp;
-			pos=(new Position((dec1*12)+x2,y1));
+			pos=(new Position((dec1*14)+x2,y1));
 		}
-		tmp=posMouse.distance(new Position((dec2*12)+x1,y2));
+		tmp=posMouse.distance(new Position((dec2*14)+x1,y2));
 		if(min>tmp) {
 			min=tmp;
-			pos=(new Position((dec2*12)+x1,y2));
+			pos=(new Position((dec2*14)+x1,y2));
 		}
-		tmp=posMouse.distance(new Position((dec2*12)+x2,y2));
+		tmp=posMouse.distance(new Position((dec2*14)+x2,y2));
 		if(min>tmp) {
 			min=tmp;
-			pos=(new Position((dec2*12)+x2,y2));
+			pos=(new Position((dec2*14)+x2,y2));
 		}
 		return pos;
 	}
@@ -58,19 +58,19 @@ public class PanneauJeu extends JPanel{
 				int y1,y2,x1,x2,pair;
 				
 				/*---Recupere les y qui entoure---*/
-				y1=12+18*((e.getY()-12)/18);
-				y2=12+18*(1+(e.getY()-12)/18);
+				y1=14+24*((e.getY()-14)/24);
+				y2=14+24*(1+(e.getY()-14)/24);
 				
-				/*---Verifie si c'est la premiere ou la 2eme lignes qui est decalé---*/
-				pair=Math.floorMod(y1/18,2);
+				/*---Verifie si c'est la premiere ou la 2eme lignes qui est decalï¿½---*/
+				pair=Math.floorMod(y1/24,2);
 				/*---Recupere les x qui l'entoure---*/
-				x1=26*((e.getX())/26);
-				x2=26*(1+(e.getX())/26);
+				x1=28*((e.getX())/28);
+				x2=28*(1+(e.getX())/28);
 				/*---Verifie parmi les 4 voisins, lequel est le plus proche---*/
 				pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
 				System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
-				System.out.println("case = ["+pos2.getX()/26+","+(pos2.getY()/18)+"]");
-				jeu.getElement(new Position(pos2.getX()/26,pos2.getY()/18)).rajoutPersonnage(new Personnage(2,2,10,10));
+				System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
+				jeu.getElement(new Position(pos2.getX()/28,pos2.getY()/24)).rajoutPersonnage(new Personnage(2,2,10,10));
 				repaint();
 			}
 		});

@@ -724,10 +724,10 @@ public class Carte implements ICarte,IConfig{
 		for(int i=0;i<size;i++) {
 			for(int j=0;j<size;j++) {
 				if(Math.floorMod(j,2)==0) {
-					debut =0;
+					debut =-14;
 				}
 				else {
-					debut =14;
+					debut =0;
 				}
 				switch(carte[i][j].getNature()) {
 				case Bord:
