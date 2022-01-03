@@ -18,6 +18,10 @@ public interface IConfig {
 	/*Personnage.joueur (et plus généralement le joueur dont c'est le tour*/
 	public int JOUEUR = 0;
 	public int IA = 1;
+
+	/*-- config générales --*/
+	public int NBJOUEUR=2;
+	public int NBPERSONNAGE=10; 
 	
 		/*--- config pour les elements ---*/
 	

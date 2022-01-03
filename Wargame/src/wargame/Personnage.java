@@ -495,7 +495,7 @@ public class Personnage implements IConfig{
 	/*indique si le personnage D peut riposter contre le personnage this en fonction de son nombre de riposte restant et de sa portée d'attaque. 
 	Rappel : le personne ne peut pas riposter si l'attaquant est un incendiaire*/
 	/*public boolean peutRiposter(Personnage D){
-		if((D.distance(this) > D.portee) || (D.riposte == 0) || this.embrasement()){
+		if((D.position.distance(this.position) > D.portee) || (D.riposte == 0) || this.embrasement()){
 			return false;
 		}
 		return true;
@@ -504,10 +504,11 @@ public class Personnage implements IConfig{
 	/*le personnage this riposte s'il le peut : inflige une contre-attaque au personnage A*/
 	/*public void Riposte(Personnage A){
 		if(this.peutRiposter(A)) {
-			this.setRiposte(this.getRiposte()-1);
+			this.setRiposte(this.riposte-1);
 			this.attaque(A);
 		}
 	}*/
+	
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public void attaque(Personnage D){
 		/*mise en place des deg*/
@@ -573,7 +574,7 @@ public class Personnage implements IConfig{
 		System.out.println("\n");
 	}
 	
-	/*Le personnage passe son tour pour se reposer et se soigner*/
+	/*Le personnage passe son tour, mais n'ayant pas encore joué, il se repose pour se soigner*/
 	public void repos(){
 		this.setAttaque(0);
 		this.setPm(0);
@@ -583,6 +584,14 @@ public class Personnage implements IConfig{
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
 		/*this.encouragement(); */
+	}
+	
+	/*Le personnage passe son tour, mais ayant joué, il termine juste son tour.*/
+	public void passeTour() {
+		this.setAttaque(0);
+		this.setPm(0);
+		System.out.println(this.nomPersonnage()+" termine son tour.");
+		System.out.println("\n");
 	}
 	
 	/*Le personnage A se soigne d'un montant egal a valeur*/

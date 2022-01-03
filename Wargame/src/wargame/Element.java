@@ -14,7 +14,7 @@ public class Element implements IConfig{
 		this.occupe = 0;
 		this.nature = n;
 		this.personnage = new Personnage[3];
-		this.etat = new int[2];
+		this.etat = new int[NBJOUEUR];
 		for(int i = 0 ; i < 2 ; i++) {
 			this.etat[i] = NON_DECOUVERT;
 		}
