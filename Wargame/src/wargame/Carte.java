@@ -182,7 +182,7 @@ public class Carte implements ICarte,IConfig{
 		}
 		
 		/*Nombre de riviere*/
-		for(int k=0;k<nbRiviere;k++) {
+		/*for(int k=0;k<nbRiviere;k++) {
 			int positionx =(int)(Math.random() * (n - 1)) + 1;;
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
@@ -192,7 +192,7 @@ public class Carte implements ICarte,IConfig{
 				positionx=tempo.getX();
 				positiony=tempo.getY();
 			}
-		}
+		}*/
 		
 		
 		/*Creation des montagnes*/
@@ -223,7 +223,7 @@ public class Carte implements ICarte,IConfig{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		//carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+		carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
 		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
 		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
@@ -237,6 +237,7 @@ public class Carte implements ICarte,IConfig{
 	
 	public Element getElement(Position pos) {
 		/*-- Rtourne l'element � la position --*/
+		System.out.println(distance (new Position(1,1),pos));
 		return this.carte[pos.getX()][pos.getY()];
 	}
 	
@@ -721,21 +722,29 @@ public class Carte implements ICarte,IConfig{
 	
 	public int distance(Position p1,Position p2) {
 		if(p1.getX()==p2.getX()) {
+			/*Retourne la difference de y si les x sont egaux*/
 			return Math.abs(p1.getY()-p2.getY());
 		}
 		else if(p1.getY()==p2.getY()) {
+			/*Retourne la difference de x si les y sont egaux*/
 			return Math.abs(p1.getX()-p2.getX());
 		}
 		else {
+			/*dy est egale a la difference de y*/
 			double dy=Math.abs(p1.getY()-p2.getY());
 			if(Math.floorMod(p1.getY(),2)==0) {
+				/*Si le y de p1 est pair*/
 				if(p2.getX()>p1.getX()) {
-					int decalage = (int)(Math.ceil(dy/2));
+					/*Si le x de p2 est > a p1*/
+					/*decalage possible == entier superieur de la (hauteur-1)/2*/
+					int decalage = (int)(Math.ceil((dy-1)/2));
 					if(p2.getX()-p1.getX()<=decalage) {
+						/*si la difference de x est inferieur au decalage on retourne la difference de y*/
 						return (int)dy;
 					}
 					else {
-						return p2.getX()-p1.getX()-decalage;
+						/*sinon on retourne la hauteur + la difference de x moins le decalage*/
+						return (int)dy + p2.getX()-p1.getX()-decalage;
 					}
 				}
 				else {
@@ -744,27 +753,29 @@ public class Carte implements ICarte,IConfig{
 						return (int)dy;
 					}
 					else {
-						return p1.getX()-p2.getX()-decalage;
+						return (int)dy + p1.getX()-p2.getX()-decalage;
 					}
 				}
 			}
 			else {
+				/*Si le y de p1 est impair*/
 				if(p2.getX()>p1.getX()) {
+					/*si le x de p2 */
 					int decalage = (int)(Math.ceil(dy/2));
 					if(p2.getX()-p1.getX()<=decalage) {
 						return (int)dy;
 					}
 					else {
-						return p2.getX()-p1.getX()-decalage;
+						return (int)dy + p2.getX()-p1.getX()-decalage;
 					}
 				}
 				else {
-					int decalage = (int)(Math.ceil(dy/2))-1;
+					int decalage = (int)(Math.ceil((dy-1)/2));
 					if(p1.getX()-p2.getX()<=decalage) {
 						return (int)dy;
 					}
 					else {
-						return p1.getX()-p2.getX()-decalage;
+						return (int)dy +p1.getX()-p2.getX()-decalage;
 					}
 				}
 			}
