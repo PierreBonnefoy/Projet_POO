@@ -512,7 +512,7 @@ public class Personnage implements IConfig{
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public void attaque(Personnage D /*, int distance*/){
 		/*mise en place des deg*/
-		int degat = this.degat + 1 + (int)(Math.random()*6) + this.assassin(D); /* -distance;*/
+		int degat = this.degat + 1 + (int)(Math.random()*4) + this.assassin(D); /* -distance;*/
 	
 		if(this.estNemesis(D)){
 			/*Le défenseur est le némésis de l'attaquant : bonus de dégât*/
