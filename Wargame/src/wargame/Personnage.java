@@ -479,8 +479,34 @@ public class Personnage implements IConfig{
 			}
 		}
 	}
+	/*verifie si le personnage est l'enchanteur, et renvois 5*/
+	public int alchimie() {
+		if(this.id == ENCHANTEUR) {
+			return 5;
+		}
+		return 0;
+	}
 	
-		/*-- toutes les autres méthodes --*/
+	/*si this est l'enchanteur, le personnage this soigne le personnage cible et récupère de l'expérience*/
+	public void encouragement(Personnage cible) {
+		if(this.id == ENCHANTEUR) {
+			System.out.println(this.nomPersonnage()+" encourage "+cible.nomPersonnage());
+			int soin = this.degat + 1 + (int)(Math.random()*4); /* -distance;*/
+			cible.soin(soin);
+			this.gainExp(soin/2);
+		}
+		System.out.println("\n");
+	}
+	/*renvoi vrai si l'éclaireur n'a pas encore riposter à ce tour*/
+	public boolean foudroiement() {
+		if(this.id == ECLAIREUR) {
+			if(this.riposte != 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+		/*---- toutes les autres méthodes ----*/
 	
 	/*Si le personnage this est le Gardien/Combattant, il regagne 3 de riposte, sinon, il en regagne seulement 1. */
 	public void recupRiposte(){
@@ -510,10 +536,11 @@ public class Personnage implements IConfig{
 	}*/
 	
 	/*Le personnage this porte une attaque sur le personnage D*/
-	public void attaque(Personnage D /*, int distance*/){
+	public boolean attaque(Personnage D /*, int distance*/){
 		/*mise en place des deg*/
 		int degat = this.degat + 1 + (int)(Math.random()*4) + this.assassin(D); /* -distance;*/
-	
+		boolean resultat = false;
+		
 		if(this.estNemesis(D)){
 			/*Le défenseur est le némésis de l'attaquant : bonus de dégât*/
 			degat += 5;
@@ -544,13 +571,10 @@ public class Personnage implements IConfig{
 			 * celle qui augmente la vitesse sur le Chasseur/Bête de guerre*/
 			D.course(pvactuel);
 			this.drain(degat);
-		
 			/*S'il l'attaquant tue la cible, il recupere un bonus d'exp (augmenté si la cible est le nemesis*/
 			if(D.deces()){
 				degat += 50;
-				if(this.estNemesis(D)){
-					degat += 50;
-				}
+				resultat = true;
 			}
 		}
 		/*on appelle les fonctions de personnage qui s'active même si l'attaque rate ou n'inflige pas de dégât:
@@ -561,14 +585,17 @@ public class Personnage implements IConfig{
 		this.meurtrissure(D); 
 		degat += this.precision(D);
 		/*this.vigueur();*/
-		/*porter une attaque rapport toujours un léger bonus d'expérience.*/
+		/*porter une attaque rapport toujours un léger bonus d'expérience. augmenté si la cible est le nemesis*/
 		degat += 5;
-	
+		if(this.estNemesis(D)){
+			degat += 10;
+		}
 		/*au final, le personnage gagne de l'EXP.*/
 		if(degat != 0) {
 			this.gainExp(degat);
 		}
 		System.out.println("\n");
+		return resultat;
 	}
 	
 	/*Le personnage passe son tour, mais n'ayant pas encore joué, il se repose pour se soigner*/
@@ -576,7 +603,7 @@ public class Personnage implements IConfig{
 		this.setAttaque(0);
 		this.setPm(0);
 		System.out.println(this.nomPersonnage()+" se repose :");
-		this.soin(6+(int)(Math.random()*6));
+		this.soin(6+(int)(Math.random()*6)+this.alchimie());
 		System.out.println("\n");
 
 		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
@@ -606,7 +633,7 @@ public class Personnage implements IConfig{
 	
 	/*Le personnage gagne de l'experience, on verifie alors s'il passe un niveau et on applique ses bonus. */
 	public void gainExp(int valeur){
-		this.setExp(this.exp + valeur);
+		this.setExp(this.exp + valeur+this.alchimie());
 		System.out.println(this.nomPersonnage()+" gagne "+valeur+" EXP.");
 		this.gainNiveau();	
 	}

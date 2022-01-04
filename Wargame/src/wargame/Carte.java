@@ -5,7 +5,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class Carte implements ICarte,IConfig{
-	private Element[][] carte;
+	public Element[][] carte;
 	private int taille;
 	
 	public Position voisineAlea(int positionx,int positiony,int n) {
@@ -137,7 +137,7 @@ public class Carte implements ICarte,IConfig{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		//carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+		carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
 		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
 		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
@@ -520,7 +520,7 @@ public class Carte implements ICarte,IConfig{
 		case GARDIEN:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_guerrierChaos.png");
+					file = new File("./image/m_abomination.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -529,7 +529,7 @@ public class Carte implements ICarte,IConfig{
 			}
 			else {
 				try {
-					file = new File("./image/m_guerrierChaos.png");
+					file = new File("./image/m_abomination.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -846,7 +846,7 @@ public class Carte implements ICarte,IConfig{
 
 	public boolean Appartient(Position[] test, Position pos){
 	    for(int i=0;i<6;i++){
-	        /*--- Vérif que la position pos appartient à test ---*/
+	        /*--- Vï¿½rif que la position pos appartient ï¿½ test ---*/
 	        if(test[i].getX()==pos.getX() && test[i].getY()==pos.getY()){
 	            return true;
 	        }
@@ -854,13 +854,13 @@ public class Carte implements ICarte,IConfig{
 	    return false;
 	}
 
-	public void Depacement(Position posD, Position posA){
+	public void Deplacement(Position posD, Position posA){
 	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null){
-	        /*--- Récup des position possible à partir de la position de Départ ---*/
+	        /*--- Rï¿½cup des position possible ï¿½ partir de la position de Dï¿½part ---*/
 	        Position[] test = this.PositionPossible(posD);
-	        /*--- Vérif que la position d'Arrivée appartient bien aux positions possible à partir de posD ---*/
+	        /*--- Vï¿½rif que la position d'Arrivï¿½e appartient bien aux positions possible ï¿½ partir de posD ---*/
 	        if(this.Appartient(test,posA)){
-	            /*--- Déplacement du personnage ---*/
+	            /*--- Dï¿½placement du personnage ---*/
 	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
 	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
 	        }

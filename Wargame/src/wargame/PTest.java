@@ -21,6 +21,7 @@ public class PTest implements IConfig{
 			chien.attaque(succube);
 			if(succube.getPvActuel() != 0){
 				succube.attaque(chien);
+				diablotin.encouragement(succube);
 			}
 		}
 		
