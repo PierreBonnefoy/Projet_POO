@@ -3,25 +3,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class FenetreJeu {
+public class FenetreJeu implements IConfig{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 				JFrame frame = new JFrame("Base de jeu");
-				PanneauJeu jeu= new PanneauJeu();
-				PanneauMenu menu = new PanneauMenu();
-				PanneauInfo info = new PanneauInfo();
+				MenuGeneral StartScreen = new MenuGeneral();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setResizable(false);
-				frame.setPreferredSize(new Dimension(1400,PanneauJeu.taille_fenetre));
-				JSplitPane contenu = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-				JSplitPane contenu2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-				contenu2.add(info);
-				contenu2.add(menu);
-				contenu.setDividerLocation(1000);
-				contenu2.setDividerLocation(400);
-				contenu.add(jeu);
-				contenu.add(contenu2);
-				frame.getContentPane().add(contenu);
+				frame.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
+				frame.setContentPane(StartScreen);
 				frame.pack();
 				frame.setVisible(true);
 	  }
