@@ -7,7 +7,7 @@ public class PanneauMenu extends JPanel{
 		GridLayout grille = new GridLayout(0,2);
 		this.setLayout(grille);	
 		this.setPreferredSize(new Dimension(500,100));
-		this.setBackground(java.awt.Color.blue);
+		this.setBackground(java.awt.Color.black);
 		JButton bouton1 = new JButton("Bouton 1");
 		JButton bouton2 = new JButton("Bouton 2");
 		JButton bouton3 = new JButton("Bouton 3");

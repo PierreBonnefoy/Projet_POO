@@ -719,6 +719,58 @@ public class Carte implements ICarte,IConfig{
 		}
 	}
 	
+	public int distance(Position p1,Position p2) {
+		if(p1.getX()==p2.getX()) {
+			return Math.abs(p1.getY()-p2.getY());
+		}
+		else if(p1.getY()==p2.getY()) {
+			return Math.abs(p1.getX()-p2.getX());
+		}
+		else {
+			double dy=Math.abs(p1.getY()-p2.getY());
+			if(Math.floorMod(p1.getY(),2)==0) {
+				if(p2.getX()>p1.getX()) {
+					int decalage = (int)(Math.ceil(dy/2));
+					if(p2.getX()-p1.getX()<=decalage) {
+						return (int)dy;
+					}
+					else {
+						return p2.getX()-p1.getX()-decalage;
+					}
+				}
+				else {
+					int decalage = (int)(Math.ceil(dy/2));
+					if(p1.getX()-p2.getX()<=decalage) {
+						return (int)dy;
+					}
+					else {
+						return p1.getX()-p2.getX()-decalage;
+					}
+				}
+			}
+			else {
+				if(p2.getX()>p1.getX()) {
+					int decalage = (int)(Math.ceil(dy/2));
+					if(p2.getX()-p1.getX()<=decalage) {
+						return (int)dy;
+					}
+					else {
+						return p2.getX()-p1.getX()-decalage;
+					}
+				}
+				else {
+					int decalage = (int)(Math.ceil(dy/2))-1;
+					if(p1.getX()-p2.getX()<=decalage) {
+						return (int)dy;
+					}
+					else {
+						return p1.getX()-p2.getX()-decalage;
+					}
+				}
+			}
+		}
+	}
+	
 	public void toutDessiner(Graphics g,int size) {
 		int debut;
 		for(int i=0;i<size;i++) {
@@ -780,4 +832,28 @@ public class Carte implements ICarte,IConfig{
 			}
 		}
 	}
+
+	public boolean Appartient(Position[] test, Position pos){
+	    for(int i=0;i<6;i++){
+	        /*--- Vérif que la position pos appartient à test ---*/
+	        if(test[i].getX()==pos.getX() && test[i].getY()==pos.getY()){
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
+	public void Depacement(Position posD, Position posA){
+	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null){
+	        /*--- Récup des position possible à partir de la position de Départ ---*/
+	        Position[] test = this.PositionPossible(posD);
+	        /*--- Vérif que la position d'Arrivée appartient bien aux positions possible à partir de posD ---*/
+	        if(this.Appartient(test,posA)){
+	            /*--- Déplacement du personnage ---*/
+	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
+	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
+	        }
+	    }
+	}
+
 }

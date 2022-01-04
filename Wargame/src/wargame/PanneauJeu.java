@@ -8,6 +8,7 @@ public class PanneauJeu extends JPanel{
 	public Carte jeu=new Carte(30,4,2,2);
 	PanneauJeu(){
 		this.setPreferredSize(new Dimension(taille_fenetre,taille_fenetre));
+		this.setBackground(Color.black);
 		clickPosition();
 	}
 	public void paintComponent(Graphics g) {
