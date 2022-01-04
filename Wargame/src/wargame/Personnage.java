@@ -678,7 +678,7 @@ public class Personnage implements IConfig{
 	}
 	/*--- Methodes d'affichage et auxiliaires ---*/
 	
-	private String nomPersonnage() {
+	public String nomPersonnage() {
 		//renvois une chaine de la forme suivante : nomPersonnage (classePersonnage-campPersonnage)
 		String chaine ="";
 		switch(this.id) {
