@@ -303,6 +303,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 						}
 						if(perso.getAttaque()==0 && perso.getPm() == 0) {
 							perso.entrainement();
+							perso.recupRiposte();
 							jouable=false;
 							tourDeJeux();
 						}

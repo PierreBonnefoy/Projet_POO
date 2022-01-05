@@ -28,8 +28,8 @@ public class Personnage implements IConfig{
 		switch(id) {
 		case GARDIEN:
 			this.position=new Position(x,y);
-			this.pvMax = 65;
-			this.pvActuel = 65;
+			this.pvMax = 95;
+			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
 			this.protection = 80;
@@ -40,7 +40,7 @@ public class Personnage implements IConfig{
 			this.portee = 1;
 			this.vision = 2;
 			this.vitesse = 3;
-			this.pm = 3;
+			this.pm = this.vitesse;
 			this.riposte = 3;
 			this.nemesis = DANCELAME;
 			this.exp = 0;
@@ -49,8 +49,8 @@ public class Personnage implements IConfig{
 			break;
 		case BETE:
 			this.position=new Position(x,y);
-			this.pvMax = 65;
-			this.pvActuel = 65;
+			this.pvMax = 95;
+			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
 			this.protection = 40;
@@ -61,7 +61,7 @@ public class Personnage implements IConfig{
 			this.portee = 1;
 			this.vision = 4;
 			this.vitesse = 5;
-			this.pm = 5;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = CHASSEUR;
 			//this.position = ;
@@ -71,8 +71,8 @@ public class Personnage implements IConfig{
 			break;
 		case INCENDIAIRE:
 			this.position=new Position(x,y);
-			this.pvMax = 45;
-			this.pvActuel = 45;
+			this.pvMax = 70;
+			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
 			this.protection = 60;
@@ -83,7 +83,7 @@ public class Personnage implements IConfig{
 			this.portee = 3;
 			this.vision = 4;
 			this.vitesse = 3;
-			this.pm = 3;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = COMBATTANT;
 			//this.position = ;
@@ -93,8 +93,8 @@ public class Personnage implements IConfig{
 			break;
 		case DESTRUCTEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 50;
-			this.pvActuel = 50;
+			this.pvMax = 75;
+			this.pvActuel = this.pvMax;
 			this.degat = 15;
 			this.attaque = 1;
 			this.protection = 60;
@@ -105,7 +105,7 @@ public class Personnage implements IConfig{
 			this.portee = 1;
 			this.vision = 3;
 			this.vitesse = 4;
-			this.pm = 4;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = GARDIEN;
 			//this.position = ;
@@ -115,8 +115,8 @@ public class Personnage implements IConfig{
 			break;
 		case ENCHANTEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 45;
-			this.pvActuel = 45;
+			this.pvMax = 70;
+			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;
 			this.protection = 40;
@@ -127,7 +127,7 @@ public class Personnage implements IConfig{
 			this.portee = 4;
 			this.vision = 4;
 			this.vitesse = 4;
-			this.pm = 4;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = DESTRUCTEUR;
 			//this.position = ;
@@ -137,8 +137,8 @@ public class Personnage implements IConfig{
 			break;
 		case COMBATTANT:
 			this.position=new Position(x,y);
-			this.pvMax = 55;
-			this.pvActuel = 55;
+			this.pvMax = 80;
+			this.pvActuel = this.pvMax;
 			this.degat = 12;
 			this.attaque = 1;
 			this.protection = 60;
@@ -149,7 +149,7 @@ public class Personnage implements IConfig{
 			this.portee = 1;
 			this.vision = 4;
 			this.vitesse = 4;
-			this.pm = 4;
+			this.pm = this.vitesse;
 			this.riposte = 3;
 			this.nemesis = BETE;
 			//this.position = ;
@@ -159,8 +159,8 @@ public class Personnage implements IConfig{
 			break;
 		case ARTILLEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 50;
-			this.pvActuel = 50;
+			this.pvMax = 75;
+			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;
 			this.protection = 40;
@@ -171,7 +171,7 @@ public class Personnage implements IConfig{
 			this.portee = 6;
 			this.vision = 4;
 			this.vitesse = 4;
-			this.pm = 4;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = ECLAIREUR;
 			//this.position = ;
@@ -181,8 +181,8 @@ public class Personnage implements IConfig{
 			break;
 		case DANCELAME:
 			this.position=new Position(x,y);
-			this.pvMax = 50;
-			this.pvActuel = 50;
+			this.pvMax = 75;
+			this.pvActuel = this.pvMax;
 			this.degat = 12;
 			this.attaque = 1;
 			this.protection = 40;
@@ -193,7 +193,7 @@ public class Personnage implements IConfig{
 			this.portee = 2;
 			this.vision = 3;
 			this.vitesse = 5;
-			this.pm = 5;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = INCENDIAIRE;
 			//this.position = ;
@@ -203,8 +203,8 @@ public class Personnage implements IConfig{
 			break;
 		case CHASSEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 45;
-			this.pvActuel = 45;
+			this.pvMax = 70;
+			this.pvActuel = this.pvMax;
 			this.degat = 15;
 			this.attaque = 1;
 			this.protection = 40;
@@ -215,7 +215,7 @@ public class Personnage implements IConfig{
 			this.portee = 1;
 			this.vision = 4;
 			this.vitesse = 7;
-			this.pm = 7;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = ARTILLEUR;
 			//this.position = ;
@@ -225,8 +225,8 @@ public class Personnage implements IConfig{
 			break;
 		case ECLAIREUR:
 			this.position=new Position(x,y);
-			this.pvMax = 40;
-			this.pvActuel = 40;
+			this.pvMax = 60;
+			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;
 			this.protection = 40;
@@ -237,7 +237,7 @@ public class Personnage implements IConfig{
 			this.portee = 3;
 			this.vision = 6;
 			this.vitesse = 6;
-			this.pm = 6;
+			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = ENCHANTEUR;
 			//this.position = ;
@@ -502,7 +502,7 @@ public class Personnage implements IConfig{
 		if(this.id == ECLAIREUR) {
 			if(this.riposte > 0) {
 				if(this.riposte != 0) {
-					return 6;
+					return 5;
 				}
 			}
 		}
@@ -567,6 +567,7 @@ public class Personnage implements IConfig{
 			D.setPvActuel(D.pvActuel-degat);
 			
 			System.out.println(this.nomPersonnage()+"inflige "+degat+" degats à "+D.nomPersonnage()+".");
+			System.out.println("Il reste "+D.pvActuel+"/"+D.pvMax+" à "+D.nomPersonnage()+".");
 	
 			/*on appelle les fonctions de personnage qui s'active seulement si l'attaque blesse :
 			 * celle qui soigne le dancelame d'une partie des degats infliges
