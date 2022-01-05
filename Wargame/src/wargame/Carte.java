@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Carte implements ICarte,IConfig{
 	public Element[][] carte;
-	private int taille;
+	public int taille;
 	
 	public Position voisineAlea(int positionx,int positiony,int n) {
 	int alea;
