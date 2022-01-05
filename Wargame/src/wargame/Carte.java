@@ -137,7 +137,7 @@ public class Carte implements ICarte,IConfig{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
 		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
 		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
@@ -146,7 +146,7 @@ public class Carte implements ICarte,IConfig{
 		carte[6][11].rajoutPersonnage(new Personnage(7,1,6,7));
 		carte[6][12].rajoutPersonnage(new Personnage(8,1,7,5));
 		carte[6][13].rajoutPersonnage(new Personnage(9,1,5,7));
-		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
+		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8)); */
 	}
 
 	public void drawHexagon(int posx,int posy,Graphics g) {
@@ -223,7 +223,7 @@ public class Carte implements ICarte,IConfig{
 		for(int i=0;i<n;i+=2) {
 			carte[0][i]=new Element(Bord);
 		}
-		carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
+	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
 		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
 		carte[6][8].rajoutPersonnage(new Personnage(4,1,6,5));
@@ -232,7 +232,7 @@ public class Carte implements ICarte,IConfig{
 		carte[6][11].rajoutPersonnage(new Personnage(7,1,6,7));
 		carte[6][12].rajoutPersonnage(new Personnage(8,1,7,5));
 		carte[6][13].rajoutPersonnage(new Personnage(9,1,5,7));
-		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
+		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));*/
 	}
 	
 	public Element getElement(Position pos) {
@@ -560,7 +560,7 @@ public class Carte implements ICarte,IConfig{
 		case INCENDIAIRE:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_demoniste.png");
+					file = new File("./image/m_drake.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -580,7 +580,7 @@ public class Carte implements ICarte,IConfig{
 		case DESTRUCTEUR:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_princeDemon.png");
+					file = new File("./image/m_minotaure.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -600,7 +600,7 @@ public class Carte implements ICarte,IConfig{
 		case ENCHANTEUR:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_diablotin.png");
+					file = new File("./image/m_mageGrenouille.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -620,7 +620,7 @@ public class Carte implements ICarte,IConfig{
 		case COMBATTANT:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_guerrierChaos.png");
+					file = new File("./image/m_armureAnimee.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -660,7 +660,7 @@ public class Carte implements ICarte,IConfig{
 		case DANCELAME:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_incube.png");
+					file = new File("./image/m_vampyrion.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -680,7 +680,7 @@ public class Carte implements ICarte,IConfig{
 		case CHASSEUR:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_chienEnfer.png");
+					file = new File("./image/m_predator.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -700,7 +700,7 @@ public class Carte implements ICarte,IConfig{
 		case ECLAIREUR:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_oeilDiable.png");
+					file = new File("./image/m_worm.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
