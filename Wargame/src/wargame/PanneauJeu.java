@@ -17,7 +17,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Carte jeu=new Carte(30,4,2,2);
 	boolean jouable=true;
 	public Position posbuffer=new Position(0,0);
-	JButton bouton4;
+	Personnage perso=new Personnage(ECLAIREUR,JOUEUR,15,10);
+	
 	
 	/*creation des personnages */
 	public Personnage[][] equipe;
@@ -41,19 +42,19 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Personnage vampyrion;
 	public Personnage predator;
 	public Personnage worm;
+	JLabel infoLabel = new JLabel (perso.toString());
 	
 	public PanneauJeu(){
+		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		infoLabel.setForeground(Color.white);
 		nb_vivant[JOUEUR] = NBPERSONNAGE;
 		nb_vivant[IA] = NBPERSONNAGE;
-		this.setPreferredSize(new Dimension(taille_fenetre,taille_fenetre));
+		
+		this.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		this.setBackground(Color.black);
 		/*initialisation du tableau d'equipe*/
-
-		JButton bouton4 = new JButton("Bouton 4");
-		bouton4.setForeground(Color.white);
-		add(bouton4);
-		EcouteurBouton eb = new EcouteurBouton();
-		bouton4.addActionListener(eb);
+		
+		add(infoLabel);
 		
 		equipe = new Personnage[NBPERSONNAGE][NBJOUEUR];
 		abomination = new Personnage(GARDIEN,IA,1,1);
@@ -67,16 +68,16 @@ public class PanneauJeu extends JPanel implements IConfig {
 		cerbere = new Personnage(CHASSEUR,IA,1,9);
 		oeil = new Personnage(ECLAIREUR,IA,1,10);
 
-		golem = new Personnage(GARDIEN,JOUEUR,2,1);
-		hydre = new Personnage(BETE,JOUEUR,2,2);
-		drake = new Personnage(INCENDIAIRE,JOUEUR,2,3);
-		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,2,4);
-		grenouille = new Personnage(ENCHANTEUR,JOUEUR,2,5);
-		armure = new Personnage(COMBATTANT,JOUEUR,2,6);
-		lezard = new Personnage(ARTILLEUR,JOUEUR,2,7);
-		vampyrion = new Personnage(DANCELAME,JOUEUR,2,8);
-		predator = new Personnage(CHASSEUR,JOUEUR,2,9);
-		worm = new Personnage(ECLAIREUR,JOUEUR,2,10);
+		golem = new Personnage(GARDIEN,JOUEUR,15,1);
+		hydre = new Personnage(BETE,JOUEUR,15,2);
+		drake = new Personnage(INCENDIAIRE,JOUEUR,15,3);
+		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,15,4);
+		grenouille = new Personnage(ENCHANTEUR,JOUEUR,15,5);
+		armure = new Personnage(COMBATTANT,JOUEUR,15,6);
+		lezard = new Personnage(ARTILLEUR,JOUEUR,15,7);
+		vampyrion = new Personnage(DANCELAME,JOUEUR,15,8);
+		predator = new Personnage(CHASSEUR,JOUEUR,15,9);
+		worm = new Personnage(ECLAIREUR,JOUEUR,15,10);
 		
 		equipe[0][IA] = abomination;
 		equipe[1][IA] = mutilateur;
@@ -105,18 +106,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 				jeu.carte[equipe[i][j].getPos().getX()][equipe[i][j].getPos().getY()].rajoutPersonnage(equipe[i][j]);
 			}
 		}
-	}
-	
-	public class EcouteurBouton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("OUII ");
-			clickPosition();
-			repaint();	
-			System.out.println("OUI ");
-			tourDeJeux();
-			
-		}
-		//NOTE : il est conseillé de faire un ecouteur pour chaque button au lieu de faire des if elses 
+		clickPosition();
+		repaint();	
+		tourDeJeux();
 	}
 	
 	public void tourDeJeux() {
@@ -129,7 +121,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 				indicePerso=NBPERSONNAGE-1;
 			}
 		}
-		
 		
 		jouable=true;
 		//int boucle = 0;
@@ -158,17 +149,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 		else {
 			System.exit(0);
 		}
-	}
-	
-	public int jouerPersoJoueur(Carte jeu, Personnage perso) {
-		
-		System.out.println("entree dans jouerperso");
-		int i;
-		int resultat = 0;
-		
-		int boucle = 0;////////////////////
-		System.out.println("perso fini");
-		return resultat;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -222,7 +202,13 @@ public class PanneauJeu extends JPanel implements IConfig {
 					/*----Recuperation de la case dans posbuffer---*/
 					Position pos2=null;
 					Position positionCase=null;
-					Personnage perso=equipe[indicePerso][indiceJoueur]; 
+					
+
+					remove(infoLabel);
+					Personnage perso=equipe[indicePerso][indiceJoueur];
+					infoLabel.setText(perso.toString());
+					add(infoLabel);
+					validate();
 					int y1,y2,x1,x2,pair;
 					/*---Recupere les y qui entoure---*/
 					y1=14+24*((e.getY()-14)/24);
@@ -249,12 +235,11 @@ public class PanneauJeu extends JPanel implements IConfig {
 						int xd=perso.getPos().getX(),yd=perso.getPos().getY();
 						
 						if(positionCase.getX()>0 && positionCase.getX()<LARGEUR_CARTE-1 && positionCase.getY()>0 && positionCase.getY()<HAUTEUR_CARTE-1) {
-							System.out.println("entree de if de clique");
 							int xa = positionCase.getX();
 							int ya = positionCase.getY();
 							/*si le joueur a cliqué sur la case où se trouve le perso, il se repose, ou passe son tour*/
 							if(xa==xd && ya==yd) {
-								if(perso.getAttaque()==1 || perso.getPm() == perso.getVitesse()) {
+								if(perso.getAttaque()==1 && perso.getPm() == perso.getVitesse()) {
 									perso.repos();
 								}
 								else {
@@ -263,15 +248,15 @@ public class PanneauJeu extends JPanel implements IConfig {
 							}
 							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
 							else if(perso.getPm() !=0 ) {
-								System.out.println("Je me deplace");
 								jeu.Deplacement(new Position(xd,yd), positionCase);
-								System.out.println("J'ai fini de me deplacer");
+								infoLabel.setText(perso.toString());
+								add(infoLabel);
+								validate();
 								repaint();
 							}
 						}
 						if(perso.getAttaque()==0 || perso.getPm() == 0) {
 							jouable=false;
-							System.out.println("fin de son tour");
 							tourDeJeux();
 						}
 					}
@@ -281,4 +266,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 		System.out.println("on recupere click :");
 		return posbuffer;
 	}
+	
 }
+

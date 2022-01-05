@@ -904,31 +904,20 @@ public class Personnage implements IConfig{
 	
 	/*Affiche les informations à propos de Personnage this*/
 	public String toString() {
-		String chaine = "   ";
-		/*on construit la chaine petit à petit à partir de toutes les informations du Personnage*/
-		//d'abord : on veut afficher le nom, le titre et le camp de la créature :
-		chaine = chaine + this.nomPersonnage();
-		//TEMPORAIRE : position du personnage : 
-		chaine = chaine+"\nPosition = "+this.position.getX()+":"+this.position.getY()+"\n";
-		//maintenant, on génère un tableau contenant les informations caractéristiques sur la créature :
-		chaine = chaine+"__________________________________________________________________________________\n";
-		chaine = chaine+"|   PV   |  ATK  |   DEF   | TAILLE |  I  |  P  |  V  | R |   PM   |  EXP  | Niv |\n";
-		chaine = chaine+"__________________________________________________________________________________\n";
-		chaine = chaine+"|  "+this.getPvActuel()+"/"+this.getPvMax()+" |  "
-						+this.getDegat()+"   |   "
-						+this.getProtection()+"/"+this.getBlindage()+"  |   "
-						+this.getTaille()+"    |  "
-						+this.getId()+"  |  "
-						+this.getPortee()+"  |  "
-						+this.getVision()+"  | "
-						+this.getRiposte()+" |  "
-						+this.getPm()+"/"+this.getVitesse()+"   | "
-						+this.getExp()+"/100 |  "
-						+this.getNiveau()+"  |\n";
-		//on ajoute les informations complémentaires : nemesis et capacités spéciales 
-		chaine = chaine+"Nemesis = "+this.nomNemesis();
-		chaine = chaine+"Capacité :\n";
-		chaine = chaine+this.capacite()+"\n";
+		String chaine = "";
+		chaine="<html> nom : "+this.nomPersonnage()
+		+"<br>PV : "+this.pvActuel +"/ "+this.pvMax
+		+"<br>ATK : "+this.degat
+		+"<br>DEF : "+this.protection+ " | "+this.blindage
+		+"<br>Taille : " +this.taille
+		+"<br>Initiative : "+this.id
+		+"<br>Porte : "+this.portee
+		+"<br>Vision : "+this.vision
+		+"<br>Riposte : "+this.riposte
+		+"<br>PM : "+this.pm + " / "+this.vitesse
+		+"<br>Exp : "+this.exp + " / 100"
+		+"<br>Niveau : "+this.getNiveau()
+		+"<br>Nemesis : "+this.nomNemesis()+"<html>";
 		return chaine;
 	}
 	

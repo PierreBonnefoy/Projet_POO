@@ -46,20 +46,10 @@ public class MenuGeneral extends JPanel implements IConfig{
 		Start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PanneauJeu jeu = new PanneauJeu();
-				PanneauMenu menu = new PanneauMenu();
-				PanneauInfo info = new PanneauInfo();
 				remove(Start);
 				remove(Aide);
 				remove(Quitter);
-				JSplitPane contenu = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-				JSplitPane contenu2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-				contenu2.add(info);
-				contenu2.add(menu);
-				contenu.setDividerLocation(1000);
-				contenu2.setDividerLocation(400);
-				contenu.add(jeu);
-				contenu.add(contenu2);
-				add(contenu);
+				add(jeu);
 				validate();
 			}
 		}
