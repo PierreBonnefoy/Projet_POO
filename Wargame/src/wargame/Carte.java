@@ -859,15 +859,17 @@ public class Carte implements ICarte,IConfig{
 	}
 
 	public void Deplacement(Position posD, Position posA){
-	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null){
+	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null && distance(posD,posA)<=this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()){
 	        /*--- R�cup des position possible � partir de la position de D�part ---*/
 	        //Position[] test = this.PositionPossible(posD);
 	        /*--- V�rif que la position d'Arriv�e appartient bien aux positions possible � partir de posD ---*/
 	        //if(this.Appartient(test,posA)){
 	            /*--- D�placement du personnage ---*/
+	    		this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPos(posA);
+	    		this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPm(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()-distance(posD,posA));
 	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
 	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
-	        //}
+	            //}
 	    }
 	}
 

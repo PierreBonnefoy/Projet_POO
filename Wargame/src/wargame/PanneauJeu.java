@@ -11,7 +11,11 @@ import java.lang.Thread;
 
 public class PanneauJeu extends JPanel implements IConfig {
 	public static final int taille_fenetre=800;
+	public int[] nb_vivant = new int[NBJOUEUR];
+	public int indicePerso =1;
+	public int indiceJoueur=NBJOUEUR-1;
 	public Carte jeu=new Carte(30,4,2,2);
+	boolean jouable=true;
 	public Position posbuffer=new Position(0,0);
 	JButton bouton4;
 	
@@ -39,9 +43,10 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Personnage worm;
 	
 	public PanneauJeu(){
+		nb_vivant[JOUEUR] = NBPERSONNAGE;
+		nb_vivant[IA] = NBPERSONNAGE;
 		this.setPreferredSize(new Dimension(taille_fenetre,taille_fenetre));
 		this.setBackground(Color.black);
-		//clickPosition();
 		/*initialisation du tableau d'equipe*/
 
 		JButton bouton4 = new JButton("Bouton 4");
@@ -105,7 +110,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public class EcouteurBouton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("OUII ");
-			
+			clickPosition();
 			repaint();	
 			System.out.println("OUI ");
 			tourDeJeux();
@@ -116,109 +121,52 @@ public class PanneauJeu extends JPanel implements IConfig {
 	
 	public void tourDeJeux() {
 		/*boucle en parcourant le tableau des Personnages, et joue chacun des personnages a tour de rôle*/
-		int indicePerso;
-		int indiceJoueur; 
-		int termine = 0;
-		int[] nb_vivant = new int[NBJOUEUR];
-		nb_vivant[JOUEUR] = NBPERSONNAGE;
-		nb_vivant[IA] = NBPERSONNAGE;
+		indiceJoueur+=1;
+		if(indiceJoueur==NBJOUEUR) {
+			indiceJoueur=0;
+			indicePerso-=1;
+			if(indicePerso==0) {
+				indicePerso=NBPERSONNAGE-1;
+			}
+		}
 		
-		int boucle = 0;
-		System.out.println("entree dans tour de jeux ");
 		
+		jouable=true;
+		//int boucle = 0;
+		//System.out.println("entree dans tour de jeux ");
 		/*on parcours équipe et on joue chacun des personnages*/
-		while(/*nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 || */boucle < 40){
+		/*while(nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0){
 			System.out.println("oui ");
+			;*/
+			/*
 			for(indicePerso=NBPERSONNAGE-1;indicePerso >= 0;indicePerso--){
 				for(indiceJoueur=0;indiceJoueur <= NBJOUEUR-1;indiceJoueur++) {
 					if(equipe[indicePerso][indiceJoueur].getEtat()!=MORT) {
-						
 						System.out.println("ici on joue "+equipe[indicePerso][indiceJoueur].nomPersonnage()+" "+indicePerso+" "+indiceJoueur);
-						
-						nb_vivant[indiceJoueur] += jouerPersoJoueur(jeu,equipe[indicePerso][indiceJoueur]);
+						nb_vivant[indiceJoueur] -= jouerPersoJoueur(jeu,equipe[indicePerso][indiceJoueur]);
 						nb_vivant[JOUEUR]-= 1;////////////
 						nb_vivant[IA]--;////////////
-						boucle++;
-						
-						if(nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 ) {
-							//System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
-						}
-						//System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
 					}
 				}
-			}
-			System.out.println("fin d'une session de jeux : boucle = "+boucle+" | joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
+			}*/
+			/*System.out.println("fin d'une session de jeux : boucle = "+boucle+" | joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
 			repaint();	
+		}*/
+		if(nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0) {
+			//pas de soucis
 		}
-		
+		else {
+			System.exit(0);
+		}
 	}
 	
 	public int jouerPersoJoueur(Carte jeu, Personnage perso) {
 		
 		System.out.println("entree dans jouerperso");
-		
 		int i;
 		int resultat = 0;
-		Position positionDepart = perso.getPos();
-		int xd=positionDepart.getX();
-		int yd=positionDepart.getY();
-		Position positionCase = null; /////////////////
-		Position postemp = new Position(xd+1,yd);
 		
 		int boucle = 0;////////////////////
-		
-		perso.setAttaque(1);
-		perso.setPm(perso.getVitesse());
-		
-		jeu.Deplacement(positionDepart, postemp);
-		
-		while(perso.getAttaque()!=0 && perso.getPm() != 0 && boucle < 50000) {
-			System.out.println("while peutjouer");
-			//System.out.println("oui est dans la boucle perso");
-			/*on se place en attente d'un click sur la carte : selon la position, l'effet sera différent*/
-			while(/*positionCase==null || */ boucle < 5) {
-				System.out.println("clickposition active");
-				positionCase = posbuffer;
-				
-				
-				try {
-					Thread.sleep(1000);
-				}catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-				
-				System.out.println("posbuffer : "+posbuffer.getX()+" | "+posbuffer.getY());
-				//positionCase = new Position(xd,yd);
-				boucle++;
-			}
-			System.out.println("sortie de boucle clickposition : "+positionCase.getX()+" | "+positionCase.getY());
-			/*on entre dans ce if seulement si on a cliqué sur une case*/
-			if(positionCase.getX()!=0 && positionCase.getY()!=0 && positionCase != null) {
-				System.out.println("entree de if de clique");
-				int xa = positionCase.getX();
-				int ya = positionCase.getY();
-				/*si le joueur a cliqué sur la case où se trouve le perso, il se repose, ou passe son tour*/
-				if(xa==xd && ya==yd) {
-					if(perso.getAttaque()==0 || perso.getPm() == perso.getVitesse()) {
-						perso.repos();
-					}
-					else {
-						perso.passeTour();
-					}
-				}
-				/*le joueur a cliqué sur une case vide a cote du perso et perso.pm!=0*/
-				if(perso.getPm() !=0) {
-					jeu.Deplacement(positionDepart, positionCase);
-				}
-			}
-			
-			/*on remet la position case a 0 la suite de la boucle*/
-			positionCase.setX(0);
-			positionCase.setY(0);	
-			boucle++;///////////////
-			
-			positionCase = null;
-		}
 		System.out.println("perso fini");
 		return resultat;
 	}
@@ -227,6 +175,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		super.paintComponent(g);
 		jeu.toutDessiner(g,30);
 	}
+	
 	
 	public Position ppV(int x1,int x2,int y1,int y2,int mx,int my,int haut) {
 		Position pos=new Position(0,0),posMouse=new Position(mx,my);
@@ -270,9 +219,11 @@ public class PanneauJeu extends JPanel implements IConfig {
 			System.out.println("null");
 			addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
-					Position pos2=new Position(15,0);
+					/*----Recuperation de la case dans posbuffer---*/
+					Position pos2=null;
+					Position positionCase=null;
+					Personnage perso=equipe[indicePerso][indiceJoueur]; 
 					int y1,y2,x1,x2,pair;
-					
 					/*---Recupere les y qui entoure---*/
 					y1=14+24*((e.getY()-14)/24);
 					y2=14+24*(1+(e.getY()-14)/24);
@@ -287,8 +238,44 @@ public class PanneauJeu extends JPanel implements IConfig {
 					//System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
 					//System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
 					posbuffer = new Position(pos2.getX()/28,pos2.getY()/24);
-				}
-			});
+					positionCase=posbuffer;
+					
+					
+					
+					/*----Mouvement ou attaque du perso----*/
+					if(jouable==true) {
+						System.out.println("joueur n� " + indiceJoueur + "joue avec le perso numero : "+indicePerso);
+						System.out.println("je suis a la position : "  + perso.getPos().getX()+ " " + perso.getPos().getY());
+						int xd=perso.getPos().getX(),yd=perso.getPos().getY();
+						
+						if(positionCase.getX()>0 && positionCase.getX()<LARGEUR_CARTE-1 && positionCase.getY()>0 && positionCase.getY()<HAUTEUR_CARTE-1) {
+							System.out.println("entree de if de clique");
+							int xa = positionCase.getX();
+							int ya = positionCase.getY();
+							/*si le joueur a cliqué sur la case où se trouve le perso, il se repose, ou passe son tour*/
+							if(xa==xd && ya==yd) {
+								if(perso.getAttaque()==1 || perso.getPm() == perso.getVitesse()) {
+									perso.repos();
+								}
+								else {
+									perso.passeTour();
+								}
+							}
+							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
+							else if(perso.getPm() !=0 ) {
+								System.out.println("Je me deplace");
+								jeu.Deplacement(new Position(xd,yd), positionCase);
+								System.out.println("J'ai fini de me deplacer");
+								repaint();
+							}
+						}
+						if(perso.getAttaque()==0 || perso.getPm() == 0) {
+							jouable=false;
+							System.out.println("fin de son tour");
+							tourDeJeux();
+						}
+					}
+			}});
 
 		//}
 		System.out.println("on recupere click :");
