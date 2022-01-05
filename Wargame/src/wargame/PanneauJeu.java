@@ -37,7 +37,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public PanneauJeu(){
 		this.setPreferredSize(new Dimension(taille_fenetre,taille_fenetre));
 		this.setBackground(Color.black);
-		clickPosition();
+		//clickPosition();
 		/*initialisation du tableau d'equipe*/
 
 		JButton bouton4 = new JButton("Bouton 4");
@@ -126,7 +126,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		/*on parcours équipe et on joue chacun des personnages*/
 		while(/*nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 || */boucle < 40){
 			System.out.println("oui ");
-			for(indicePerso=NBPERSONNAGE-1;indicePerso > 0;indicePerso--){
+			for(indicePerso=NBPERSONNAGE-1;indicePerso >= 0;indicePerso--){
 				for(indiceJoueur=0;indiceJoueur <= NBJOUEUR-1;indiceJoueur++) {
 					
 					System.out.println("change perso : "+indicePerso+" "+indiceJoueur);
@@ -174,16 +174,20 @@ public class PanneauJeu extends JPanel implements IConfig {
 			while(positionCase==null || boucle < 50000) {
 				//System.out.println("clickposition active");
 				positionCase = clickPosition();
+				
+				
+				//positionCase = new Position(xd,yd);
 				boucle++;
 			}
 			System.out.println("sortie de boucle clickposition : "+positionCase.getX()+" | "+positionCase.getY());
 			/*on entre dans ce if seulement si on a cliqué sur une case*/
 			if(positionCase.getX()!=0 && positionCase.getY()!=0 && positionCase != null) {
+				System.out.println("entree de if de clique");
 				int xa = positionCase.getX();
 				int ya = positionCase.getY();
 				/*si le joueur a cliqué sur la case où se trouve le perso, il se repose, ou passe son tour*/
 				if(xa==xd && ya==yd) {
-					if(perso.getAttaque()==0 || perso.getPm() != perso.getVitesse()) {
+					if(perso.getAttaque()==0 || perso.getPm() == perso.getVitesse()) {
 						perso.repos();
 					}
 					else {
@@ -248,28 +252,34 @@ public class PanneauJeu extends JPanel implements IConfig {
 	}
  	
 	public Position clickPosition(){
+		posbuffer = null;
 		
-		addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				Position pos2=new Position(0,0);
-				int y1,y2,x1,x2,pair;
-				
-				/*---Recupere les y qui entoure---*/
-				y1=14+24*((e.getY()-14)/24);
-				y2=14+24*(1+(e.getY()-14)/24);
-				
-				/*---Verifie si c'est la premiere ou la 2eme lignes qui est decal�---*/
-				pair=Math.floorMod(y1/24,2);
-				/*---Recupere les x qui l'entoure---*/
-				x1=28*((e.getX())/28);
-				x2=28*(1+(e.getX())/28);
-				/*---Verifie parmi les 4 voisins, lequel est le plus proche---*/
-				pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
-				System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
-				System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
-				posbuffer = new Position(pos2.getX()/28,pos2.getY()/24);
-			}
-		});
+		while(posbuffer == null) {
+			System.out.println("null");
+			addMouseListener(new MouseAdapter() {
+				public void mouseReleased(MouseEvent e) {
+					Position pos2=new Position(15,0);
+					int y1,y2,x1,x2,pair;
+					
+					/*---Recupere les y qui entoure---*/
+					y1=14+24*((e.getY()-14)/24);
+					y2=14+24*(1+(e.getY()-14)/24);
+					
+					/*---Verifie si c'est la premiere ou la 2eme lignes qui est decal�---*/
+					pair=Math.floorMod(y1/24,2);
+					/*---Recupere les x qui l'entoure---*/
+					x1=28*((e.getX())/28);
+					x2=28*(1+(e.getX())/28);
+					/*---Verifie parmi les 4 voisins, lequel est le plus proche---*/
+					pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
+					//System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
+					//System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
+					posbuffer = new Position(pos2.getX()/28,pos2.getY()/24);
+				}
+			});
+
+		}
+		System.out.println("on recupere click :");
 		return posbuffer;
 	}
 }
