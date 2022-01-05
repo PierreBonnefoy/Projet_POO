@@ -124,12 +124,12 @@ public class PanneauJeu extends JPanel implements IConfig {
 		System.out.println("oui ");
 		
 		/*on parcours équipe et on joue chacun des personnages*/
-		while(/*nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 || */boucle <= 20){
+		while(/*nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 || */boucle < 40){
 			System.out.println("oui ");
-			for(indicePerso=NBPERSONNAGE-1;indicePerso >= 1;indicePerso--){
+			for(indicePerso=NBPERSONNAGE-1;indicePerso > 0;indicePerso--){
 				for(indiceJoueur=0;indiceJoueur <= NBJOUEUR-1;indiceJoueur++) {
 					
-					System.out.println("change perso ");
+					System.out.println("change perso : "+indicePerso+" "+indiceJoueur);
 					
 					System.out.println("ici on joue "+equipe[indicePerso][indiceJoueur].nomPersonnage());
 					
@@ -143,9 +143,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 						boucle++;
 						
 						if(nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 ) {
-							System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
+							//System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
 						}
-						System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
+						//System.out.println("joueur = "+nb_vivant[JOUEUR]+" "+nb_vivant[IA]);
 					}
 				}
 			}
@@ -161,20 +161,22 @@ public class PanneauJeu extends JPanel implements IConfig {
 		Position positionDepart = perso.getPos();
 		int xd=positionDepart.getX();
 		int yd=positionDepart.getY();
-		Position positionCase = new Position(0,0); /////////////////
+		Position positionCase = null; /////////////////
 		
 		int boucle = 0;////////////////////
 		
 		perso.setAttaque(1);
 		perso.setPm(perso.getVitesse());
 		
-		while(perso.getAttaque()!=0 && perso.getPm() != 0 && boucle != 2) {
+		while(perso.getAttaque()!=0 && perso.getPm() != 0 && boucle < 50000) {
 			//System.out.println("oui est dans la boucle perso");
 			/*on se place en attente d'un click sur la carte : selon la position, l'effet sera différent*/
-		/*	if(clickPosition()!=null) {
+			while(positionCase==null || boucle < 50000) {
+				//System.out.println("clickposition active");
 				positionCase = clickPosition();
-			}*/
-			positionCase = clickPosition();
+				boucle++;
+			}
+			System.out.println("sortie de boucle clickposition : "+positionCase.getX()+" | "+positionCase.getY());
 			/*on entre dans ce if seulement si on a cliqué sur une case*/
 			if(positionCase.getX()!=0 && positionCase.getY()!=0 && positionCase != null) {
 				int xa = positionCase.getX();
@@ -198,6 +200,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 			positionCase.setX(0);
 			positionCase.setY(0);	
 			boucle++;///////////////
+			
+			positionCase = null;
 		}
 		System.out.println("perso fini");
 		return resultat;
@@ -246,7 +250,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Position clickPosition(){
 		
 		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				Position pos2=new Position(0,0);
 				int y1,y2,x1,x2,pair;
 				
