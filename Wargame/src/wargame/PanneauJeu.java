@@ -18,6 +18,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	boolean jouable=true;
 	public Position posbuffer=new Position(0,0);
 	Personnage perso=new Personnage(ECLAIREUR,JOUEUR,15,10);
+	boolean[] mort;
 	
 	
 	/*creation des personnages */
@@ -56,28 +57,29 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		add(infoLabel);
 		
+		mort = new boolean[NBJOUEUR];
 		equipe = new Personnage[NBPERSONNAGE][NBJOUEUR];
-		abomination = new Personnage(GARDIEN,IA,1,1);
-		mutilateur = new Personnage(BETE,IA,1,2);
-		demoniste = new Personnage(INCENDIAIRE,IA,1,3);
-		demon = new Personnage(DESTRUCTEUR,IA,1,4);
-		diablotin = new Personnage(ENCHANTEUR,IA,1,5);
-		guerrier = new Personnage(COMBATTANT,IA,1,6);
-		succube = new Personnage(ARTILLEUR,IA,1,7);
-		incube = new Personnage(DANCELAME,IA,1,8);
-		cerbere = new Personnage(CHASSEUR,IA,1,9);
-		oeil = new Personnage(ECLAIREUR,IA,1,10);
+		abomination = new Personnage(GARDIEN,IA,10,1);
+		mutilateur = new Personnage(BETE,IA,10,2);
+		demoniste = new Personnage(INCENDIAIRE,IA,10,3);
+		demon = new Personnage(DESTRUCTEUR,IA,10,4);
+		diablotin = new Personnage(ENCHANTEUR,IA,10,5);
+		guerrier = new Personnage(COMBATTANT,IA,10,6);
+		succube = new Personnage(ARTILLEUR,IA,10,7);
+		incube = new Personnage(DANCELAME,IA,10,8);
+		cerbere = new Personnage(CHASSEUR,IA,10,9);
+		oeil = new Personnage(ECLAIREUR,IA,10,10);
 
-		golem = new Personnage(GARDIEN,JOUEUR,15,1);
-		hydre = new Personnage(BETE,JOUEUR,15,2);
-		drake = new Personnage(INCENDIAIRE,JOUEUR,15,3);
-		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,15,4);
-		grenouille = new Personnage(ENCHANTEUR,JOUEUR,15,5);
-		armure = new Personnage(COMBATTANT,JOUEUR,15,6);
-		lezard = new Personnage(ARTILLEUR,JOUEUR,15,7);
-		vampyrion = new Personnage(DANCELAME,JOUEUR,15,8);
-		predator = new Personnage(CHASSEUR,JOUEUR,15,9);
-		worm = new Personnage(ECLAIREUR,JOUEUR,15,10);
+		golem = new Personnage(GARDIEN,JOUEUR,1,1);
+		hydre = new Personnage(BETE,JOUEUR,1,2);
+		drake = new Personnage(INCENDIAIRE,JOUEUR,1,3);
+		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,1,4);
+		grenouille = new Personnage(ENCHANTEUR,JOUEUR,1,5);
+		armure = new Personnage(COMBATTANT,JOUEUR,1,6);
+		lezard = new Personnage(ARTILLEUR,JOUEUR,1,7);
+		vampyrion = new Personnage(DANCELAME,JOUEUR,1,8);
+		predator = new Personnage(CHASSEUR,JOUEUR,1,9);
+		worm = new Personnage(ECLAIREUR,JOUEUR,1,10);
 		
 		equipe[0][IA] = abomination;
 		equipe[1][IA] = mutilateur;
@@ -230,14 +232,18 @@ public class PanneauJeu extends JPanel implements IConfig {
 					
 					/*----Mouvement ou attaque du perso----*/
 					if(jouable==true) {
-						System.out.println("joueur n� " + indiceJoueur + "joue avec le perso numero : "+indicePerso);
+						System.out.println("joueur n� " + indiceJoueur + "joue avec le perso : "+perso.nomPersonnage());
 						System.out.println("je suis a la position : "  + perso.getPos().getX()+ " " + perso.getPos().getY());
 						int xd=perso.getPos().getX(),yd=perso.getPos().getY();
+						mort[0] = false;
+						mort[1] = false;
 						
 						if(positionCase.getX()>0 && positionCase.getX()<LARGEUR_CARTE-1 && positionCase.getY()>0 && positionCase.getY()<HAUTEUR_CARTE-1) {
 							int xa = positionCase.getX();
 							int ya = positionCase.getY();
-							/*si le joueur a cliqué sur la case où se trouve le perso, il se repose, ou passe son tour*/
+							System.out.println("je pointe vers la position : "  + xa+ " " + ya);
+							System.out.println("distance de : "+jeu.distance(perso.getPos(),positionCase));
+							/*si le joueur a cliqué sur la case où se trouve le perso qui joue, il se repose, ou passe son tour*/
 							if(xa==xd && ya==yd) {
 								if(perso.getAttaque()==1 && perso.getPm() == perso.getVitesse()) {
 									perso.repos();
@@ -245,8 +251,48 @@ public class PanneauJeu extends JPanel implements IConfig {
 								else {
 									perso.passeTour();
 								}
+								infoLabel.setText(perso.toString());
+								add(infoLabel);
+								validate();
+								repaint();
 							}
-							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
+							/*le perso a clique sur une case ou se trouve un personnage, on verifie si elle est a portee d 'attaque*/
+							else if(jeu.carte[positionCase.getX()][positionCase.getY()].getOccupe() != 0 && perso.getPortee() >= jeu.distance(perso.getPos(),positionCase)) {
+								/*si le personnage est un ennemi*/
+								if(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getJoueur() != indiceJoueur) {
+									System.out.println(perso.nomPersonnage()+" attaque "+jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).nomPersonnage());
+									perso.setAttaque(perso.getAttaque()-1);
+									mort[0] = perso.attaque(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0));
+									
+									if(mort[0]) {
+										jeu.carte[positionCase.getX()][positionCase.getY()].enleverPersonnage(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getId(),
+												jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getJoueur());
+									}
+									else {
+									/*si le defenseur peut riposter, il riposte*/
+										if(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getPortee() >= jeu.distance(perso.getPos(),positionCase) 
+												&& jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getRiposte() > 0) {
+											System.out.println("portee riposte : "+jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getPortee()+"\ndistance :"+jeu.distance(perso.getPos(),positionCase));
+											
+											System.out.println(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).nomPersonnage()+" riposte contre "+perso.nomPersonnage());
+											mort[1] = jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).attaque(perso);
+											jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).setRiposte(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).getRiposte()-1);
+										}
+										else {
+											System.out.println(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0).nomPersonnage()+" ne peut pas riposter contre "+perso.nomPersonnage());
+										}
+									}
+									repaint();
+								} /*le personnage est un allié*/
+								else {
+									perso.encouragement(jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0));
+								}
+								infoLabel.setText(perso.toString());
+								add(infoLabel);
+								validate();
+								repaint();
+							}
+							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
 							else if(perso.getPm() !=0 ) {
 								jeu.Deplacement(new Position(xd,yd), positionCase);
 								infoLabel.setText(perso.toString());
@@ -255,13 +301,19 @@ public class PanneauJeu extends JPanel implements IConfig {
 								repaint();
 							}
 						}
-						if(perso.getAttaque()==0 || perso.getPm() == 0) {
+						if(perso.getAttaque()==0 && perso.getPm() == 0) {
+							perso.entrainement();
 							jouable=false;
 							tourDeJeux();
 						}
 					}
 			}});
 
+			try {
+				Thread.sleep(1000);
+			}catch (Exception e1) {
+				System.out.println(e1.getMessage());
+			}
 		//}
 		System.out.println("on recupere click :");
 		return posbuffer;

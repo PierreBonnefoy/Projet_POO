@@ -524,7 +524,7 @@ public class Carte implements ICarte,IConfig{
 		case GARDIEN:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_abomination.png");
+					file = new File("./image/m_golem.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -544,7 +544,7 @@ public class Carte implements ICarte,IConfig{
 		case BETE:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_mutilateur.png");
+					file = new File("./image/m_hydre.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {
@@ -644,7 +644,7 @@ public class Carte implements ICarte,IConfig{
 		case ARTILLEUR:
 			if(perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_succube.png");
+					file = new File("./image/m_saurus.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut+(i*28), j*24, null);
 				}catch (Exception e) {

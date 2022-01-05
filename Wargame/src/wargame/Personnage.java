@@ -498,13 +498,15 @@ public class Personnage implements IConfig{
 		System.out.println("\n");
 	}
 	/*renvoi vrai si l'éclaireur n'a pas encore riposter à ce tour*/
-	public boolean foudroiement() {
+	public int foudroiement() {
 		if(this.id == ECLAIREUR) {
-			if(this.riposte != 0) {
-				return true;
+			if(this.riposte > 0) {
+				if(this.riposte != 0) {
+					return 6;
+				}
 			}
 		}
-		return false;
+		return 0;
 	}
 		/*---- toutes les autres méthodes ----*/
 	
@@ -538,7 +540,7 @@ public class Personnage implements IConfig{
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public boolean attaque(Personnage D /*, int distance*/){
 		/*mise en place des deg*/
-		int degat = this.degat + 1 + (int)(Math.random()*4) + this.assassin(D); /* -distance;*/
+		int degat = this.degat + 1 + (int)(Math.random()*4) + this.assassin(D) + this.foudroiement(); /* -distance;*/
 		boolean resultat = false;
 		
 		if(this.estNemesis(D)){
@@ -634,7 +636,6 @@ public class Personnage implements IConfig{
 	/*Le personnage gagne de l'experience, on verifie alors s'il passe un niveau et on applique ses bonus. */
 	public void gainExp(int valeur){
 		this.setExp(this.exp + valeur+this.alchimie());
-		System.out.println(this.nomPersonnage()+" gagne "+valeur+" EXP.");
 		this.gainNiveau();	
 	}
 	
@@ -896,7 +897,7 @@ public class Personnage implements IConfig{
 			break;
 		case ECLAIREUR:
 			chaine = "	Maître des chemin : Peut se déplacer sur n'importe quel terrain.\n"
-					+ "	Foudroiement : En attaquant, inflige 3+1D6 dégâts à tout les ennemis supplémlentaires à 6 de distance";
+					+ "	Foudroiement : La première attaque du personnage et ses ripostes font 6 degats supplémentaires";
 			break;
 		}
 		return chaine;
