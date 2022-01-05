@@ -342,6 +342,10 @@ public class Carte implements ICarte,IConfig{
 	
 	public Position[] PositionPossible(Position pos) {
 		Position[] tmp=new Position[6];
+		for(int i=0;i<6;i++) {
+            tmp[i]=new Position(1,1);
+        }
+		
 		if(pos.getY()>0 && pos.getY()>0)
 		{
 			if(Math.floorMod(pos.getY(), 2)==0) {
@@ -857,13 +861,13 @@ public class Carte implements ICarte,IConfig{
 	public void Deplacement(Position posD, Position posA){
 	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null){
 	        /*--- R�cup des position possible � partir de la position de D�part ---*/
-	        Position[] test = this.PositionPossible(posD);
+	        //Position[] test = this.PositionPossible(posD);
 	        /*--- V�rif que la position d'Arriv�e appartient bien aux positions possible � partir de posD ---*/
-	        if(this.Appartient(test,posA)){
+	        //if(this.Appartient(test,posA)){
 	            /*--- D�placement du personnage ---*/
 	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
 	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
-	        }
+	        //}
 	    }
 	}
 

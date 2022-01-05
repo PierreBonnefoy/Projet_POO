@@ -1,8 +1,12 @@
 package wargame;
 import java.awt.*;
-
 import java.awt.event.*;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.lang.Thread;
 
 
 public class PanneauJeu extends JPanel implements IConfig {
@@ -105,7 +109,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 			repaint();	
 			System.out.println("OUI ");
 			tourDeJeux();
-			System.out.println("oui ");
 			
 		}
 		//NOTE : il est conseillé de faire un ecouteur pour chaque button au lieu de faire des if elses 
@@ -121,21 +124,16 @@ public class PanneauJeu extends JPanel implements IConfig {
 		nb_vivant[IA] = NBPERSONNAGE;
 		
 		int boucle = 0;
-		System.out.println("oui ");
+		System.out.println("entree dans tour de jeux ");
 		
 		/*on parcours équipe et on joue chacun des personnages*/
 		while(/*nb_vivant[JOUEUR]>0 || nb_vivant[IA]>0 || */boucle < 40){
 			System.out.println("oui ");
 			for(indicePerso=NBPERSONNAGE-1;indicePerso >= 0;indicePerso--){
 				for(indiceJoueur=0;indiceJoueur <= NBJOUEUR-1;indiceJoueur++) {
-					
-					System.out.println("change perso : "+indicePerso+" "+indiceJoueur);
-					
-					System.out.println("ici on joue "+equipe[indicePerso][indiceJoueur].nomPersonnage());
-					
 					if(equipe[indicePerso][indiceJoueur].getEtat()!=MORT) {
 						
-						//System.out.println("on joue "+equipe[indicePerso][indiceJoueur].nomPersonnage());
+						System.out.println("ici on joue "+equipe[indicePerso][indiceJoueur].nomPersonnage()+" "+indicePerso+" "+indiceJoueur);
 						
 						nb_vivant[indiceJoueur] += jouerPersoJoueur(jeu,equipe[indicePerso][indiceJoueur]);
 						nb_vivant[JOUEUR]-= 1;////////////
@@ -156,26 +154,40 @@ public class PanneauJeu extends JPanel implements IConfig {
 	}
 	
 	public int jouerPersoJoueur(Carte jeu, Personnage perso) {
+		
+		System.out.println("entree dans jouerperso");
+		
 		int i;
 		int resultat = 0;
 		Position positionDepart = perso.getPos();
 		int xd=positionDepart.getX();
 		int yd=positionDepart.getY();
 		Position positionCase = null; /////////////////
+		Position postemp = new Position(xd+1,yd);
 		
 		int boucle = 0;////////////////////
 		
 		perso.setAttaque(1);
 		perso.setPm(perso.getVitesse());
 		
+		jeu.Deplacement(positionDepart, postemp);
+		
 		while(perso.getAttaque()!=0 && perso.getPm() != 0 && boucle < 50000) {
+			System.out.println("while peutjouer");
 			//System.out.println("oui est dans la boucle perso");
 			/*on se place en attente d'un click sur la carte : selon la position, l'effet sera différent*/
-			while(positionCase==null || boucle < 50000) {
-				//System.out.println("clickposition active");
-				positionCase = clickPosition();
+			while(/*positionCase==null || */ boucle < 5) {
+				System.out.println("clickposition active");
+				positionCase = posbuffer;
 				
 				
+				try {
+					Thread.sleep(1000);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				
+				System.out.println("posbuffer : "+posbuffer.getX()+" | "+posbuffer.getY());
 				//positionCase = new Position(xd,yd);
 				boucle++;
 			}
@@ -254,7 +266,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Position clickPosition(){
 		posbuffer = null;
 		
-		while(posbuffer == null) {
+		//while(posbuffer == null) {
 			System.out.println("null");
 			addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
@@ -278,7 +290,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 				}
 			});
 
-		}
+		//}
 		System.out.println("on recupere click :");
 		return posbuffer;
 	}
