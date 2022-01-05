@@ -28,10 +28,11 @@ public class Dijkstra {
 	}
 	
 	private int coutPlusFaible(int distance[],boolean visiter[]) {
-		
+		/*--- Retourne l'index qui a le cout de deplacement le plus faible ---*/
 		int minIdex = -1, min=Integer.MAX_VALUE;
 		
 		for(int i=0;i<distance.length;i++) {
+			/*--- Verif que le sommet n'a pas ete visiter et que son cout est plus faible ---*/
 			if(!visiter[i] && distance[i]<min) {
 				min=distance[i];
 				minIdex=i;
