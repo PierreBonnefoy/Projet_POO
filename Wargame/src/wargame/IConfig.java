@@ -10,6 +10,9 @@ public interface IConfig {
 	Color COULEUR_TEXTE = Color.black, COULEUR_MONSTRES = Color.black;
 	Color COULEUR_HEROS = Color.red, COULEUR_HEROS_DEJA_JOUE = Color.pink;
 	Color COULEUR_EAU = Color.blue, COULEUR_FORET = Color.green, COULEUR_ROCHER = Color.gray;
+		/*--- config pour la carte ---*/
+	int PLAINE=0,FORET=1,RIVIERE=2,MONTAGNE=3,BORD=99;
+	int MAXRIVIERE=4,MAXMONTAGNE=3,MAXFORET=3;
 		/*--- config pour les personnages ---*/
 	/*Personnage.id et Personnage.nemesis*/
 	public int GARDIEN = 1, BETE = 2, INCENDIAIRE = 3, DESTRUCTEUR = 4, ENCHANTEUR = 5, COMBATTANT = 6;

@@ -91,18 +91,18 @@ public class Carte implements ICarte,IConfig{
 		for (int k = 0; k < n; k++) {
 			for (int l = 0; l < n; l++) {
 				if (carte[k][l] == null) {
-					carte[k][l] = new Element(Plaine);
+					carte[k][l] = new Element(PLAINE);
 				}
 			}
 		}
 		/*Nombre de riviere*/
-		tmp1=(int) (Math.random() * (MaxRiviere - 1)) + 1;
+		tmp1=(int) (Math.random() * (MAXRIVIERE - 1)) + 1;
 		for(int k=0;k<tmp1;k++) {
 			int positionx =(int)(Math.random() * (n - 1)) + 1;;
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<=tmp2;m++) {
-				carte[positionx][positiony]=new Element(Riviere);
+				carte[positionx][positiony]=new Element(RIVIERE);
 				positionx=voisineAlea(positionx,positiony,n).getX();
 				positiony=voisineAlea(positionx,positiony,n).getX();
 			}
@@ -110,32 +110,32 @@ public class Carte implements ICarte,IConfig{
 		
 		
 		/*Creation des montagnes*/
-		tmp1=(int) (Math.random() * (MaxMontagne - 1)) + 1;
+		tmp1=(int) (Math.random() * (MAXMONTAGNE - 1)) + 1;
 		for(int k=0;k<tmp1;k++) {
 			int positionx =(int)(Math.random() * (n - 1)) + 1;;
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<=tmp2;m++) {
-				carte[positionx][positiony]=new Element(Montagne);
+				carte[positionx][positiony]=new Element(MONTAGNE);
 				positionx=voisineAlea(positionx,positiony,n).getX();
 				positiony=voisineAlea(positionx,positiony,n).getX();
 			}
 		}
 		
 		/*Creation des forets*/
-		tmp1=(int) (Math.random() * (MaxForet - 1)) + 1;
+		tmp1=(int) (Math.random() * (MAXFORET - 1)) + 1;
 		for(int k=0;k<tmp1;k++) {
 			int positionx =(int)(Math.random() * (n - 1)) + 1;;
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<=tmp2;m++) {
-				carte[positionx][positiony]=new Element(Foret);
+				carte[positionx][positiony]=new Element(FORET);
 				positionx=voisineAlea(positionx,positiony,n).getX();
 				positiony=voisineAlea(positionx,positiony,n).getX();
 			}
 		}
 		for(int i=0;i<n;i+=2) {
-			carte[0][i]=new Element(Bord);
+			carte[0][i]=new Element(BORD);
 		}
 	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
@@ -176,7 +176,7 @@ public class Carte implements ICarte,IConfig{
 		for (int k = 0; k < n; k++) {
 			for (int l = 0; l < n; l++) {
 				if (carte[k][l] == null) {
-					carte[k][l] = new Element(Plaine);
+					carte[k][l] = new Element(PLAINE);
 				}
 			}
 		}
@@ -187,7 +187,7 @@ public class Carte implements ICarte,IConfig{
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<tmp2;m++) {
-				carte[positionx][positiony]=new Element(Riviere);
+				carte[positionx][positiony]=new Element(RIVIERE);
 				tempo=voisineAlea(positionx,positiony,n);
 				positionx=tempo.getX();
 				positiony=tempo.getY();
@@ -201,7 +201,7 @@ public class Carte implements ICarte,IConfig{
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<=tmp2;m++) {
-				carte[positionx][positiony]=new Element(Montagne);
+				carte[positionx][positiony]=new Element(MONTAGNE);
 				tempo=voisineAlea(positionx,positiony,n);
 				positionx=tempo.getX();
 				positiony=tempo.getY();
@@ -214,14 +214,14 @@ public class Carte implements ICarte,IConfig{
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
 			for(int m=0;m<=tmp2;m++) {
-				carte[positionx][positiony]=new Element(Foret);
+				carte[positionx][positiony]=new Element(FORET);
 				tempo=voisineAlea(positionx,positiony,n);
 				positionx=tempo.getX();
 				positiony=tempo.getY();
 			}
 		}
 		for(int i=0;i<n;i+=2) {
-			carte[0][i]=new Element(Bord);
+			carte[0][i]=new Element(BORD);
 		}
 	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
@@ -797,10 +797,10 @@ public class Carte implements ICarte,IConfig{
 					debut =0;
 				}
 				switch(carte[i][j].getNature()) {
-				case Bord:
+				case BORD:
 					g.setColor(java.awt.Color.white);
 					break;
-				case Riviere:
+				case RIVIERE:
 					try {
 						File file = new File("./image/m_eau_1.png");
 						BufferedImage img = ImageIO.read(file);
@@ -809,7 +809,7 @@ public class Carte implements ICarte,IConfig{
 						System.out.println(e.getMessage());
 					}
 					break;
-				case Montagne:
+				case MONTAGNE:
 					try {
 						File file = new File("./image/m_montagne_1.png");
 						BufferedImage img = ImageIO.read(file);
@@ -818,7 +818,7 @@ public class Carte implements ICarte,IConfig{
 						System.out.println(e.getMessage());
 					}
 					break;
-				case Foret:
+				case FORET:
 					try {
 						File file = new File("./image/m_foret_1.png");
 						BufferedImage img = ImageIO.read(file);
@@ -827,7 +827,7 @@ public class Carte implements ICarte,IConfig{
 						System.out.println(e.getMessage());
 					}
 					break;
-				case Plaine:
+				case PLAINE:
 					try {
 						File file = new File("./image/m_plaine_1.png");
 						BufferedImage img = ImageIO.read(file);
@@ -869,6 +869,7 @@ public class Carte implements ICarte,IConfig{
 	    		this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPm(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()-distance(posD,posA));
 	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
 	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
+	    
 	            //}
 	    }
 	}
