@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Carte implements ICarte,IConfig{
+public class Carte implements ICarte,IConfig,java.io.Serializable{
 	public Element[][] carte;
 	public int taille;
 	
@@ -182,7 +182,7 @@ public class Carte implements ICarte,IConfig{
 		}
 		
 		/*Nombre de riviere*/
-		/*for(int k=0;k<nbRiviere;k++) {
+		for(int k=0;k<nbRiviere;k++) {
 			int positionx =(int)(Math.random() * (n - 1)) + 1;;
 			int positiony =(int)(Math.random() * (n - 1)) + 1;
 			tmp2=(int)(Math.random() * ((n-positionx) - 1)) + 1;
@@ -192,7 +192,7 @@ public class Carte implements ICarte,IConfig{
 				positionx=tempo.getX();
 				positiony=tempo.getY();
 			}
-		}*/
+		}
 		
 		
 		/*Creation des montagnes*/
@@ -851,27 +851,22 @@ public class Carte implements ICarte,IConfig{
 	public boolean Appartient(Position[] test, Position pos){
 	    for(int i=0;i<6;i++){
 	        /*--- V�rif que la position pos appartient � test ---*/
-	        if(test[i].getX()==pos.getX() && test[i].getY()==pos.getY()){
+	    	if(test[i]!=null) {
+	    		if(test[i].getX()==pos.getX() && test[i].getY()==pos.getY()){
 	            return true;
-	        }
+	    		}
+	    	}
 	    }
 	    return false;
 	}
 
 	public void Deplacement(Position posD, Position posA){
-	    if(this.carte[posD.getX()][posD.getY()].getPersonnage(0)!=null && distance(posD,posA)<=this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()){
-	        /*--- R�cup des position possible � partir de la position de D�part ---*/
-	        //Position[] test = this.PositionPossible(posD);
-	        /*--- V�rif que la position d'Arriv�e appartient bien aux positions possible � partir de posD ---*/
-	        //if(this.Appartient(test,posA)){
-	            /*--- D�placement du personnage ---*/
-	    		this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPos(posA);
-	    		this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPm(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()-distance(posD,posA));
-	            this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
-	            this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
-	    
-	            //}
-	    }
+	    /*--- D�placement du personnage ---*/
+	    this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPos(posA);
+	    this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPm(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()-distance(posD,posA));
+	    this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
+	    this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
+	     
 	}
 
 }

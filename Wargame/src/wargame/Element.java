@@ -1,6 +1,6 @@
 package wargame;
 
-public class Element implements IConfig{
+public class Element implements IConfig,java.io.Serializable{
 	/*-- Liste des variables --*/
 	/*Element désigne la case du plateau*/
 	private int occupe; /*un entier entre 0 et 3 qui indique l'occupation de la case. Si occupe = 3 : la case est pleine et rien ne peut aller dessus. Lorsqu'une unité va sur une case, il augmente occupe de sa Taille.*/

@@ -1,6 +1,6 @@
 package wargame;
 
-public class Personnage implements IConfig{
+public class Personnage implements IConfig,java.io.Serializable{
 	/*Cette classe est TEMPORAIRE : on decidera plus tard de si on la conserve sous ce nom ou si on met les fonctions dans une autre classe.*/
 	
 	private int pvMax;  //les PV totaux du personnage
