@@ -907,7 +907,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*Affiche les informations à propos de Personnage this*/
 	public String toString() {
 		String chaine = "";
-		chaine="<html> nom : "+this.nomPersonnage()
+		chaine="<br>nom : "+this.nomPersonnage()
 		+"<br>PV : "+this.pvActuel +"/ "+this.pvMax
 		+"<br>ATK : "+this.degat
 		+"<br>DEF : "+this.protection+ " | "+this.blindage
@@ -919,7 +919,9 @@ public class Personnage implements IConfig,java.io.Serializable{
 		+"<br>PM : "+this.pm + " / "+this.vitesse
 		+"<br>Exp : "+this.exp + " / 100"
 		+"<br>Niveau : "+this.getNiveau()
-		+"<br>Nemesis : "+this.nomNemesis()+"<html>";
+		+"<br>Nemesis : "+this.nomNemesis()
+		+"<br>Position : "+this.position.getX()+":"+this.position.getY()
+		+"<br>";
 		return chaine;
 	}
 	

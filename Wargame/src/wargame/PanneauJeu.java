@@ -43,7 +43,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Personnage vampyrion;
 	public Personnage predator;
 	public Personnage worm;
-	JLabel infoLabel = new JLabel (perso.toString());
+	JLabel infoLabel = new JLabel ("<html>"+perso.toString()+"<html>");
 	
 	public PanneauJeu(){
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -126,6 +126,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		if(perso.getEtat() != MORT) {
 			jouable=true;
+			perso.setAttaque(1);
+			perso.setPm(perso.getVitesse());
 		}
 		//int boucle = 0;
 		//System.out.println("entree dans tour de jeux ");
@@ -201,7 +203,49 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		//while(posbuffer == null) {
 			System.out.println("null");
-			addMouseListener(new MouseAdapter() {
+			
+			addMouseMotionListener(new MouseAdapter() {
+				public void mouseMoved(MouseEvent e) {
+					/*----Recuperation de la case dans posbuffer---*/
+					Position pos2=null;
+					Position positionCase=null;
+					
+
+					remove(infoLabel);
+					Personnage perso=equipe[indicePerso][indiceJoueur];
+					infoLabel.setText("<html>"+perso.toString()+"<html>");
+					add(infoLabel);
+					validate();
+					int y1,y2,x1,x2,pair;
+					/*---Recupere les y qui entoure---*/
+					y1=14+24*((e.getY()-14)/24);
+					y2=14+24*(1+(e.getY()-14)/24);
+					
+					/*---Verifie si c'est la premiere ou la 2eme lignes qui est decal�---*/
+					pair=Math.floorMod(y1/24,2);
+					/*---Recupere les x qui l'entoure---*/
+					x1=28*((e.getX())/28);
+					x2=28*(1+(e.getX())/28);
+					/*---Verifie parmi les 4 voisins, lequel est le plus proche---*/
+					pos2=ppV(x1,x2,y1,y2,e.getX(),e.getY(),pair);
+					//System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
+					//System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
+					posbuffer = new Position(pos2.getX()/28,pos2.getY()/24);
+					System.out.println("position case : "+pos2.getX()/28+":"+pos2.getY()/24);
+					System.out.println("case : "+jeu.carte[pos2.getX()/28][pos2.getY()/24].getNature()+" ; "+jeu.carte[pos2.getX()/28][pos2.getY()/24].getOccupe());
+					if(jeu.carte[pos2.getX()/28][pos2.getY()/24].getOccupe() != 0) {
+						if(perso.nomPersonnage() != jeu.carte[pos2.getX()/28][pos2.getY()/24].getPersonnage(0).nomPersonnage()) {
+						remove(infoLabel);
+						Personnage cible=jeu.carte[pos2.getX()/28][pos2.getY()/24].getPersonnage(0);
+						infoLabel.setText("<html>"+perso.toString()+cible.toString()+"<html>");
+						add(infoLabel);
+						validate();
+						}
+					}
+			
+			}});
+			
+			addMouseListener(new MouseAdapter() {	
 				public void mouseReleased(MouseEvent e) {
 					/*----Recuperation de la case dans posbuffer---*/
 					Position pos2=null;
@@ -210,7 +254,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 
 					remove(infoLabel);
 					Personnage perso=equipe[indicePerso][indiceJoueur];
-					infoLabel.setText(perso.toString());
+					infoLabel.setText("<html>"+perso.toString()+"<html>");
 					add(infoLabel);
 					validate();
 					int y1,y2,x1,x2,pair;
@@ -232,7 +276,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 					
 					
 					
-					/*----Mouvement ou attaque du perso----*/
+					/*----Jeu du perso----*/
 					if(jouable==true) {
 						System.out.println("joueur n� " + indiceJoueur + "joue avec le perso : "+perso.nomPersonnage());
 						System.out.println("je suis a la position : "  + perso.getPos().getX()+ " " + perso.getPos().getY());
@@ -253,13 +297,13 @@ public class PanneauJeu extends JPanel implements IConfig {
 								else {
 									perso.passeTour();
 								}
-								infoLabel.setText(perso.toString());
+								infoLabel.setText("<html>"+perso.toString()+"<html>");
 								add(infoLabel);
 								validate();
 								repaint();
 							}
-							/*le perso a clique sur une case ou se trouve un personnage, on verifie si elle est a portee d 'attaque*/
-							else if(jeu.carte[xa][yd].getOccupe() != 0 && perso.getPortee() >= jeu.distance(perso.getPos(),positionCase)) {
+							/*le perso a clique sur une case ou se trouve un personnage, on verifie si elle est a portee d'attaque et sil peut attaquer*/
+							else if(jeu.carte[xa][yd].getOccupe() != 0 /*&& perso.getPortee() >= jeu.distance(perso.getPos(),positionCase) */ && perso.getAttaque() > 0) {
 								/*si le personnage est un ennemi*/
 								Personnage cible = jeu.carte[positionCase.getX()][positionCase.getY()].getPersonnage(0);
 								if(cible.getJoueur() != indiceJoueur) {
@@ -274,14 +318,14 @@ public class PanneauJeu extends JPanel implements IConfig {
 									/*si le defenseur peut riposter, il riposte*/
 										if(cible.getPortee() >= jeu.distance(perso.getPos(),positionCase) 
 												&& cible.getRiposte() > 0) {
-											System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :"+jeu.distance(perso.getPos(),positionCase));
+											System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :"/*+jeu.distance(perso.getPos(),positionCase)*/);
 											
 											System.out.println(cible.nomPersonnage()+" riposte contre "+perso.nomPersonnage());
 											mort[1] = cible.attaque(perso); //riposte
 											cible.setRiposte(cible.getRiposte()-1);
 										}
 										else {
-											System.out.println(cible+" ne peut pas riposter contre "+perso.nomPersonnage());
+											System.out.println(cible.nomPersonnage()+" ne peut pas riposter contre "+perso.nomPersonnage());
 										}
 									}
 									repaint();
@@ -289,15 +333,17 @@ public class PanneauJeu extends JPanel implements IConfig {
 								else {
 									perso.encouragement(cible);
 								}
-								infoLabel.setText(perso.toString());
+								perso.setAttaque(perso.getAttaque()-1);
+								infoLabel.setText("<html>"+perso.toString()+"<html>");
 								add(infoLabel);
 								validate();
 								repaint();
 							}
 							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
-							else if(jeu.carte[xa][ya].getOccupe() == 0 && jeu.carte[xa][ya].getNature() != MONTAGNE && jeu.carte[xa][ya].getNature() != RIVIERE && perso.getPm() !=0 ) {
+							else if(jeu.carte[xa][ya].getOccupe() == 0 && (jeu.carte[xa][ya].getNature() != MONTAGNE || jeu.carte[xa][ya].getNature() != RIVIERE || perso.chemin()) && perso.getPm() >0 /*&& (jeu.distance(perso.getPos(),positionCase) == 1)*/ ) {
+								System.out.println(perso.nomPersonnage()+" se deplace en "+positionCase.getX()+":"+positionCase.getY());
 								jeu.Deplacement(new Position(xd,yd), positionCase);
-								infoLabel.setText(perso.toString());
+								infoLabel.setText("<html>"+perso.toString()+"<html>");
 								add(infoLabel);
 								validate();
 								repaint();
