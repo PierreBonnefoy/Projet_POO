@@ -1,7 +1,7 @@
 package wargame;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -108,6 +108,57 @@ public class PanneauJeu extends JPanel implements IConfig {
 				jeu.carte[equipe[i][j].getPos().getX()][equipe[i][j].getPos().getY()].rajoutPersonnage(equipe[i][j]);
 			}
 		}
+		
+		JButton Save = new JButton("Save");
+		
+		Save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FileOutputStream file = new FileOutputStream("./save.ser");
+					ObjectOutputStream save = new ObjectOutputStream(file);
+					save.writeObject(nb_vivant);
+					save.write(indicePerso);
+					save.write(indiceJoueur);
+					save.writeObject(jeu);
+					save.writeObject(equipe);
+					save.close();
+					file.close();
+				}catch(IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		);
+		
+		JButton Load = new JButton("Load");
+		
+		Load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FileInputStream file = new FileInputStream("./save.ser");
+					ObjectInputStream load = new ObjectInputStream(file);
+					nb_vivant = (int[]) load.readObject();
+					indicePerso = (int) load.read();
+					indiceJoueur = (int) load.read();
+					jeu = (Carte) load.readObject();
+					equipe = (Personnage[][]) load.readObject();
+					repaint();
+					load.close();
+					file.close();
+				}catch(IOException ex) {
+					ex.printStackTrace();
+					return;
+				}catch(ClassNotFoundException exe) {
+					System.out.println("Une class n'a pas ete trouve !");
+					exe.printStackTrace();
+					return;
+				}
+			}
+		}
+		);
+		add(Save);
+		add(Load);
+		
 		clickPosition();
 		repaint();	
 		tourDeJeux();
