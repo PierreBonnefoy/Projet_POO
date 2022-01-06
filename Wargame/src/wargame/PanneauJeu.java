@@ -12,7 +12,7 @@ import java.lang.Thread;
 public class PanneauJeu extends JPanel implements IConfig {
 	public static final int taille_fenetre=800;
 	public int[] nb_vivant = new int[NBJOUEUR];
-	public int indicePerso =1;
+	public int indicePerso =NBPERSONNAGE;
 	public int indiceJoueur=NBJOUEUR-1;
 	public Carte jeu=new Carte(30,4,2,2);
 	boolean jouable=true;

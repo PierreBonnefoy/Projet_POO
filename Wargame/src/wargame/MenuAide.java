@@ -21,7 +21,8 @@ public class MenuAide extends JPanel implements IConfig{
 				"Les Ennemis jouent une équipe semblable, et les créatures de chaque équipe jouent à tour de rôle.<br>\r\n" + 
 				"Lors de son tour de jeux, un Personnage agit selon l’endroit où l’on clique avec la souris : \r\n" + 
 				"<ul><li>Se déplacer (cliquez sur une case vide accessible)</li>\r\n" + 
-				"<li>Attaquer (cliquez sur une case occupée (par un ennemi)</li><li>Passer son tour (cliquez sur le personnage</li></ul></html>");
+				"<li>Attaquer (cliquez sur une case occupée (par un ennemi)</li><li>Passer son tour (cliquez sur le personnage</li></ul>"
+				+ "</html>");
 		JButton retour = new JButton ("retour");
 		this.setBackground(new Color(127, 127, 127));
 		Explication.setForeground(new Color(251, 243, 124));

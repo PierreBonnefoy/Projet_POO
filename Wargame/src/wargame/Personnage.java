@@ -734,7 +734,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case ARTILLEUR:
 			if(this.joueur == 0) {
-				chaine = "HOMME-LEZARD (artilleur-donjon)";
+				chaine = "SAURUS (artilleur-donjon)";
 			}
 			else {
 				chaine = "SUCCUBE (artilleur-enfer)";
@@ -825,7 +825,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 				chaine = "SUCCUBE\n";
 			}
 			else {
-				chaine = "HOMME-LEZARD\n";
+				chaine = "SAURUS\n";
 			}
 			break;
 		case DANCELAME:
