@@ -40,7 +40,6 @@ public class Element implements IConfig,java.io.Serializable{
 		int i;
 		if(this.occupe+perso.getTaille()<=3) {
 			this.occupe+=perso.getTaille();
-			System.out.println("Taille du perso : "+perso.getTaille());
 			for(i=0;this.personnage[i]!=null;i++) {
 			}
 			this.personnage[i]=perso;

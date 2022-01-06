@@ -4,7 +4,7 @@ public class IA implements IConfig{
 	
 	public IA() {}
 	
-	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort) {
+	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable) {
 		Personnage courant = equipe[indicePerso][IA];
 		Personnage cible=null;
 		int x=0;
@@ -27,11 +27,10 @@ public class IA implements IConfig{
 		}
 		
 		while(courant.getPm()>0) {
-			for(int i=0;i<NBPERSONNAGE;i++) {
+			
 				/*--- On test si un perso ennemi est à pertée ---*/
-				if(jeu.distance(courant.getPos(),equipe[i][JOUEUR].getPos())<=courant.getPortee() && courant.getAttaque()>0) {
+				if(jeu.distance(courant.getPos(),cible.getPos())<=courant.getPortee() && courant.getAttaque()>0) {
 					/*--- Si oui on l'attaque ---*/
-					cible = equipe[i][JOUEUR];
 					if(cible.getJoueur() != IA) {
 						System.out.println(courant.nomPersonnage()+" attaque "+cible.nomPersonnage());
 						courant.setAttaque(courant.getAttaque()-1); //attaque
@@ -42,12 +41,18 @@ public class IA implements IConfig{
 						}
 						else {
 						/*si le defenseur peut riposter, il riposte*/
-							if(cible.getPortee() >= jeu.distance(courant.getPos(),cible.getPos()) && cible.getRiposte() > 0) {
+							if(cible.getPortee() >= jeu.distance(courant.getPos(),cible.getPos()) && cible.getRiposte() > 0 && !cible.embrasement()) {
 								System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :"/*+jeu.distance(perso.getPos(),positionCase)*/);
 								
 								System.out.println(cible.nomPersonnage()+" riposte contre "+courant.nomPersonnage());
 								mort[1] = cible.attaque(courant); //riposte
 								cible.setRiposte(cible.getRiposte()-1);
+								
+								if(mort[1]) {
+									System.out.println(cible.nomPersonnage()+" a tue en ripostant "+courant.nomPersonnage());
+									jeu.carte[courant.getPos().getX()][courant.getPos().getY()].enleverPersonnage(courant.getId(), courant.getJoueur());
+									courant.passeTour();
+								}
 							}
 							else {
 								System.out.println(cible.nomPersonnage()+" ne peut pas riposter contre "+courant.nomPersonnage());
@@ -71,11 +76,22 @@ public class IA implements IConfig{
 							}
 						}
 					}
+					if(best != null) {
 					jeu.Deplacement(courant.getPos(), best);
-					courant.setPm(courant.getPm()-1);
+					}
+					else {
+						courant.passeTour();
+					}
 				}
-			}
+				
 		}
 		courant.passeTour();
+		if(courant.getAttaque()==0 && courant.getPm() == 0) {
+			courant.entrainement();
+			courant.regeneration();
+			courant.recupRiposte();
+			jouable=false;
+		}
+
 	}
 }

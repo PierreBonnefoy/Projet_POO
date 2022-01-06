@@ -1,7 +1,7 @@
 package wargame;
 import java.awt.Color;
 public interface IConfig {
-	int LARGEUR_CARTE = 25; int HAUTEUR_CARTE = 15; // en nombre de cases
+	int LARGEUR_CARTE = 30; int HAUTEUR_CARTE = 15; // en nombre de cases
 	int LARGEUR_FENETRE = 1300 ; int HAUTEUR_FENETRE = 800;
 	int NB_PIX_CASE = 20;
 	int POSITION_X = 100; int POSITION_Y = 50; // Position de la fen�tre
@@ -12,7 +12,7 @@ public interface IConfig {
 	Color COULEUR_EAU = Color.blue, COULEUR_FORET = Color.green, COULEUR_ROCHER = Color.gray;
 		/*--- config pour la carte ---*/
 	int PLAINE=0,FORET=1,RIVIERE=2,MONTAGNE=3,BORD=99;
-	int MAXRIVIERE=4,MAXMONTAGNE=3,MAXFORET=3;
+	int MAXRIVIERE=36,MAXMONTAGNE=32,MAXFORET=32;
 		/*--- config pour les personnages ---*/
 	/*Personnage.id et Personnage.nemesis*/
 	public int GARDIEN = 1, BETE = 2, INCENDIAIRE = 3, DESTRUCTEUR = 4, ENCHANTEUR = 5, COMBATTANT = 6;

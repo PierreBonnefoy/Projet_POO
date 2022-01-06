@@ -134,8 +134,11 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				positiony=voisineAlea(positionx,positiony,n).getX();
 			}
 		}
-		for(int i=0;i<n;i+=2) {
+		for(int i=0;i<n;i++) {
 			carte[0][i]=new Element(BORD);
+			carte[i][0]=new Element(BORD);
+			carte[i][LARGEUR_CARTE-1]=new Element(BORD);
+			carte[LARGEUR_CARTE-1][i]=new Element(BORD);
 		}
 	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
@@ -220,9 +223,19 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				positiony=tempo.getY();
 			}
 		}
-		for(int i=0;i<n;i+=2) {
+		for(int i=0;i<n;i++) {
 			carte[0][i]=new Element(BORD);
+			carte[i][0]=new Element(BORD);
+			carte[i][LARGEUR_CARTE-1]=new Element(BORD);
+			carte[LARGEUR_CARTE-1][i]=new Element(BORD);
 		}
+		for(int i=1;i<n-1;i++) {
+			carte[1][i]=new Element(PLAINE);
+			carte[i][1]=new Element(PLAINE);
+			carte[i][LARGEUR_CARTE-2]=new Element(PLAINE);
+			carte[LARGEUR_CARTE-2][i]=new Element(PLAINE);
+		}
+		
 	/*	carte[6][5].rajoutPersonnage(new Personnage(1,1,5,5));
 		carte[6][6].rajoutPersonnage(new Personnage(2,1,6,6));
 		carte[6][7].rajoutPersonnage(new Personnage(3,1,5,6));
@@ -349,7 +362,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		if(pos.getY()>0 && pos.getY()>0)
 		{
 			if(Math.floorMod(pos.getY(), 2)==0) {
-				if(this.carte[pos.getX()-1][pos.getY()-1].getOccupe()==0) {
+				if(this.carte[pos.getX()-1][pos.getY()-1].getOccupe()==0 && this.carte[pos.getX()-1][pos.getY()-1].getNature() != BORD &&
+						((this.carte[pos.getX()-1][pos.getY()-1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()-1][pos.getY()-1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[0].setX(pos.getX()-1);
 					tmp[0].setY(pos.getY()-1);
 				}
@@ -358,7 +373,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				}
 			}
 			else {
-				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0 && this.carte[pos.getX()][pos.getY()-1].getNature() != BORD &&
+						((this.carte[pos.getX()][pos.getY()-1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()][pos.getY()-1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[0].setX(pos.getX());
 					tmp[0].setY(pos.getY()-1);
 				}
@@ -370,7 +387,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		/*-- Case haut droite --*/
 		if(pos.getX()<this.taille-1 && pos.getY()>0) {
 			if(Math.floorMod(pos.getY(), 2)==0) {
-				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0) {
+				if(this.carte[pos.getX()][pos.getY()-1].getOccupe()==0 &&  this.carte[pos.getX()][pos.getY()-1].getNature() != BORD &&
+						((this.carte[pos.getX()][pos.getY()-1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()][pos.getY()-1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[1].setX(pos.getX());
 					tmp[1].setY(pos.getY()-1);
 				}
@@ -379,7 +398,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				}
 			}
 			else {
-				if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0) {
+				if(this.carte[pos.getX()+1][pos.getY()-1].getOccupe()==0 && this.carte[pos.getX()+1][pos.getY()-1].getNature() != BORD &&
+						((this.carte[pos.getX()+1][pos.getY()-1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()+1][pos.getY()-1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[1].setX(pos.getX()+1);
 					tmp[1].setY(pos.getY()-1);
 				}
@@ -392,7 +413,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		/*-- Case gauche --*/
 		if(pos.getX()>0)
 		{
-			if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0) {
+			if(this.carte[pos.getX()-1][pos.getY()].getOccupe()==0 && this.carte[pos.getX()-1][pos.getY()].getNature() != BORD &&
+					((this.carte[pos.getX()-1][pos.getY()].getNature() != MONTAGNE &&
+					this.carte[pos.getX()-1][pos.getY()].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 				tmp[2].setX(pos.getX()-1);
 				tmp[2].setY(pos.getY());
 			}
@@ -403,7 +426,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		/*-- Case droite --*/
 		if(pos.getX()<this.taille-1)
 		{
-			if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0) {
+			if(this.carte[pos.getX()+1][pos.getY()].getOccupe()==0 && this.carte[pos.getX()+1][pos.getY()].getNature() != BORD &&
+					((this.carte[pos.getX()+1][pos.getY()].getNature() != MONTAGNE &&
+					this.carte[pos.getX()+1][pos.getY()].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 				tmp[3].setX(pos.getX()+1);
 				tmp[3].setY(pos.getY());
 			}
@@ -415,7 +440,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		if(pos.getY()<this.taille-1 && pos.getX()>0)
 		{
 			if(Math.floorMod(pos.getY(), 2)==0) {
-				if(this.carte[pos.getX()-1][pos.getY()+1].getOccupe()==0) {
+				if(this.carte[pos.getX()-1][pos.getY()+1].getOccupe()==0 && this.carte[pos.getX()-1][pos.getY()+1].getNature() != BORD &&
+						((this.carte[pos.getX()-1][pos.getY()+1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()-1][pos.getY()+1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[4].setX(pos.getX()-1);
 					tmp[4].setY(pos.getY()+1);
 				}
@@ -424,7 +451,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				}
 			}
 			else {
-				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0 &&  this.carte[pos.getX()][pos.getY()+1].getNature() != BORD &&
+						((this.carte[pos.getX()][pos.getY()+1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()][pos.getY()+1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[4].setX(pos.getX());
 					tmp[4].setY(pos.getY()+1);
 				}
@@ -436,7 +465,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		/*-- Case bas droite --*/
 		if(pos.getY()<this.taille-1 && pos.getX()<this.taille-1) {
 			if(Math.floorMod(pos.getY(), 2)==0) {
-				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0) {
+				if(this.carte[pos.getX()][pos.getY()+1].getOccupe()==0 &&  this.carte[pos.getX()][pos.getY()+1].getNature() != BORD &&
+						((this.carte[pos.getX()][pos.getY()+1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()][pos.getY()+1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[5].setX(pos.getX());
 					tmp[5].setY(pos.getY()+1);
 				}
@@ -445,7 +476,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 				}
 			}
 			else {
-				if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0) {
+				if(this.carte[pos.getX()+1][pos.getY()+1].getOccupe()==0 && this.carte[pos.getX()+1][pos.getY()+1].getNature() != BORD &&
+						((this.carte[pos.getX()+1][pos.getY()+1].getNature() != MONTAGNE &&
+						this.carte[pos.getX()+1][pos.getY()+1].getNature() != RIVIERE) || this.carte[pos.getX()][pos.getY()].getPersonnage(0).chemin())) {
 					tmp[5].setX(pos.getX()+1);
 					tmp[5].setY(pos.getY()+1);
 				}
@@ -862,11 +895,11 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 
 	public void Deplacement(Position posD, Position posA){
 	    /*--- D�placement du personnage ---*/
-	    this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPos(posA);
-	    this.carte[posD.getX()][posD.getY()].getPersonnage(0).setPm(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getPm()-distance(posD,posA));
 	    this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
 	    this.carte[posD.getX()][posD.getY()].enleverPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0).getId(),this.carte[posD.getX()][posD.getY()].getPersonnage(0).getJoueur());
-	     
+	    this.carte[posA.getX()][posA.getY()].getPersonnage(0).setPos(posA);
+	    int i = this.carte[posA.getX()][posA.getY()].getPersonnage(0).getPm()-1;
+	    this.carte[posA.getX()][posA.getY()].getPersonnage(0).setPm(i);
 	}
 
 }
