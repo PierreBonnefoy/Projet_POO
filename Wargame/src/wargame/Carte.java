@@ -881,18 +881,6 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		}
 	}
 
-	public boolean Appartient(Position[] test, Position pos){
-	    for(int i=0;i<6;i++){
-	        /*--- V�rif que la position pos appartient � test ---*/
-	    	if(test[i]!=null) {
-	    		if(test[i].getX()==pos.getX() && test[i].getY()==pos.getY()){
-	            return true;
-	    		}
-	    	}
-	    }
-	    return false;
-	}
-
 	public void Deplacement(Position posD, Position posA){
 	    /*--- D�placement du personnage ---*/
 	    this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));

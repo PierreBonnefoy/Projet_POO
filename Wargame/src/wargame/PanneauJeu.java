@@ -59,6 +59,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		mort = new boolean[NBJOUEUR];
 		equipe = new Personnage[NBPERSONNAGE][NBJOUEUR];
+		
 		abomination = new Personnage(GARDIEN,IA,28,19);
 		mutilateur = new Personnage(BETE,IA,28,20);
 		demoniste = new Personnage(INCENDIAIRE,IA,28,21);
