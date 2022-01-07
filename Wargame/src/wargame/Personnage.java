@@ -949,44 +949,44 @@ public class Personnage implements IConfig,java.io.Serializable{
 		String chaine ="";
 		switch(this.id) {
 		case GARDIEN:
-			chaine = "	Réplique : possède 3 ripostes au lieu d'une seule.\n"
-					+ "	Régénération : au début de chaque tour, se soigne de 1+1D6.";
+			chaine = "	-Réplique : possède 3 ripostes<br> au lieu d'une seule.<br>"
+					+ "	-Régénération : au début de chaque tour,<br> se soigne de 1+1D6.<br>";
 			break;
 		case BETE:
-			chaine = "	Course : Augmente de 1 sa vitesse après avoir perdu 50% de ses PV max (cumulable).\n"
-					+ "	Meurtrissure : Ralentie de 1 les ennemis attaqué (jusqu'à une vitesse de 3).";
+			chaine = "	-Course : Augmente de 1 sa vitesse après<br> avoir perdu 50% de ses PV max.<br>"
+					+ "	-Meurtrissure : Ralentie de 1 les ennemis<br> attaqué (jusqu'à une vitesse de 3).<br>";
 			break;
 		case INCENDIAIRE:
-			chaine = "	Perce-armure : Les attaques ignorent la défense ennemie.\n"
-					+ "	Embrasement : les attaques ne peuvent pas générer de riposte ennemie.";
+			chaine = "	-Perce-armure : Les attaques ignorent<br> la défense ennemie.<br>"
+					+ "	-Embrasement : les attaques ne peuvent<br> pas générer de riposte ennemie.<br>";
 			break;
 		case DESTRUCTEUR:
-			chaine = "	Perce-armure : Les attaques ignorent la défense ennemie.\n"
-					+ "	Rage : augmente de 1 ses dégâts à chaque attaque subie (cumulable).";
+			chaine = "	-Perce-armure : Les attaques ignorent<br> la défense ennemie.<br>"
+					+ "	-Rage : augmente de 1 ses dégâts à <br>chaque attaque subie (cumulable).<br>";
 			break;
 		case ENCHANTEUR:
-			chaine = "	Vigueur : Les attaques soignent un Personnage allié à 2 de distance de 5 PV.\n"
-					+ "	Encouragement : Se reposer confère 5 d'Expérience aux alliés à 2 de distance.";
+			chaine = "	-Vigueur : Les attaques soignent un<br> Personnage allié à 2 de distance de 5 PV.<br>"
+					+ "	-Encouragement : Se reposer confère<br> 5 d'Expérience aux alliés à 2 de distance.<br>";
 			break;
 		case COMBATTANT:
-			chaine = "	Réplique : possède 3 ripostes au lieu d'une seule.\n"
-					+ "	Entrainement : au début de chaque tour, gagne 5 d'Expérience.";
+			chaine = "	-Réplique : possède 3 ripostes au<br> lieu d'une seule.<br>"
+					+ "	-Entrainement : au début de chaque<br> tour, gagne 5 d'Expérience.<br>";
 			break;
 		case ARTILLEUR:
-			chaine = "	Assassin : Inflige 5 dégât supplémentaire aux ennemis avec moins de 50% de leurs PV max.\n"
-					+ "	Précision : gagne de l'Expérience bonus selon la taille des cibles attaquées. Augmente sa portée en gagnant un niveau.";
+			chaine = "	-Assassin : Inflige 5 dégât supplémentaire<br> aux ennemis avec moins de 50% de leurs PV max.<br>"
+					+ "	-Précision : gagne de l'Expérience bonus<br> selon la taille des cibles attaquées et <br>augmente sa portée en gagnant un niveau.<br>";
 			break;
 		case DANCELAME:
-			chaine = "	Drain : se soigne de 25% des dégâts infligés.\n"
-					+ "	Esquive : Lorsqu'il ne riposte pas, il possède 20% de chance d'esquiver l'attaque subie.";
+			chaine = "	-Drain : se soigne de 25% des dégâts infligés.<br>"
+					+ "	-Esquive : Lorsqu'il ne riposte pas,<br> il possède 20% de chance d'esquiver l'attaque subie.<br>";
 			break;
 		case CHASSEUR:
-			chaine = "	Course : Augmente de 1 sa vitesse après avoir perdu 50% de ses PV max (cumulable).\n"
-					+ "	Assassin : Inflige 5 dégât supplémentaire aux ennemis avec moins de 50% de leurs PV max..";
+			chaine = "	-Course : Augmente de 1 sa vitesse <br>après avoir perdu 50% de ses PV max (cumulable).<br>"
+					+ "	-Assassin : Inflige 5 dégât supplémentaire<br> aux ennemis avec moins de 50% de leurs PV max.<br>";
 			break;
 		case ECLAIREUR:
-			chaine = "	Maître des chemin : Peut se déplacer sur n'importe quel terrain.\n"
-					+ "	Foudroiement : La première attaque du personnage et ses ripostes font 6 degats supplémentaires";
+			chaine = "	-Maître des chemin : Peut se déplacer sur<br> n'importe quel terrain.<br>"
+					+ "	-Foudroiement : Si le personnage peut<br> riposter, il fait 5 degats supplémentaires<br>";
 			break;
 		}
 		return chaine;
@@ -995,13 +995,13 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*Affiche les informations à propos de Personnage this*/
 	public String toString() {
 		String chaine = "";
-		chaine="<br>nom : "+this.nomPersonnage()
-		+"<br>PV : "+this.pvActuel +"/ "+this.pvMax
+		chaine="<br><h3> "+this.nomPersonnage()
+		+"</h3><br>PV : "+this.pvActuel +"/ "+this.pvMax
 		+"<br>ATK : "+this.degat
 		+"<br>DEF : "+this.protection+ " | "+this.blindage
 		+"<br>Taille : " +this.taille
 		+"<br>Initiative : "+this.id
-		+"<br>Porte : "+this.portee
+		+"<br>Porte: "+this.portee
 		+"<br>Vision : "+this.vision
 		+"<br>Riposte : "+this.riposte
 		+"<br>PM : "+this.pm + " / "+this.vitesse
@@ -1009,8 +1009,10 @@ public class Personnage implements IConfig,java.io.Serializable{
 		+"<br>Niveau : "+this.getNiveau()
 		+"<br>Nemesis : "+this.nomNemesis()
 		+"<br>Position : "+this.position.getX()+":"+this.position.getY()
+		+"<br><br>"+this.capacite()
 		+"<br>";
 		return chaine;
 	}
+
 	
 }
