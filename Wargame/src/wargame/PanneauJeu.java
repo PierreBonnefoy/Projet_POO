@@ -44,6 +44,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Personnage predator;
 	public Personnage worm;
 	JLabel infoLabel = new JLabel ("<html>"+perso.toString()+"<html>");
+	JPanel boutonPanel = new JPanel();
+	JPanel infoPanel = new JPanel();
+	Icon icon;
 	
 	public PanneauJeu(){
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -55,7 +58,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 		this.setBackground(Color.black);
 		/*initialisation du tableau d'equipe*/
 		
-		add(infoLabel);
 		
 		mort = new boolean[NBJOUEUR];
 		equipe = new Personnage[NBPERSONNAGE][NBJOUEUR];
@@ -157,9 +159,26 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		}
 		);
-		add(Save);
-		add(Load);
+		JButton Quit = new JButton("Quitter");
 		
+		Quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		}
+		);
+		JSplitPane splitVert = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		infoPanel.setBackground(Color.gray);
+		icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+		infoLabel.setIcon(icon);
+		infoPanel.add(infoLabel);
+		boutonPanel.setBackground(Color.gray);
+		boutonPanel.add(Save);
+		boutonPanel.add(Load);
+		boutonPanel.add(Quit);
+		splitVert.add(infoPanel);
+		splitVert.add(boutonPanel);
+		add(splitVert);
 		clickPosition();
 		repaint();	
 		tourDeJeux();
@@ -171,7 +190,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		if(indiceJoueur==NBJOUEUR) {
 			indiceJoueur=0;
 			indicePerso-=1;
-			System.out.println("dans le if, indiceperso : "+indicePerso+" ; indicejoueur :"+indiceJoueur);
+			//System.out.println("dans le if, indiceperso : "+indicePerso+" ; indicejoueur :"+indiceJoueur);
 			//indicePerso-=1;
 			if(indicePerso<0) {
 				indicePerso=NBPERSONNAGE-1;
@@ -190,7 +209,14 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		
 		if(nb_vivant[JOUEUR]==0 || nb_vivant[IA]==0) {
-			System.exit(0);
+			JPanel fin = new JPanel();
+			if(nb_vivant[JOUEUR]==0) {
+				//VICTOIRE IA
+				
+			}
+			else {
+				//VICTOIRE JOUEUR
+			}
 		}
 		if(perso.getEtat() != MORT) {
 			
@@ -199,7 +225,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 				perso.setAttaque(1);
 				perso.setPm(perso.getVitesse());
 				jouable = true;
-				robot.tour(jeu,equipe,indicePerso,mort,jouable);
+				robot.tour(jeu,equipe,indicePerso,mort,jouable,nb_vivant);
 				tourDeJeux();
 			}
 			else {
@@ -273,7 +299,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		posbuffer = null;
 		
 		//while(posbuffer == null) {
-			System.out.println("null");
+			//System.out.println("null");
 			
 			addMouseMotionListener(new MouseAdapter() {
 				public void mouseMoved(MouseEvent e) {
@@ -285,7 +311,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 					remove(infoLabel);
 					Personnage perso=equipe[indicePerso][indiceJoueur];
 					infoLabel.setText("<html>"+perso.toString()+"<html>");
-					add(infoLabel);
+					icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+					infoLabel.setIcon(icon);
+					infoPanel.add(infoLabel);
 					validate();
 					int y1,y2,x1,x2,pair;
 					/*---Recupere les y qui entoure---*/
@@ -302,17 +330,19 @@ public class PanneauJeu extends JPanel implements IConfig {
 					//System.out.println("proche x = "+pos2.getX()+"proche y = "+pos2.getY());
 					//System.out.println("case = ["+pos2.getX()/28+","+(pos2.getY()/24)+"]");
 					posbuffer = new Position(pos2.getX()/28,pos2.getY()/24);
-					if(pos2.getX()/28 <= jeu.taille-1 && pos2.getY()/24 <= jeu.taille-1 && pos2.getX()/28 > -1 && pos2.getY()/28 > -1) {
-						System.out.println("position case : "+pos2.getX()/28+":"+pos2.getY()/24);
+					if(pos2.getX()/28 <= jeu.taille-1 && pos2.getY()/24 <= jeu.taille-1 && pos2.getX()/28 > -1 && pos2.getY()/28 > -1 && jeu.carte[pos2.getX()/28][pos2.getY()/24].getEtat(JOUEUR)==VISIBLE ) {
+						//System.out.println("position case : "+pos2.getX()/28+":"+pos2.getY()/24);
 						//System.out.println("taille carte : "+jeu.taille);
-						System.out.println("case : nature="+jeu.carte[pos2.getX()/28][pos2.getY()/24].getNature()+" ; occupation="+jeu.carte[pos2.getX()/28][pos2.getY()/24].getOccupe());
+						//System.out.println("case : nature="+jeu.carte[pos2.getX()/28][pos2.getY()/24].getNature()+" ; occupation="+jeu.carte[pos2.getX()/28][pos2.getY()/24].getOccupe());
 						
 						if(jeu.carte[pos2.getX()/28][pos2.getY()/24].getOccupe() != 0) {
 							if(perso.nomPersonnage() != jeu.carte[pos2.getX()/28][pos2.getY()/24].getPersonnage(0).nomPersonnage()) {
 								remove(infoLabel);
 								Personnage cible=jeu.carte[pos2.getX()/28][pos2.getY()/24].getPersonnage(0);
 								infoLabel.setText("<html>"+perso.toString()+cible.toString()+"<html>");
-								add(infoLabel);
+								icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+								infoLabel.setIcon(icon);
+								infoPanel.add(infoLabel);
 								validate();
 							}
 						}
@@ -331,7 +361,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 					remove(infoLabel);
 					Personnage perso=equipe[indicePerso][indiceJoueur];
 					infoLabel.setText("<html>"+perso.toString()+"<html>");
-					add(infoLabel);
+					icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+					infoLabel.setIcon(icon);
+					infoPanel.add(infoLabel);
 					validate();
 					int y1,y2,x1,x2,pair;
 					/*---Recupere les y qui entoure---*/
@@ -374,7 +406,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 									perso.passeTour();
 								}
 								infoLabel.setText("<html>"+perso.toString()+"<html>");
-								add(infoLabel);
+								icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+								infoLabel.setIcon(icon);
+								infoPanel.add(infoLabel);
 								validate();
 								repaint();
 							}
@@ -390,6 +424,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 									if(mort[0]) {
 										System.out.println(perso.nomPersonnage()+" a tue en attaquant "+cible.nomPersonnage());
 										jeu.carte[xa][ya].enleverPersonnage(cible.getId(), cible.getJoueur());
+										nb_vivant[IA]-=1;
 									}
 									else {
 									/*si le defenseur peut riposter, il riposte*/
@@ -405,6 +440,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 											if(mort[1]) {
 												System.out.println(perso.nomPersonnage()+" a tue en ripostant "+cible.nomPersonnage());
 												jeu.carte[xd][yd].enleverPersonnage(perso.getId(), perso.getJoueur());
+												nb_vivant[JOUEUR]-=1;
 												tourDeJeux();
 											}
 										}
@@ -419,7 +455,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 								}
 								perso.setAttaque(perso.getAttaque()-1);
 								infoLabel.setText("<html>"+perso.toString()+"<html>");
-								add(infoLabel);
+								icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+								infoLabel.setIcon(icon);
+								infoPanel.add(infoLabel);
 								validate();
 								repaint();
 								}
@@ -431,7 +469,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 								jeu.decouvrir(indiceJoueur,equipe);
 						        repaint();
 								infoLabel.setText("<html>"+perso.toString()+"<html>");
-								add(infoLabel);
+								icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+								infoLabel.setIcon(icon);
+								infoPanel.add(infoLabel);
 								validate();
 								repaint();
 							}
@@ -450,7 +490,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}});
 			
 		//}
-		System.out.println("on recupere click :");
+		//System.out.println("on recupere click :");
 		return posbuffer;
 	}
 	

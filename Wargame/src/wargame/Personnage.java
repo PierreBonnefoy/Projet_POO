@@ -768,6 +768,94 @@ public class Personnage implements IConfig,java.io.Serializable{
 		return chaine;
 	}
 	
+	public String getNom() {
+		//renvois une chaine de la forme suivante : nomPersonnage (classePersonnage-campPersonnage)
+		String chaine ="";
+		switch(this.id) {
+		case GARDIEN:
+			if(this.joueur == 0) {
+				chaine = "golem";
+			}
+			else {
+				chaine = "abomination";
+			}
+			break;
+		case BETE:
+			if(this.joueur == 0) {
+				chaine = "hydre";
+			}
+			else {
+				chaine = "mutilateur";
+			}
+			break;
+		case INCENDIAIRE:
+			if(this.joueur == 0) {
+				chaine = "drake";
+			}
+			else {
+				chaine = "demoniste";
+			}
+			break;
+		case DESTRUCTEUR:
+			if(this.joueur == 0) {
+				chaine = "minotaure";
+			}
+			else {
+				chaine = "princeDemon";
+			}
+			break;
+		case ENCHANTEUR:
+			if(this.joueur == 0) {
+				chaine = "mageGrenouille";
+			}
+			else {
+				chaine = "diablotin";
+			}
+			break;
+		case COMBATTANT:
+			if(this.joueur == 0) {
+				chaine = "armureAnimee";
+			}
+			else {
+				chaine = "guerrierChaos";
+			}
+			break;
+		case ARTILLEUR:
+			if(this.joueur == 0) {
+				chaine = "saurus";
+			}
+			else {
+				chaine = "succube";
+			}
+			break;
+		case DANCELAME:
+			if(this.joueur == 0) {
+				chaine = "vampyrion";
+			}
+			else {
+				chaine = "incube";
+			}
+			break;
+		case CHASSEUR:
+			if(this.joueur == 0) {
+				chaine = "predator";
+			}
+			else {
+				chaine = "chienEnfer";
+			}
+			break;
+		case ECLAIREUR:
+			if(this.joueur == 0) {
+				chaine = "worm";
+			}
+			else {
+				chaine ="oeilDiable";
+			}
+			break;
+		}
+		return chaine;
+	}
+	
 	private String nomNemesis() {
 		//renvois une chaine contenant le nom du Nemesis du Personnage this
 		String chaine ="";

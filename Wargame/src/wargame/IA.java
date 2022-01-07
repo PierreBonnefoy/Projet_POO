@@ -4,7 +4,7 @@ public class IA implements IConfig{
 	
 	public IA() {}
 	
-	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable) {
+	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable,int nb_vivant[]) {
 		Personnage courant = equipe[indicePerso][IA];
 		Personnage cible=null;
 		int x=0;
@@ -38,6 +38,7 @@ public class IA implements IConfig{
 						
 						if(mort[0]) {
 							jeu.carte[cible.getPos().getX()][(cible.getPos().getY())].enleverPersonnage(cible.getId(), cible.getJoueur());
+							nb_vivant[JOUEUR]-=1;
 						}
 						else {
 						/*si le defenseur peut riposter, il riposte*/
@@ -51,6 +52,7 @@ public class IA implements IConfig{
 								if(mort[1]) {
 									System.out.println(cible.nomPersonnage()+" a tue en ripostant "+courant.nomPersonnage());
 									jeu.carte[courant.getPos().getX()][courant.getPos().getY()].enleverPersonnage(courant.getId(), courant.getJoueur());
+									nb_vivant[IA]-=1;
 									courant.passeTour();
 								}
 							}
