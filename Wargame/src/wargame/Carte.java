@@ -6,10 +6,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Carte implements ICarte, IConfig, java.io.Serializable {
+public class Carte  IConfig, java.io.Serializable {
 	public Element[][] carte;
 	public int taille;
 
+	/**
+	 * 
+	 * @param positionx positionx initiale
+	 * @param positiony positiony initiale
+	 * @param n taille de la carte
+	 * @return Une position aleatoire parmi les cases adjacentes
+	 */
 	public Position voisineAlea(int positionx, int positiony, int n) {
 		int alea;
 		alea = (int) (Math.random() * 5);
@@ -77,6 +84,10 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		return new Position(positionx, positiony);
 	}
 
+	/**
+	 * Constructeur de la carte
+	 * @param n taille de la carte
+	 */
 	public Carte(int n) {
 		int tmp1, tmp2;
 		carte = new Element[n][n];
@@ -149,7 +160,16 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		 * carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
 		 */
 	}
-
+	/**
+	 * dessine un hexagone
+	 * @param posx position x de l'hexagone
+	 * @param posy position y de l'hexagone
+	 * @param g Graphics où dessiner
+	 * @param rouge valeur du rouge pour la couleur
+	 * @param vert valeur du vert pour la couleur
+	 * @param bleu valeur du bleu pour la couleur
+	 * @param transparent valeur de transaprence
+	 */
 	public void drawHexagon(int posx, int posy, Graphics g, int rouge, int vert, int bleu, int transparent) {
 		g.setColor(new Color((rouge), (vert), (bleu), transparent));
 
@@ -169,8 +189,15 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		g.fillPolygon(xPoints, yPoints, 6);
 	}
 
+	/**
+	 * Constructeur de la carte
+	 * @param n taille de la carte 
+	 * @param nbRiviere nombre de riviere de la carte
+	 * @param nbMontagne nombre de montagne de la carte
+	 * @param nbForet nombre de foret de la carte
+	 */
 	public Carte(int n, int nbRiviere, int nbMontagne, int nbForet) {
-		int tmp1, tmp2;
+		int tmp2;
 		Position tempo;
 		carte = new Element[n][n];
 		this.taille = n;
@@ -251,13 +278,16 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		 * carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8));
 		 */
 	}
-
 	public Element getElement(Position pos) {
 		/*-- Rtourne l'element � la position --*/
 		System.out.println(distance(new Position(1, 1), pos));
 		return this.carte[pos.getX()][pos.getY()];
 	}
 
+	/**
+	 * recherche d'un eposition vide aleatoire sur la carte
+	 * @return trouve une position vide aleatoire sur la carte
+	 */
 	public Position trouvePositionVide() {
 		/*-- Cherche une position, sur le plateau, libre aleatoirement --*/
 		int aleaX, aleaY;
@@ -267,7 +297,12 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		} while (this.carte[aleaX][aleaY].getOccupe() != 0);
 		return (new Position(aleaX, aleaY));
 	}
-
+	
+	/**
+	 * trouve une position vide autour de la position en parametre
+	 * @param pos position actuelle
+	 * @return  position vide aleatoire adjacente a la position actuelle
+	 */
 	public Position trouvePositionVide(Position pos) {
 		/*-- Vérification qu'il y ait au moins une place libre --*/
 		boolean test = false;
@@ -349,6 +384,11 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 
 	}
 
+	/**
+	 * Cherche l'ensemble des positions vides autour de la position passé en parametre
+	 * @param pos position actuelle
+	 * @return ensemble des positon possibles
+	 */
 	public Position[] PositionPossible(Position pos) {
 		Position[] tmp = new Position[6];
 		for (int i = 0; i < 6; i++) {
@@ -515,6 +555,14 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 	 * drawHexagon(debut+(i*26),j*18,g); } } }
 	 */
 
+	/**
+	 * Affiche sur la carte les sprites des personnages
+	 * @param g le Graphics où les affiché
+	 * @param debut decale si existant
+	 * @param i	position x de la case
+	 * @param j position y de la case
+	 * @param perso personnage a afficher
+	 */
 	public void affichePerso(Graphics g, int debut, int i, int j, Personnage perso) {
 		/* affiche le personnage à l'aide des infos passés en paramètre */
 		/* on veut savoir son id et son joueur pour connaître l'image à afficher */
@@ -721,6 +769,12 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		g.fillRect(debut + (i * 28) + 16 - (perso.getPvActuel() / 8), j * 24 + 24, (perso.getPvActuel() / 4), 2);
 	}
 
+	/**
+	 * renvoie la distance entre deux cases
+	 * @param p1 position de la case numero 1
+	 * @param p2 position de la case numero 2
+	 * @return la distance en nombre de pas entre les deux
+	 */
 	public int distance(Position p1, Position p2) {
 		if (p1.getX() == p2.getX()) {
 			/* Retourne la difference de y si les x sont egaux */
@@ -776,7 +830,12 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 			}
 		}
 	}
-
+	
+	/**
+	 * Affiche tout les sprites necessaire sur la carte
+	 * @param g Graphics où les afficher
+	 * @param equipe equipe ayant la vision sur la zone(le joueur dans notre cas)
+	 */
 	public void toutDessiner(Graphics g, int equipe) {
 		int debut;
 
@@ -886,6 +945,11 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		}
 	}
 
+	/**
+	 * Deplace un personange d'une position de départ a une position d'arrivée
+	 * @param posD position de départ
+	 * @param posA position d'arrivée
+	 */
 	public void Deplacement(Position posD, Position posA) {
 		/*--- D�placement du personnage ---*/
 		this.carte[posA.getX()][posA.getY()].rajoutPersonnage(this.carte[posD.getX()][posD.getY()].getPersonnage(0));
@@ -897,6 +961,11 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		this.carte[posA.getX()][posA.getY()].getPersonnage(0).setPm(i);
 	}
 
+	/**
+	 * Cette fonction s'occupe de la gestion du brouillard et de la visibilité
+	 * @param numequipe numero de l'équipe où la decouverte se fait
+	 * @param equipe tableau des personnagesd des equipes
+	 */
 	public void decouvrir(int numequipe, Personnage[][] equipe) {
 		int i, j, k;
 		Personnage perso = null;

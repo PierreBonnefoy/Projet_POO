@@ -2,8 +2,20 @@ package wargame;
 
 public class IA implements IConfig{
 	
+	/**
+	 * Contructeur vide de L'IA
+	 */
 	public IA() {}
 	
+	/**
+	 * Description d'un tour d'une IA
+	 * @param jeu la carte courante
+	 * @param equipe liste des personnages
+	 * @param indicePerso numero du personnage a jouer
+	 * @param mort resultat de l'attaque
+	 * @param jouable si l'IA peut jouer
+	 * @param nb_vivant nombre de personnages vivants dans chaque equipe
+	 */
 	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable,int nb_vivant[]) {
 		Personnage courant = equipe[indicePerso][IA];
 		Personnage cible=null;

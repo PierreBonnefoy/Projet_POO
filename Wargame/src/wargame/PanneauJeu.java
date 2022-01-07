@@ -50,7 +50,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 	JPanel ecranFin = new JPanel();
 	JSplitPane splitVert = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 	Icon icon;
-	
+	/**
+	 * Constructeur du panneau de jeuappeler par menu general
+	 */
 	public PanneauJeu(){
 		ecranFin.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT,0,0));
@@ -191,6 +193,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 		tourDeJeux();
 	}
 	
+	/**
+	 * Procede au changement du personnage et verifie si la partie n'est pas finie
+	 */
 	public void tourDeJeux() {
 		/*boucle en parcourant le tableau des Personnages, et joue chacun des personnages a tour de rôle*/
 		indiceJoueur+=1;
@@ -269,12 +274,26 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		
 	}
+	/**
+	 * Appele la fonction qui afffiche la carte
+	 * @param g un Graphics
+	 */
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		jeu.toutDessiner(g,JOUEUR);
 	}
-	
+	/**
+	 * Renvoie la position de la case la plus proche du clique entre les quatre l'entourant
+	 * @param x1 x minimum
+	 * @param x2 x maximum
+	 * @param y1 y minimum
+	 * @param y2 y maximum
+	 * @param mx pixel x du clique de la souris
+	 * @param my pixel y du clique de la souris
+	 * @param haut indique si il y a ubn decalage
+	 * @return la position de la case la plus proche
+	 */
 	public Position ppV(int x1,int x2,int y1,int y2,int mx,int my,int haut) {
 		Position pos=new Position(0,0),posMouse=new Position(mx,my);
 		int dec1,dec2;
@@ -310,6 +329,10 @@ public class PanneauJeu extends JPanel implements IConfig {
 		return pos;
 	}
  	
+	
+	/**
+	 * Cette fonction s'occupe de la gestion du mouvement et du clique de la souris
+	 */
 	public Position clickPosition(){
 		posbuffer = null;
 		

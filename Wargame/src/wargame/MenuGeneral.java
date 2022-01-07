@@ -3,6 +3,9 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 public class MenuGeneral extends JPanel implements IConfig{
+	/**
+	 *Constructeur vide du menu principal
+	 */
 	MenuGeneral(){
 		this.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		MenuAide aide = new MenuAide();
@@ -39,7 +42,7 @@ public class MenuGeneral extends JPanel implements IConfig{
 				remove(Aide);
 				remove(Quitter);
 				add(aide);
-				validate();
+				revalidate();
 			}
 		}
 		);
@@ -50,7 +53,7 @@ public class MenuGeneral extends JPanel implements IConfig{
 				remove(Aide);
 				remove(Quitter);
 				add(jeu);
-				validate();
+				revalidate();
 			}
 		}
 		);

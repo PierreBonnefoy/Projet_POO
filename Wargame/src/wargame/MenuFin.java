@@ -5,6 +5,10 @@ import java.awt.event.*;
 import java.io.*;
 
 public class MenuFin extends JPanel implements IConfig{
+	/**
+	 * Constructeur du panneau d'affichage de victoire
+	 * @param victoire est ce que le joueur a gagné
+	 */
 	MenuFin(boolean victoire){
 		String c=null;
 		if(victoire) {

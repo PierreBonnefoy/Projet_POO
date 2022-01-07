@@ -8,6 +8,9 @@ public class Element implements IConfig,java.io.Serializable{
 	private Personnage[] personnage ; /*la liste des personnages qui sont sur la case (il y en as 3 maximum)*/
 	private int[] etat; /*l'etat d'exploration de la case pour chacune des equipes*/
 	
+	/**
+	 * Constructeur vide d'un element
+	 */
 	public Element() {
 		int n;
 		n=(int)(Math.random()*3);
@@ -23,6 +26,10 @@ public class Element implements IConfig,java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * Constructeur d'un element
+	 * @param n type de l'element a créer
+	 */
 	public Element(int n) {
 		this.occupe = 0;
 		this.nature = n;
@@ -36,6 +43,10 @@ public class Element implements IConfig,java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * Rajout d'un personnage de l'element courant
+	 * @param perso personnage a rajouter
+	 */
 	public void rajoutPersonnage(Personnage perso) {
 		int i;
 		if(this.occupe+perso.getTaille()<=3) {
@@ -61,6 +72,11 @@ public class Element implements IConfig,java.io.Serializable{
 		return null;
 	}
 	
+	/**
+	 * Eneleve un personnage de l'element courant
+	 * @param id id du personnage a enlever
+	 * @param joueur id du joueur chez qui le personnage doit etre enlever
+	 */
 	public void enleverPersonnage(int id, int joueur) {
 		/*---On enlève le personnage possédant la bonne id et le bon joueur---*/
 		int i;

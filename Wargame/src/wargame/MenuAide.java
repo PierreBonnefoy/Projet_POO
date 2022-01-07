@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class MenuAide extends JPanel implements IConfig{
+	/**
+	 * Constructeur vide de menu aide
+	 */
 	MenuAide(){
 		this.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		this.setLayout(new BorderLayout());

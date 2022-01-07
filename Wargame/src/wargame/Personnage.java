@@ -23,6 +23,13 @@ public class Personnage implements IConfig,java.io.Serializable{
 	private int niveau; //le niveau du personnage (commence à 0)
 	private int etat; //vivant ou mort
 
+	/**
+	 * Constructeur d'un personnage
+	 * @param id id du personnage
+	 * @param joueur joueur auquel il appartient
+	 * @param x position x
+	 * @param y position y
+	 */
 	/*-- Constructeur --*/
 	public Personnage(int id, int joueur,int x,int y) {
 		switch(id) {
