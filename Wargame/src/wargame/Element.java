@@ -49,6 +49,10 @@ public class Element implements IConfig,java.io.Serializable{
 		}
 	}
 	
+	public int getEtat(int equipe) { return this.etat[equipe];}
+	
+	public void setEtat(int equipe,int x) {this.etat[equipe]=x;}
+	
 	public Personnage getPersonnage(int i) {
 		/*renvoi le personnage à l'indice i s'il existe dans l'element, ou null sinon*/
 		if(this.personnage[i]!=null) {

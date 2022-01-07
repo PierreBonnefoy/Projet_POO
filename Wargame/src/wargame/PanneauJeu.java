@@ -178,11 +178,15 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		}
 		
-		System.out.println("test avant laccès au perso du tablo, indiceperso : "+indicePerso+" ; indicejoueur :"+indiceJoueur);
+		jeu.decouvrir(indiceJoueur,equipe);
+        repaint();
+        jouable=true;
+		
+		//System.out.println("test avant laccès au perso du tablo, indiceperso : "+indicePerso+" ; indicejoueur :"+indiceJoueur);
 		
 		perso=equipe[indicePerso][indiceJoueur];
 		
-		System.out.println("test apres laccès au perso du tablo");
+		//System.out.println("test apres laccès au perso du tablo");
 		
 		
 		if(nb_vivant[JOUEUR]==0 || nb_vivant[IA]==0) {
@@ -191,7 +195,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		if(perso.getEtat() != MORT) {
 			
 			if(indiceJoueur != JOUEUR) {
-				System.out.println("IIIIIIIIIIIAAAAAAAAAAAAAAAAA");
+				//System.out.println("IIIIIIIIIIIAAAAAAAAAAAAAAAAA");
 				perso.setAttaque(1);
 				perso.setPm(perso.getVitesse());
 				jouable = true;
@@ -205,7 +209,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 				jouable = true;
 				robot.tour(jeu,equipe,indicePerso,mort);
 				*/
-				System.out.println("JJJJJJJJJJJJJJOOOOOOOOOOEEEEEEUUUUUUUUUURRRRRRRR");
+				//System.out.println("JJJJJJJJJJJJJJOOOOOOOOOOEEEEEEUUUUUUUUUURRRRRRRR");
 				jouable=true;
 				perso.setAttaque(1);
 				perso.setPm(perso.getVitesse());
@@ -227,7 +231,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		jeu.toutDessiner(g,LARGEUR_CARTE);
+		jeu.toutDessiner(g,JOUEUR);
 	}
 	
 	public Position ppV(int x1,int x2,int y1,int y2,int mx,int my,int haut) {
@@ -350,8 +354,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 					
 					/*----Jeu du perso----*/
 					if(jouable==true) {
-						System.out.println("joueur n� " + indiceJoueur + "joue avec le perso : "+perso.nomPersonnage());
-						System.out.println("je suis a la position : "  + perso.getPos().getX()+ " " + perso.getPos().getY());
+						//System.out.println("joueur n� " + indiceJoueur + "joue avec le perso : "+perso.nomPersonnage());
+						//System.out.println("je suis a la position : "  + perso.getPos().getX()+ " " + perso.getPos().getY());
 						int xd=perso.getPos().getX(),yd=perso.getPos().getY();
 						mort[0] = false;
 						mort[1] = false;
@@ -359,8 +363,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 						if(positionCase.getX()>0 && positionCase.getX()<jeu.taille-1 && positionCase.getY()>0 && positionCase.getY()<jeu.taille-1) {
 							int xa = positionCase.getX();
 							int ya = positionCase.getY();
-							System.out.println("je pointe vers la position : "  + xa+ " " + ya);
-							System.out.println("distance de : "+jeu.distance(perso.getPos(),positionCase));
+							//System.out.println("je pointe vers la position : "  + xa+ " " + ya);
+							//System.out.println("distance de : "+jeu.distance(perso.getPos(),positionCase));
 							/*si le joueur a cliqué sur la case où se trouve le perso qui joue, il se repose, ou passe son tour*/
 							if(xa==xd && ya==yd) {
 								if(perso.getAttaque()==1 && perso.getPm() == perso.getVitesse()) {
@@ -422,15 +426,17 @@ public class PanneauJeu extends JPanel implements IConfig {
 							
 							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
 							else if(jeu.carte[xa][ya].getOccupe() == 0 && ((jeu.carte[xa][ya].getNature() != MONTAGNE && jeu.carte[xa][ya].getNature() != RIVIERE) || perso.chemin()) && perso.getPm() >0 && (jeu.distance(perso.getPos(),positionCase) == 1) ) {
-								System.out.println(perso.nomPersonnage()+" se deplace en "+positionCase.getX()+":"+positionCase.getY());
+								//System.out.println(perso.nomPersonnage()+" se deplace en "+positionCase.getX()+":"+positionCase.getY());
 								jeu.Deplacement(new Position(xd,yd), positionCase);
+								jeu.decouvrir(indiceJoueur,equipe);
+						        repaint();
 								infoLabel.setText("<html>"+perso.toString()+"<html>");
 								add(infoLabel);
 								validate();
 								repaint();
 							}
 							else {
-					    		System.out.println(jeu.carte[xd][yd].getPersonnage(0).nomPersonnage()+" ne peut pas se déplacer ici !");
+					    		//System.out.println(jeu.carte[xd][yd].getPersonnage(0).nomPersonnage()+" ne peut pas se déplacer ici !");
 					    	}
 						}
 						if(perso.getAttaque()==0 && perso.getPm() == 0) {
