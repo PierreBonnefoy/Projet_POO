@@ -53,7 +53,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	
 	public PanneauJeu(){
 		ecranFin.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
-		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		this.setLayout(new FlowLayout(FlowLayout.RIGHT,0,0));
 		infoLabel.setForeground(Color.white);
 		nb_vivant[JOUEUR] = NBPERSONNAGE;
 		nb_vivant[IA] = NBPERSONNAGE;
@@ -167,7 +167,11 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		Quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				MenuGeneral menu = new MenuGeneral();
+				removeAll();
+				revalidate();
+				add(menu);
+				validate();
 			}
 		}
 		);
@@ -182,6 +186,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		splitVert.add(infoPanel);
 		splitVert.add(boutonPanel);
 		add(splitVert);
+		System.out.println(splitVert.getLocation());
 		clickPosition();
 		repaint();	
 		tourDeJeux();
