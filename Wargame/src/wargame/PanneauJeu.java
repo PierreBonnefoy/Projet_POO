@@ -326,7 +326,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 					remove(infoLabel);
 					Personnage perso=equipe[indicePerso][indiceJoueur];
 					infoLabel.setText("<html>"+perso.toString()+"<html>");
-					icon =new ImageIcon("Wargame/image/m_"+perso.getNom()+".png");
+					icon =new ImageIcon("Wargame/image/g_"+perso.getNom()+".png");
 					infoLabel.setIcon(icon);
 					infoPanel.add(infoLabel);
 					validate();
