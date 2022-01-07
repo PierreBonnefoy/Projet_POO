@@ -525,7 +525,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case GARDIEN:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_golem.png");
+					file = new File("Wargame/image/m_golem.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -533,7 +533,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_abomination.png");
+					file = new File("Wargame/image/m_abomination.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -544,7 +544,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case BETE:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_hydre.png");
+					file = new File("Wargame/image/m_hydre.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -552,7 +552,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_mutilateur.png");
+					file = new File("Wargame/image/m_mutilateur.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -563,7 +563,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case INCENDIAIRE:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_drake.png");
+					file = new File("Wargame/image/m_drake.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -571,7 +571,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_demoniste.png");
+					file = new File("Wargame/image/m_demoniste.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -582,7 +582,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case DESTRUCTEUR:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_minotaure.png");
+					file = new File("Wargame/image/m_minotaure.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -590,7 +590,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_princeDemon.png");
+					file = new File("Wargame/image/m_princeDemon.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -601,7 +601,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case ENCHANTEUR:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_mageGrenouille.png");
+					file = new File("Wargame/image/m_mageGrenouille.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -609,7 +609,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_diablotin.png");
+					file = new File("Wargame/image/m_diablotin.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -620,7 +620,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case COMBATTANT:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_armureAnimee.png");
+					file = new File("Wargame/image/m_armureAnimee.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -628,7 +628,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_guerrierChaos.png");
+					file = new File("Wargame/image/m_guerrierChaos.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -639,7 +639,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case ARTILLEUR:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_saurus.png");
+					file = new File("Wargame/image/m_saurus.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -647,7 +647,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_succube.png");
+					file = new File("Wargame/image/m_succube.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -658,7 +658,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case DANCELAME:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_vampyrion.png");
+					file = new File("Wargame/image/m_vampyrion.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -666,7 +666,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_incube.png");
+					file = new File("Wargame/image/m_incube.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -677,7 +677,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case CHASSEUR:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_predator.png");
+					file = new File("Wargame/image/m_predator.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -685,7 +685,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_chienEnfer.png");
+					file = new File("Wargame/image/m_chienEnfer.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -696,7 +696,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 		case ECLAIREUR:
 			if (perso.getJoueur() == 0) {
 				try {
-					file = new File("./image/m_worm.png");
+					file = new File("Wargame/image/m_worm.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -704,7 +704,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 				}
 			} else {
 				try {
-					file = new File("./image/m_oeilDiable.png");
+					file = new File("Wargame/image/m_oeilDiable.png");
 					img = ImageIO.read(file);
 					g.drawImage(img, debut + (i * 28), j * 24, null);
 				} catch (Exception e) {
@@ -794,7 +794,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case RIVIERE:
 						try {
-							File file = new File("./image/m_eau_1.png");
+							File file = new File("Wargame/image/m_eau_1.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -803,7 +803,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case MONTAGNE:
 						try {
-							File file = new File("./image/m_montagne_1.png");
+							File file = new File("Wargame/image/m_montagne_1.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -812,7 +812,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case FORET:
 						try {
-							File file = new File("./image/m_foret_1.png");
+							File file = new File("Wargame/image/m_foret_1.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -821,7 +821,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case PLAINE:
 						try {
-							File file = new File("./image/m_plaine_1.png");
+							File file = new File("Wargame/image/m_plaine_1.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -837,7 +837,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case RIVIERE:
 						try {
-							File file = new File("./image/m_eau_2.png");
+							File file = new File("Wargame/image/m_eau_2.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -846,7 +846,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case MONTAGNE:
 						try {
-							File file = new File("./image/m_montagne_2.png");
+							File file = new File("Wargame/image/m_montagne_2.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -855,7 +855,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case FORET:
 						try {
-							File file = new File("./image/m_foret_2.png");
+							File file = new File("Wargame/image/m_foret_2.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {
@@ -864,7 +864,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						break;
 					case PLAINE:
 						try {
-							File file = new File("./image/m_plaine_2.png");
+							File file = new File("Wargame/image/m_plaine_2.png");
 							BufferedImage img = ImageIO.read(file);
 							g.drawImage(img, debut + (i * 28), j * 24, null);
 						} catch (Exception e) {

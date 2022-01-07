@@ -28,7 +28,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 		switch(id) {
 		case GARDIEN:
 			this.position=new Position(x,y);
-			this.pvMax = 95;
+			this.pvMax = 95 -55;
 			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
@@ -49,7 +49,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case BETE:
 			this.position=new Position(x,y);
-			this.pvMax = 95;
+			this.pvMax = 95-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
@@ -71,7 +71,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case INCENDIAIRE:
 			this.position=new Position(x,y);
-			this.pvMax = 70;
+			this.pvMax = 70-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 10;
 			this.attaque = 1;
@@ -93,7 +93,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case DESTRUCTEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 75;
+			this.pvMax = 75-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 15;
 			this.attaque = 1;
@@ -115,7 +115,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case ENCHANTEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 70;
+			this.pvMax = 70-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;
@@ -137,7 +137,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case COMBATTANT:
 			this.position=new Position(x,y);
-			this.pvMax = 80;
+			this.pvMax = 80-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 12;
 			this.attaque = 1;
@@ -159,7 +159,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case ARTILLEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 75;
+			this.pvMax = 75-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;
@@ -181,7 +181,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case DANCELAME:
 			this.position=new Position(x,y);
-			this.pvMax = 75;
+			this.pvMax = 75-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 12;
 			this.attaque = 1;
@@ -203,7 +203,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case CHASSEUR:
 			this.position=new Position(x,y);
-			this.pvMax = 70;
+			this.pvMax = 70-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 15;
 			this.attaque = 1;
@@ -225,7 +225,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case ECLAIREUR:
 			this.position=new Position(x,y);
-			this.pvMax = 60;
+			this.pvMax = 60-55;
 			this.pvActuel = this.pvMax;
 			this.degat = 8;
 			this.attaque = 1;

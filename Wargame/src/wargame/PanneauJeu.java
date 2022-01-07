@@ -117,7 +117,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					FileOutputStream file = new FileOutputStream("./save.ser");
+					FileOutputStream file = new FileOutputStream("Wargame/save.ser");
 					ObjectOutputStream save = new ObjectOutputStream(file);
 					save.writeObject(nb_vivant);
 					save.write(indicePerso);
@@ -138,7 +138,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		Load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					FileInputStream file = new FileInputStream("./save.ser");
+					FileInputStream file = new FileInputStream("Wargame/save.ser");
 					ObjectInputStream load = new ObjectInputStream(file);
 					nb_vivant = (int[]) load.readObject();
 					indicePerso = (int) load.read();
@@ -169,7 +169,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		);
 		JSplitPane splitVert = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		infoPanel.setBackground(Color.gray);
-		icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+		icon =new ImageIcon("Wargame/image/m_"+perso.getNom()+".png");
 		infoLabel.setIcon(icon);
 		infoPanel.add(infoLabel);
 		boutonPanel.setBackground(Color.gray);
@@ -212,10 +212,21 @@ public class PanneauJeu extends JPanel implements IConfig {
 			JPanel fin = new JPanel();
 			if(nb_vivant[JOUEUR]==0) {
 				//VICTOIRE IA
-				
+				JButton retour = new JButton ("retour");
+				retour.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						MenuGeneral menu = new MenuGeneral();
+						remove(retour);
+						add(menu);
+						validate();
+					}
+				}
+				);
+				add(retour);
 			}
 			else {
 				//VICTOIRE JOUEUR
+				
 			}
 		}
 		if(perso.getEtat() != MORT) {
@@ -311,7 +322,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 					remove(infoLabel);
 					Personnage perso=equipe[indicePerso][indiceJoueur];
 					infoLabel.setText("<html>"+perso.toString()+"<html>");
-					icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
+					icon =new ImageIcon("Wargame/image/m_"+perso.getNom()+".png");
 					infoLabel.setIcon(icon);
 					infoPanel.add(infoLabel);
 					validate();
