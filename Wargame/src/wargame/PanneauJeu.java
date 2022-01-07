@@ -213,48 +213,19 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		if(nb_vivant[JOUEUR]==0 || nb_vivant[IA]==0) {
 			System.out.println("Executé");
-			JPanel fin = new JPanel();
 			if(nb_vivant[JOUEUR]==0) {
 				//VICTOIRE IA
-				JButton retour = new JButton("Retour Menu");
-				retour.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						System.exit(0);
-					}
-				}
-				);
-				ecranFin.setBackground(new Color(88,85,90));
-				texteFin.setText("T'a perdu boloss");
-				texteFin.setForeground(new Color(251, 243, 124));
-				texteFin.setFont(new Font("Tahoma", Font.PLAIN, 30));
-				ecranFin.add(texteFin);
-				ecranFin.add(retour);
-				remove(boutonPanel);
-				remove(infoPanel);
-				add(ecranFin);
-				repaint();
+				MenuFin fin = new MenuFin(false);
+				super.removeAll();
+				add(fin);
+				super.revalidate();
+				super.repaint();
 			}
 			else {
 				//VICTOIRE JOUEUR
-				JButton retour = new JButton("Retour Menu");
-				retour.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						MenuGeneral StartScreen = new MenuGeneral();
-						removeAll();
-						add(StartScreen);
-						revalidate();
-						repaint();
-					}
-				}
-				);
-				ecranFin.setBackground(new Color(88,85,90));
-				texteFin.setText("T'a gagné bogoss");
-				texteFin.setForeground(new Color(251, 243, 124));
-				texteFin.setFont(new Font("Tahoma", Font.PLAIN, 30));
-				ecranFin.add(retour);
-				ecranFin.add(texteFin);
+				MenuFin fin = new MenuFin(true);
 				super.removeAll();
-				add(ecranFin,BorderLayout.NORTH);
+				add(fin);
 				super.revalidate();
 				super.repaint();
 			}
