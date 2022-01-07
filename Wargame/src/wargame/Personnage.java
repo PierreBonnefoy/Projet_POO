@@ -356,7 +356,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	public void rage(){
 		if(this.id == DESTRUCTEUR){
 			this.setDegat(this.degat + 1);
-			System.out.println(this.nomPersonnage()+" active Rage : +1 Dégât.");
+			//System.out.println(this.nomPersonnage()+" active Rage : +1 Dégât.");
 		}
 	}
 	
@@ -368,7 +368,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			/*on sais ici que this viens de perdre plus de 50% de ses PV max : on active la capacité Course*/
 				this.degat -= 1;
 				this.vitesse += 1;
-				System.out.println(this.nomPersonnage()+" active Course : -1 Dégât et +1 Vitesse.");
+				//System.out.println(this.nomPersonnage()+" active Course : -1 Dégât et +1 Vitesse.");
 			}
 		}	
 	}
@@ -378,7 +378,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 		if(this.id == BETE){
 			if(D.vitesse > 3){
 				D.setVitesse(D.vitesse-1);
-				System.out.println(this.nomPersonnage()+" meurtrie "+D.nomPersonnage()+" : -1 Vitesse. ("+D.getVitesse());
+				//System.out.println(this.nomPersonnage()+" meurtrie "+D.nomPersonnage()+" : -1 Vitesse. ("+D.getVitesse());
 			}
 		}
 	}
@@ -387,7 +387,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	Cette fonction est appelée à la fin de chaque tour de personnage.*/
 	public void entrainement(){
 		if(this.id == COMBATTANT){
-			System.out.println(this.nomPersonnage()+" active Entrainement : + 5 EXP.");
+			//System.out.println(this.nomPersonnage()+" active Entrainement : + 5 EXP.");
 			this.gainExp(5);
 		}
 	}
@@ -406,7 +406,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	public int assassin(Personnage D){
 		if(this.id == CHASSEUR || this.id == ARTILLEUR){
 			if(D.pvActuel <= D.pvMax/2){
-				System.out.println(this.nomPersonnage()+" active Assassin : inflige 5 dégât supplémentaire.");
+				//System.out.println(this.nomPersonnage()+" active Assassin : inflige 5 dégât supplémentaire.");
 				return 5;
 			}
 		}
@@ -416,14 +416,14 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*si le Personnage this est le Gardien, il se soigne.*/
 	public void regeneration(){
 		if(this.id == GARDIEN){
-			System.out.println(this.nomPersonnage()+" active Régénération.");
+			//System.out.println(this.nomPersonnage()+" active Régénération.");
 			this.soin(2+(int)(Math.random()*6));
 		}
 	}
 	/*Si le personnage this est le Gardien/Combattant, renvoi vrai */ 
 	public boolean replique(){
 		if(this.id == GARDIEN || this.id == COMBATTANT){
-			System.out.println(this.nomPersonnage()+" active Réplique : +2 riposte\n");
+			//System.out.println(this.nomPersonnage()+" active Réplique : +2 riposte\n");
 			return true;
 		}
 		return false;
@@ -441,7 +441,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*si le personnage est le Destructeur ou l'Incendiaire, renvois vrais.*/
 	public boolean perceArmure(){
 		if(this.id == INCENDIAIRE || this.id == DESTRUCTEUR){
-			System.out.println(this.nomPersonnage()+" ignore l'armure de la cible.");
+			//System.out.println(this.nomPersonnage()+" ignore l'armure de la cible.");
 			return true;
 		}
 		return false;
@@ -450,7 +450,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*Renvoi vrai si le personnage est l'icendiaire*/
 	public boolean embrasement(){
 		if(this.id == INCENDIAIRE){
-			System.out.println(this.nomPersonnage()+" empèche les ripostes.");
+			//System.out.println(this.nomPersonnage()+" empèche les ripostes.");
 			return true;
 		}
 		return false;
@@ -461,7 +461,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 		if(this.id == DANCELAME) {
 			int a = 1 + (int)(Math.random()*10);
 			if(a <= 2) {
-				System.out.println(this.nomPersonnage()+" parvient à esquiver l'attaque.");
+				//System.out.println(this.nomPersonnage()+" parvient à esquiver l'attaque.");
 				return 0;
 			}
 		}
@@ -490,12 +490,12 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*si this est l'enchanteur, le personnage this soigne le personnage cible et récupère de l'expérience*/
 	public void encouragement(Personnage cible) {
 		if(this.id == ENCHANTEUR) {
-			System.out.println(this.nomPersonnage()+" encourage "+cible.nomPersonnage());
+			//System.out.println(this.nomPersonnage()+" encourage "+cible.nomPersonnage());
 			int soin = this.degat + 1 + (int)(Math.random()*4); /* -distance;*/
 			cible.soin(soin);
 			this.gainExp(soin/2);
 		}
-		System.out.println("\n");
+		//System.out.println("\n");
 	}
 	/*renvoi vrai si l'éclaireur n'a pas encore riposter à ce tour*/
 	public int foudroiement() {
@@ -520,23 +520,6 @@ public class Personnage implements IConfig,java.io.Serializable{
 		}
 	}
 	
-	/*indique si le personnage D peut riposter contre le personnage this en fonction de son nombre de riposte restant et de sa portée d'attaque. 
-	Rappel : le personne ne peut pas riposter si l'attaquant est un incendiaire*/
-	/*public boolean peutRiposter(Personnage D){
-		if((D.position.distance(this.position) > D.portee) || (D.riposte == 0) || this.embrasement()){
-			return false;
-		}
-		return true;
-	}*/
-	
-	/*le personnage this riposte s'il le peut : inflige une contre-attaque au personnage A*/
-	/*public void Riposte(Personnage A){
-		if(this.peutRiposter(A)) {
-			this.setRiposte(this.riposte-1);
-			this.attaque(A);
-		}
-	}*/
-	
 	/*Le personnage this porte une attaque sur le personnage D*/
 	public boolean attaque(Personnage D /*, int distance*/){
 		/*mise en place des deg*/
@@ -553,7 +536,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			/*les  degats vont etre reduit par l'armure de la cible D, si l'A est un incendiaire (ID = 3) ou un destructeur (ID= 4), alors cette partie est sautée*/
 			if(!this.perceArmure()){
 				if(1+(int)(Math.random()*100) <= D.protection){
-					System.out.println(D.nomPersonnage()+" réduit de "+D.blindage+" les dégâts subies.");
+					//System.out.println(D.nomPersonnage()+" réduit de "+D.blindage+" les dégâts subies.");
 					degat -= D.blindage; 
 					D.gainExp(D.blindage);
 					if(degat < 0){
@@ -566,8 +549,8 @@ public class Personnage implements IConfig,java.io.Serializable{
 			int pvactuel =  D.pvActuel;
 			D.setPvActuel(D.pvActuel-degat);
 			
-			System.out.println(this.nomPersonnage()+"inflige "+degat+" degats à "+D.nomPersonnage()+".");
-			System.out.println("Il reste "+D.pvActuel+"/"+D.pvMax+" à "+D.nomPersonnage()+".");
+			//System.out.println(this.nomPersonnage()+"inflige "+degat+" degats à "+D.nomPersonnage()+".");
+			//System.out.println("Il reste "+D.pvActuel+"/"+D.pvMax+" à "+D.nomPersonnage()+".");
 	
 			/*on appelle les fonctions de personnage qui s'active seulement si l'attaque blesse :
 			 * celle qui soigne le dancelame d'une partie des degats infliges
@@ -587,7 +570,6 @@ public class Personnage implements IConfig,java.io.Serializable{
 		D.rage();
 		this.meurtrissure(D); 
 		degat += this.precision(D);
-		/*this.vigueur();*/
 		/*porter une attaque rapport toujours un léger bonus d'expérience. augmenté si la cible est le nemesis*/
 		degat += 5;
 		if(this.estNemesis(D)){
@@ -597,7 +579,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 		if(degat != 0) {
 			this.gainExp(degat);
 		}
-		System.out.println("\n");
+		//System.out.println("\n");
 		return resultat;
 	}
 	
@@ -605,27 +587,24 @@ public class Personnage implements IConfig,java.io.Serializable{
 	public void repos(){
 		this.setAttaque(0);
 		this.setPm(0);
-		System.out.println(this.nomPersonnage()+" se repose :");
+		//System.out.println(this.nomPersonnage()+" se repose :");
 		this.soin(6+(int)(Math.random()*6)+this.alchimie());
-		System.out.println("\n");
-
-		/*si c'est l'enchanteur, il donne de l'EXP aux alliés proches et se soigne un peu plus*/
-		/*this.encouragement(); */
+		//System.out.println("\n");
 	}
 	
 	/*Le personnage passe son tour, mais ayant joué, il termine juste son tour.*/
 	public void passeTour() {
 		this.setAttaque(0);
 		this.setPm(0);
-		System.out.println(this.nomPersonnage()+" termine son tour.");
-		System.out.println("\n");
+		//System.out.println(this.nomPersonnage()+" termine son tour.");
+		//System.out.println("\n");
 	}
 	
 	/*Le personnage A se soigne d'un montant egal a valeur*/
 	public void soin(int valeur){
 		if(this.pvActuel != this.pvMax) {
 			this.setPvActuel(this.pvActuel + valeur);
-			System.out.println(this.nomPersonnage()+" se soigne de "+valeur+"PV.");
+			//System.out.println(this.nomPersonnage()+" se soigne de "+valeur+"PV.");
 			if(this.pvActuel > this.pvMax){
 				valeur -= this.pvActuel - this.pvMax;
 				this.setPvActuel(this.pvMax);
@@ -643,7 +622,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*Si le personnage depasse 100 d'exp, il gagne un niveau*/
 	public void gainNiveau(){
 		if(this.exp >= 100){
-			System.out.println(this.nomPersonnage()+" gagne un niveau !\n");
+			//System.out.println(this.nomPersonnage()+" gagne un niveau !\n");
 			this.setNiveau(this.niveau + 1);
 			this.setExp(this.exp -100);
 			/*Il peut arriver que le personnage gagne tant d'EXP en une fois qu'il gagne 2 niveaux : on verifie*/
@@ -670,7 +649,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 	/*deces test si le personnage a perdu tout ses PV, le tue si c'est le cas, en renvoyant vrai*/
 	public boolean deces() {
 		if(this.pvActuel <= 0) {
-			System.out.println(this.nomPersonnage()+" est mort !");
+			//System.out.println(this.nomPersonnage()+" est mort !");
 			this.setEtat(MORT);
 			this.setPvActuel(0);
 			//IL reste probablement des choses à faire ici...
@@ -1037,6 +1016,4 @@ public class Personnage implements IConfig,java.io.Serializable{
 		+"<br>";
 		return chaine;
 	}
-
-	
 }
