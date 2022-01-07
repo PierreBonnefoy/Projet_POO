@@ -44,11 +44,15 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Personnage predator;
 	public Personnage worm;
 	JLabel infoLabel = new JLabel ("<html>"+perso.toString()+"<html>");
+	JLabel texteFin = new JLabel();
 	JPanel boutonPanel = new JPanel();
 	JPanel infoPanel = new JPanel();
+	JPanel ecranFin = new JPanel();
+	JSplitPane splitVert = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 	Icon icon;
 	
 	public PanneauJeu(){
+		ecranFin.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		infoLabel.setForeground(Color.white);
 		nb_vivant[JOUEUR] = NBPERSONNAGE;
@@ -167,7 +171,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		}
 		);
-		JSplitPane splitVert = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		infoPanel.setBackground(Color.gray);
 		icon =new ImageIcon("Wargame/image/m_"+perso.getNom()+".png");
 		infoLabel.setIcon(icon);
@@ -209,24 +212,51 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		
 		if(nb_vivant[JOUEUR]==0 || nb_vivant[IA]==0) {
+			System.out.println("Executé");
 			JPanel fin = new JPanel();
 			if(nb_vivant[JOUEUR]==0) {
 				//VICTOIRE IA
-				JButton retour = new JButton ("retour");
+				JButton retour = new JButton("Retour Menu");
 				retour.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						MenuGeneral menu = new MenuGeneral();
-						remove(retour);
-						add(menu);
-						validate();
+						System.exit(0);
 					}
 				}
 				);
-				add(retour);
+				ecranFin.setBackground(new Color(88,85,90));
+				texteFin.setText("T'a perdu boloss");
+				texteFin.setForeground(new Color(251, 243, 124));
+				texteFin.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				ecranFin.add(texteFin);
+				ecranFin.add(retour);
+				remove(boutonPanel);
+				remove(infoPanel);
+				add(ecranFin);
+				repaint();
 			}
 			else {
 				//VICTOIRE JOUEUR
-				
+				JButton retour = new JButton("Retour Menu");
+				retour.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						MenuGeneral StartScreen = new MenuGeneral();
+						removeAll();
+						add(StartScreen);
+						revalidate();
+						repaint();
+					}
+				}
+				);
+				ecranFin.setBackground(new Color(88,85,90));
+				texteFin.setText("T'a gagné bogoss");
+				texteFin.setForeground(new Color(251, 243, 124));
+				texteFin.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				ecranFin.add(retour);
+				ecranFin.add(texteFin);
+				super.removeAll();
+				add(ecranFin,BorderLayout.NORTH);
+				super.revalidate();
+				super.repaint();
 			}
 		}
 		if(perso.getEtat() != MORT) {

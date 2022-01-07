@@ -5,10 +5,8 @@ import java.awt.*;
 
 public class MenuAide extends JPanel implements IConfig{
 	MenuAide(){
-		this.setPreferredSize(new Dimension(HAUTEUR_FENETRE,LARGEUR_FENETRE));
-		GridLayout grille = new GridLayout(0,1,HAUTEUR_FENETRE/1000,LARGEUR_FENETRE/1000);
-		grille.preferredLayoutSize(this);
-		this.setLayout(grille);
+		this.setPreferredSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
+		this.setLayout(new BorderLayout());
 		JLabel Explication = new JLabel("<html><h1>QUEST FOR UNDERGROUND : </h1>\r\n" + 
 				"\r\n" + 
 				"Les habitants des Donjon, monstres en tout genre, creusent la terre pour agrandir leur demeure et découvre l'Underground : un nouveau monde souterrain. En creusant trop profondément, ils créent malheureusement un passage vers l'Enfer : le royaume des démons. <br>\r\n" + 
@@ -25,6 +23,7 @@ public class MenuAide extends JPanel implements IConfig{
 				+ "</html>");
 		JButton retour = new JButton ("retour");
 		this.setBackground(new Color(127, 127, 127));
+		Explication.setMaximumSize(new Dimension(LARGEUR_FENETRE,HAUTEUR_FENETRE));
 		Explication.setForeground(new Color(251, 243, 124));
 		Explication.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		retour.setBackground(new Color(100, 100, 100));
@@ -41,6 +40,6 @@ public class MenuAide extends JPanel implements IConfig{
 		}
 		);
 		add(Explication);
-		add(retour);
+		add(retour,BorderLayout.SOUTH);
 	}
 }
