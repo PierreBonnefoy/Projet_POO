@@ -186,7 +186,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 		splitVert.add(infoPanel);
 		splitVert.add(boutonPanel);
 		add(splitVert);
-		System.out.println(splitVert.getLocation());
 		clickPosition();
 		repaint();	
 		tourDeJeux();
@@ -217,7 +216,6 @@ public class PanneauJeu extends JPanel implements IConfig {
 		
 		
 		if(nb_vivant[JOUEUR]==0 || nb_vivant[IA]==0) {
-			System.out.println("Executé");
 			if(nb_vivant[JOUEUR]==0) {
 				//VICTOIRE IA
 				MenuFin fin = new MenuFin(false);
