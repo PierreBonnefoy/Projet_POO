@@ -949,44 +949,68 @@ public class Personnage implements IConfig,java.io.Serializable{
 		String chaine ="";
 		switch(this.id) {
 		case GARDIEN:
-			chaine = "	-Réplique : possède 3 ripostes<br> au lieu d'une seule.<br>"
-					+ "	-Régénération : au début de chaque tour,<br> se soigne de 1+1D6.<br>";
+			chaine = "	-Réplique : possède 3 ripostes<br>"
+					+ " au lieu d'une seule.<br>"
+					+ "	-Régénération : au début de <br>"
+					+ "chaque tour, se soigne de 1+1D6.<br>";
 			break;
 		case BETE:
-			chaine = "	-Course : Augmente de 1 sa vitesse après<br> avoir perdu 50% de ses PV max.<br>"
-					+ "	-Meurtrissure : Ralentie de 1 les ennemis<br> attaqué (jusqu'à une vitesse de 3).<br>";
+			chaine = "	-Course : Augmente de 1 sa vitesse<br>"
+					+ " après avoir perdu 50% de ses PV max.<br>"
+					+ "	-Meurtrissure : Ralentie de 1 les<br>"
+					+ " ennemis attaqué (jusqu'à V = 3).<br>";
 			break;
 		case INCENDIAIRE:
-			chaine = "	-Perce-armure : Les attaques ignorent<br> la défense ennemie.<br>"
-					+ "	-Embrasement : les attaques ne peuvent<br> pas générer de riposte ennemie.<br>";
+			chaine = "	-Perce-armure : Les attaques ignorent<br>"
+					+ "la défense ennemie.<br>"
+					+ "	-Embrasement : les attaques ne peuvent<br>"
+					+ "pas générer de riposte ennemie.<br>";
 			break;
 		case DESTRUCTEUR:
-			chaine = "	-Perce-armure : Les attaques ignorent<br> la défense ennemie.<br>"
-					+ "	-Rage : augmente de 1 ses dégâts à <br>chaque attaque subie (cumulable).<br>";
+			chaine = "	-Perce-armure : Les attaques ignorent<br>"
+					+ "la défense ennemie.<br>"
+					+ "	-Rage : augmente de 1 ses dégâts à <br>"
+					+ "chaque attaque subie (cumulable).<br>";
 			break;
 		case ENCHANTEUR:
-			chaine = "	-Vigueur : Les attaques soignent un<br> Personnage allié à 2 de distance de 5 PV.<br>"
-					+ "	-Encouragement : Se reposer confère<br> 5 d'Expérience aux alliés à 2 de distance.<br>";
+			chaine = "	-Vigueur : Les attaques soignent <br>"
+					+ "un Personnage allié à 2 de distance<br>"
+					+ " de 5 PV.<br>"
+					+ "	-Alchimie : Se reposer confère<br> "
+					+ "5 de soin et d'EXP bonus. <br>";
 			break;
 		case COMBATTANT:
-			chaine = "	-Réplique : possède 3 ripostes au<br> lieu d'une seule.<br>"
-					+ "	-Entrainement : au début de chaque<br> tour, gagne 5 d'Expérience.<br>";
+			chaine = "	-Réplique : possède 3 ripostes au<br>"
+					+ " lieu d'une seule.<br>"
+					+ "	-Entrainement : au début de chaque<br>"
+					+ "tour, gagne 5 d'Expérience.<br>";
 			break;
 		case ARTILLEUR:
-			chaine = "	-Assassin : Inflige 5 dégât supplémentaire<br> aux ennemis avec moins de 50% de leurs PV max.<br>"
-					+ "	-Précision : gagne de l'Expérience bonus<br> selon la taille des cibles attaquées et <br>augmente sa portée en gagnant un niveau.<br>";
+			chaine = "	-Assassin : Inflige 5 dégât<br>"
+					+ "supplémentaire aux ennemis avec<br>"
+					+ " moins de 50% de leurs PV max.<br>"
+					+ "	-Précision : gagne de l'Expérience<br>"
+					+ "bonus selon la taille des cibles et <br>"
+					+ "+1 en portée par niveau.<br>";
 			break;
 		case DANCELAME:
-			chaine = "	-Drain : se soigne de 25% des dégâts infligés.<br>"
-					+ "	-Esquive : Lorsqu'il ne riposte pas,<br> il possède 20% de chance d'esquiver l'attaque subie.<br>";
+			chaine = "	-Drain : se soigne de 25% des<br>"
+					+ " dégâts infligés."
+					+ "	-Esquive : esquive 20%<br>"
+					+ "des attaques subies<br>";
 			break;
 		case CHASSEUR:
-			chaine = "	-Course : Augmente de 1 sa vitesse <br>après avoir perdu 50% de ses PV max (cumulable).<br>"
-					+ "	-Assassin : Inflige 5 dégât supplémentaire<br> aux ennemis avec moins de 50% de leurs PV max.<br>";
+			chaine = "	-Course : Augmente de 1 sa vitesse <br>"
+					+ "après avoir perdu 50% de ses PV max.<br>"
+					+ "	-Assassin : Inflige 5 dégât<br>"
+					+ "supplémentaire aux ennemis avec<br>"
+					+ " moins de 50% de leurs PV max.<br>";
 			break;
 		case ECLAIREUR:
-			chaine = "	-Maître des chemin : Peut se déplacer sur<br> n'importe quel terrain.<br>"
-					+ "	-Foudroiement : Si le personnage peut<br> riposter, il fait 5 degats supplémentaires<br>";
+			chaine = "	-Maître des chemin : Peut se déplacer <br>"
+					+ "sur n'importe quel terrain.<br>"
+					+ "	-Foudroiement : Si le personnage peut<br>"
+					+ "riposter, il fait 5 degats bonus<br>";
 			break;
 		}
 		return chaine;
