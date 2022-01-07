@@ -1,4 +1,5 @@
 package wargame;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -152,7 +153,9 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		carte[6][14].rajoutPersonnage(new Personnage(10,1,8,8)); */
 	}
 
-	public void drawHexagon(int posx,int posy,Graphics g) {
+	public void drawHexagon(int posx,int posy,Graphics g, int rouge, int vert, int bleu, int transparent) {
+		g.setColor(new Color((rouge),(vert),(bleu),transparent));
+		
 		int xPoints[]=new int[6],yPoints[]=new int[6];
 		xPoints[0]=posx;
 		yPoints[0]=posy;
@@ -553,6 +556,7 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 		/*on veut savoir son id et son joueur pour connaître l'image à afficher*/
 		File file;
 		BufferedImage img;
+		
 		switch(perso.getId()) {
 		case GARDIEN:
 			if(perso.getJoueur() == 0) {
@@ -755,6 +759,13 @@ public class Carte implements ICarte,IConfig,java.io.Serializable{
 			}
 			break;
 		}
+		/*affichage des barres de vie*/if(perso.getJoueur() == 0) {
+			g.setColor(new Color((0),(250),(0),175));
+		}
+		else {
+			g.setColor(new Color((250),(0),(0),205));
+		}
+		g.fillRect(debut+(i*28)+16-(perso.getPvActuel()/8), j*24+24, (perso.getPvActuel()/4), 2);
 	}
 	
 	public int distance(Position p1,Position p2) {

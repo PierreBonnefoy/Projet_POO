@@ -212,7 +212,15 @@ public class PanneauJeu extends JPanel implements IConfig {
 				//tourDeJeux();
 			}
 		}else {
-			tourDeJeux();
+		/*	if(perso.getJoueur() == 0) {
+				g.setColor(new Color((0),(250),(0),105));
+			}
+			else {
+				g.setColor(new Color((250),(0),(0),135));
+			}
+		
+			this.drawHexagon((debut)+(i*28)+17, j*24+5, g);*/
+			tourDeJeux(); 
 			}
 		
 	}
