@@ -79,16 +79,16 @@ public class PanneauJeu extends JPanel implements IConfig {
 		cerbere = new Personnage(CHASSEUR,IA,28,27);
 		oeil = new Personnage(ECLAIREUR,IA,28,28);
 
-		golem = new Personnage(GARDIEN,JOUEUR,1,1);
-		hydre = new Personnage(BETE,JOUEUR,1,2);
-		drake = new Personnage(INCENDIAIRE,JOUEUR,1,3);
-		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,1,4);
-		grenouille = new Personnage(ENCHANTEUR,JOUEUR,1,5);
-		armure = new Personnage(COMBATTANT,JOUEUR,1,6);
-		lezard = new Personnage(ARTILLEUR,JOUEUR,1,7);
-		vampyrion = new Personnage(DANCELAME,JOUEUR,1,8);
-		predator = new Personnage(CHASSEUR,JOUEUR,1,9);
-		worm = new Personnage(ECLAIREUR,JOUEUR,1,10);
+		golem = new Personnage(GARDIEN,JOUEUR,1,10);
+		hydre = new Personnage(BETE,JOUEUR,1,9);
+		drake = new Personnage(INCENDIAIRE,JOUEUR,1,8);
+		minotaure = new Personnage(DESTRUCTEUR,JOUEUR,1,7);
+		grenouille = new Personnage(ENCHANTEUR,JOUEUR,1,6);
+		armure = new Personnage(COMBATTANT,JOUEUR,1,5);
+		lezard = new Personnage(ARTILLEUR,JOUEUR,1,4);
+		vampyrion = new Personnage(DANCELAME,JOUEUR,1,3);
+		predator = new Personnage(CHASSEUR,JOUEUR,1,2);
+		worm = new Personnage(ECLAIREUR,JOUEUR,1,1);
 		
 		equipe[0][IA] = abomination;
 		equipe[1][IA] = mutilateur;
@@ -209,6 +209,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		}
 		
+		/*on affiche une première l'environnement autours de l'équipe du joueur*/
 		jeu.decouvrir(indiceJoueur,equipe);
         repaint();
         jouable=true;
@@ -246,6 +247,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 				perso.setPm(perso.getVitesse());
 				jouable = true;
 				robot.tour(jeu,equipe,indicePerso,mort,jouable,nb_vivant);
+				jeu.decouvrir(JOUEUR,equipe);
+				repaint();
 				tourDeJeux();
 			}
 			else {
@@ -486,7 +489,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 											System.out.println(cible.nomPersonnage()+" ne peut pas riposter contre "+perso.nomPersonnage());
 										}
 									}
-									repaint();
+									
 								} /*le personnage est un allié*/
 								else {
 									perso.encouragement(cible);
@@ -497,6 +500,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 								infoLabel.setIcon(icon);
 								infoPanel.add(infoLabel);
 								validate();
+								jeu.decouvrir(indiceJoueur,equipe);
 								repaint();
 								}
 							

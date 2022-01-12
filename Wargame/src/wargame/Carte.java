@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Carte  IConfig, java.io.Serializable {
+public class Carte implements IConfig, java.io.Serializable {
 	public Element[][] carte;
 	public int taille;
 
@@ -761,12 +761,14 @@ public class Carte  IConfig, java.io.Serializable {
 			}
 			break;
 		}
-		/* affichage des barres de vie */if (perso.getJoueur() == 0) {
+		/* affichage des barres de vie et d'EXP */if (perso.getJoueur() == 0) {
 			g.setColor(new Color((0), (250), (0), 175));
 		} else {
 			g.setColor(new Color((250), (0), (0), 205));
 		}
 		g.fillRect(debut + (i * 28) + 16 - (perso.getPvActuel() / 8), j * 24 + 24, (perso.getPvActuel() / 4), 2);
+		g.setColor(new Color((100), (0), (205), 205));
+		g.fillRect(debut + (i * 28) + 16 - (perso.getExp() / 8), j * 24 + 27, (perso.getExp() / 4), 2);
 	}
 
 	/**
@@ -964,7 +966,7 @@ public class Carte  IConfig, java.io.Serializable {
 	/**
 	 * Cette fonction s'occupe de la gestion du brouillard et de la visibilité
 	 * @param numequipe numero de l'équipe où la decouverte se fait
-	 * @param equipe tableau des personnagesd des equipes
+	 * @param equipe tableau des personnages des equipes
 	 */
 	public void decouvrir(int numequipe, Personnage[][] equipe) {
 		int i, j, k;
@@ -974,7 +976,10 @@ public class Carte  IConfig, java.io.Serializable {
 				if (this.carte[i][j].getEtat(numequipe) == VISIBLE) {
 					for (k = 0; k < NBPERSONNAGE; k++) {
 						perso = equipe[k][numequipe];
-						if (distance(perso.getPos(), new Position(i, j)) > perso.getVision()) {
+						if (distance(perso.getPos(), new Position(i, j)) > perso.getVision() ) {
+							this.carte[i][j].setEtat(numequipe, DECOUVERT);
+						}
+						if (distance(perso.getPos(), new Position(i, j)) <= perso.getVision()) {
 							this.carte[i][j].setEtat(numequipe, DECOUVERT);
 						}
 					}
@@ -983,7 +988,7 @@ public class Carte  IConfig, java.io.Serializable {
 						|| this.carte[i][j].getEtat(numequipe) == DECOUVERT) {
 					for (k = 0; k < NBPERSONNAGE; k++) {
 						perso = equipe[k][numequipe];
-						if (distance(perso.getPos(), new Position(i, j)) <= perso.getVision()) {
+						if (distance(perso.getPos(), new Position(i, j)) <= perso.getVision() && perso.getEtat() != MORT) {
 							this.carte[i][j].setEtat(numequipe, VISIBLE);
 						}
 					}

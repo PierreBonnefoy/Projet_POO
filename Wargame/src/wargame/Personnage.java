@@ -66,7 +66,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			this.id = id;
 			this.joueur = joueur;
 			this.portee = 1;
-			this.vision = 4;
+			this.vision = 3;
 			this.vitesse = 5;
 			this.pm = this.vitesse;
 			this.riposte = 1;
@@ -177,7 +177,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			this.joueur = joueur;
 			this.portee = 6;
 			this.vision = 4;
-			this.vitesse = 4;
+			this.vitesse = 3;
 			this.pm = this.vitesse;
 			this.riposte = 1;
 			this.nemesis = ECLAIREUR;
@@ -188,7 +188,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case DANCELAME:
 			this.position=new Position(x,y);
-			this.pvMax = 75;
+			this.pvMax = 60;
 			this.pvActuel = this.pvMax;
 			this.degat = 12;
 			this.attaque = 1;
@@ -634,9 +634,9 @@ public class Personnage implements IConfig,java.io.Serializable{
 			this.setExp(this.exp -100);
 			/*Il peut arriver que le personnage gagne tant d'EXP en une fois qu'il gagne 2 niveaux : on verifie*/
 			this.gainNiveau();
-			this.setDegat(this.degat +1);
-			this.setPvMax(this.pvMax + 5);
-			this.setPvActuel(this.pvActuel + 5);
+			this.setDegat(this.degat +2);
+			this.setPvMax(this.pvMax + 10);
+			this.setPvActuel(this.pvActuel + 10);
 			this.setBlindage(this.blindage +1);
 			/*l'artilleur gagne aussi un bonus de portée*/
 			if(this.id == ARTILLEUR){
@@ -959,7 +959,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 					+ "chaque attaque subie (cumulable).<br>";
 			break;
 		case ENCHANTEUR:
-			chaine = "	-Vigueur : Les attaques soignent <br>"
+			chaine = "	-Encouragement : Les attaques soignent <br>"
 					+ "un Personnage allié à 2 de distance<br>"
 					+ " de 5 PV.<br>"
 					+ "	-Alchimie : Se reposer confère<br> "
@@ -981,7 +981,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			break;
 		case DANCELAME:
 			chaine = "	-Drain : se soigne de 25% des<br>"
-					+ " dégâts infligés."
+					+ " dégâts infligés.<br>"
 					+ "	-Esquive : esquive 20%<br>"
 					+ "des attaques subies<br>";
 			break;
