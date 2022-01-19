@@ -242,7 +242,7 @@ public class Personnage implements IConfig,java.io.Serializable{
 			this.id = id;
 			this.joueur = joueur;
 			this.portee = 3;
-			this.vision = 6;
+			this.vision = 6+10;
 			this.vitesse = 5;
 			this.pm = this.vitesse;
 			this.riposte = 1;

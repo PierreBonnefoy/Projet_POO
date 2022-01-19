@@ -19,7 +19,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 	public Position posbuffer=new Position(0,0);
 	Personnage perso=new Personnage(ECLAIREUR,JOUEUR,15,10);
 	boolean[] mort;
-	IA robot = new IA();
+	//IA robot = new IA();
 	
 	/*creation des personnages */
 	public Personnage[][] equipe;
@@ -151,7 +151,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 					indiceJoueur = (int) load.read();
 					jeu = (Carte) load.readObject();
 					equipe = (Personnage[][]) load.readObject();
-					repaint();
+					repaint(); //reinitialiser l'affichage lors du chargement
 					load.close();
 					file.close();
 				}catch(IOException ex) {
@@ -189,7 +189,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 		splitVert.add(boutonPanel);
 		add(splitVert);
 		clickPosition();
-		repaint();	
+		//repaint();	//aucune utilité trouvée
 		tourDeJeux();
 	}
 	
@@ -209,9 +209,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		}
 		
-		/*on affiche une première l'environnement autours de l'équipe du joueur*/
+		/*on affiche une première fois l'environnement autours de l'équipe du joueur*/
 		jeu.decouvrir(indiceJoueur,equipe);
-        repaint();
+        //repaint();  	//aucune utilité trouvée 
         jouable=true;
 		
 		//System.out.println("test avant laccès au perso du tablo, indiceperso : "+indicePerso+" ; indicejoueur :"+indiceJoueur);
@@ -228,7 +228,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 				super.removeAll();
 				add(fin);
 				super.revalidate();
-				super.repaint();
+				super.repaint(); //mettre à jour pour afficher le menu de fin
 			}
 			else {
 				//VICTOIRE JOUEUR
@@ -236,7 +236,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 				super.removeAll();
 				add(fin);
 				super.revalidate();
-				super.repaint();
+				super.repaint();//mettre à jour pour afficher le menu de fin
 			}
 		}
 		if(perso.getEtat() != MORT) {
@@ -246,9 +246,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 				perso.setAttaque(1);
 				perso.setPm(perso.getVitesse());
 				jouable = true;
-				robot.tour(jeu,equipe,indicePerso,mort,jouable,nb_vivant);
+				tour(jeu,equipe,indicePerso,mort,jouable,nb_vivant);
 				jeu.decouvrir(JOUEUR,equipe);
-				repaint();
+				//repaint(); //aucune utilité trouvée 
 				tourDeJeux();
 			}
 			else {
@@ -277,6 +277,134 @@ public class PanneauJeu extends JPanel implements IConfig {
 			}
 		
 	}
+	
+	/**
+	 * Description d'un tour d'une IA
+	 * @param jeu la carte courante
+	 * @param equipe liste des personnages
+	 * @param indicePerso numero du personnage a jouer
+	 * @param mort resultat de l'attaque
+	 * @param jouable si l'IA peut jouer
+	 * @param nb_vivant nombre de personnages vivants dans chaque equipe
+	 */
+	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable,int nb_vivant[]) {
+		Personnage courant = equipe[indicePerso][IA];
+		Personnage cible=null;
+		int x=0;
+		if(courant.getPvActuel()<(courant.getPvMax()/2)) {
+			courant.repos();
+		}
+		
+		while(cible==null && x<NBPERSONNAGE) {
+			if(equipe[x][JOUEUR].getEtat()!=MORT) {
+				cible=equipe[x][JOUEUR];
+			}
+			x++;
+		}
+		for(x=0;x<NBPERSONNAGE;x++) {
+			if(equipe[x][JOUEUR].getEtat()!=MORT) {
+				if(jeu.distance(courant.getPos(), equipe[x][JOUEUR].getPos())<jeu.distance(courant.getPos(), cible.getPos())) {
+					cible=equipe[x][JOUEUR];
+				}
+			}
+		}
+		
+		//while(courant.getPm()>0) {--------------------------------------------------------------
+		for(courant.getPm() ; courant.getPm() != 0 ; courant.setPm(courant.getPm() -1)) {
+			
+				/*--- On test si un perso ennemi est à pertée ---*/
+				if(jeu.distance(courant.getPos(),cible.getPos())<=courant.getPortee() && courant.getAttaque()>0) {
+					/*--- Si oui on l'attaque ---*/
+					if(cible.getJoueur() != IA) {
+						System.out.println(courant.nomPersonnage()+" attaque "+cible.nomPersonnage());
+						courant.setAttaque(courant.getAttaque()-1); //attaque
+						mort[0] = courant.attaque(cible);
+						
+						if(mort[0]) {
+							jeu.carte[cible.getPos().getX()][(cible.getPos().getY())].enleverPersonnage(cible.getId(), cible.getJoueur());
+							nb_vivant[JOUEUR]-=1;
+						}
+						else {
+						/*si le defenseur peut riposter, il riposte*/
+							if(cible.getPortee() >= jeu.distance(courant.getPos(),cible.getPos()) && cible.getRiposte() > 0 && !cible.embrasement()) {
+								System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :"/*+jeu.distance(perso.getPos(),positionCase)*/);
+								
+								System.out.println(cible.nomPersonnage()+" riposte contre "+courant.nomPersonnage());
+								mort[1] = cible.attaque(courant); //riposte
+								cible.setRiposte(cible.getRiposte()-1);
+								
+								if(mort[1]) {
+									System.out.println(cible.nomPersonnage()+" a tue en ripostant "+courant.nomPersonnage());
+									jeu.carte[courant.getPos().getX()][courant.getPos().getY()].enleverPersonnage(courant.getId(), courant.getJoueur());
+									nb_vivant[IA]-=1;
+									courant.passeTour();
+								}
+							}
+							else {
+								System.out.println(cible.nomPersonnage()+" ne peut pas riposter contre "+courant.nomPersonnage());
+							}
+						}
+					}
+				}
+				else {
+					
+					int j=0;
+					Position tmp[] = jeu.PositionPossible(courant.getPos());
+					
+					Position best=null;
+					while(best==null && j<6) {
+						best=tmp[j];
+						j++;
+					}
+					for(j=0; j<6;j++) {
+						if(tmp[j]!=null) {
+							if(jeu.distance(tmp[j], cible.getPos())<jeu.distance(best, cible.getPos())) {
+								best=tmp[j];
+							}
+						}
+					}
+					if(best != null) {
+						try {
+			                //on fait attendre histoire de mettre une certaine animation
+			                Thread.sleep(250);
+			                repaint();
+			                Thread.sleep(250);
+			                System.out.println(courant.nomPersonnage()+" seleep");
+			                
+						}
+						catch (Exception e) {
+							// on prend l'exception
+							System.out.println(e);
+							System.out.println("erreur");
+						}
+						repaint();
+						jeu.Deplacement(courant.getPos(), best);
+						System.out.println(courant.nomPersonnage()+" se déplace");
+						/*infoLabel.setText("<html>"+courant.toString()+"<html>");
+						icon =new ImageIcon("./image/m_"+courant.getNom()+".png");
+						infoLabel.setIcon(icon);
+						infoPanel.add(infoLabel);
+						validate();*/
+						repaint();
+					}
+					else {
+						courant.passeTour();
+					}
+				}
+				
+		}
+		courant.passeTour();
+		if(courant.getAttaque()==0 && courant.getPm() == 0) {
+			courant.entrainement();
+			courant.regeneration();
+			courant.recupRiposte();
+			jouable=false;
+			
+		}
+
+	}
+	
+	
 	/**
 	 * Appele la fonction qui afffiche la carte
 	 * @param g un Graphics
@@ -451,7 +579,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 								infoLabel.setIcon(icon);
 								infoPanel.add(infoLabel);
 								validate();
-								repaint();
+								repaint(); //affichage du label
 							}
 							/*le perso a clique sur une case ou se trouve un personnage, on verifie si elle est a portee d'attaque et sil peut attaquer*/
 							else if(jeu.carte[xa][ya].getOccupe() != 0 && perso.getPortee() >= jeu.distance(perso.getPos(),positionCase)  && perso.getAttaque() > 0) {
@@ -501,7 +629,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 								infoPanel.add(infoLabel);
 								validate();
 								jeu.decouvrir(indiceJoueur,equipe);
-								repaint();
+								//repaint(); aucune utilité trouvée
 								}
 							
 							/*le joueur a cliqu� sur une case vide a cote du perso et perso.pm!=0*/
@@ -509,13 +637,12 @@ public class PanneauJeu extends JPanel implements IConfig {
 								//System.out.println(perso.nomPersonnage()+" se deplace en "+positionCase.getX()+":"+positionCase.getY());
 								jeu.Deplacement(new Position(xd,yd), positionCase);
 								jeu.decouvrir(indiceJoueur,equipe);
-						        repaint();
 								infoLabel.setText("<html>"+perso.toString()+"<html>");
 								icon =new ImageIcon("./image/m_"+perso.getNom()+".png");
 								infoLabel.setIcon(icon);
 								infoPanel.add(infoLabel);
 								validate();
-								repaint();
+								repaint(); //mise a jour après déplacement du personnage 
 							}
 							else {
 					    		//System.out.println(jeu.carte[xd][yd].getPersonnage(0).nomPersonnage()+" ne peut pas se déplacer ici !");

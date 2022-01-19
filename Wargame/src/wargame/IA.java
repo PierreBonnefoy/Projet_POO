@@ -1,6 +1,11 @@
 package wargame;
 
-public class IA implements IConfig{
+import java.io.*;
+import java.lang.Thread;
+
+import javax.swing.JPanel;
+
+public class IA extends JPanel implements IConfig{
 	
 	/**
 	 * Contructeur vide de L'IA
@@ -16,6 +21,7 @@ public class IA implements IConfig{
 	 * @param jouable si l'IA peut jouer
 	 * @param nb_vivant nombre de personnages vivants dans chaque equipe
 	 */
+	/*
 	public void tour(Carte jeu,Personnage[][] equipe,int indicePerso,boolean[] mort,boolean jouable,int nb_vivant[]) {
 		Personnage courant = equipe[indicePerso][IA];
 		Personnage cible=null;
@@ -40,9 +46,7 @@ public class IA implements IConfig{
 		
 		while(courant.getPm()>0) {
 			
-				/*--- On test si un perso ennemi est à pertée ---*/
 				if(jeu.distance(courant.getPos(),cible.getPos())<=courant.getPortee() && courant.getAttaque()>0) {
-					/*--- Si oui on l'attaque ---*/
 					if(cible.getJoueur() != IA) {
 						System.out.println(courant.nomPersonnage()+" attaque "+cible.nomPersonnage());
 						courant.setAttaque(courant.getAttaque()-1); //attaque
@@ -53,12 +57,11 @@ public class IA implements IConfig{
 							nb_vivant[JOUEUR]-=1;
 						}
 						else {
-						/*si le defenseur peut riposter, il riposte*/
 							if(cible.getPortee() >= jeu.distance(courant.getPos(),cible.getPos()) && cible.getRiposte() > 0 && !cible.embrasement()) {
-								System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :"/*+jeu.distance(perso.getPos(),positionCase)*/);
+								System.out.println("portee riposte : "+cible.getPortee()+"\ndistance :");
 								
 								System.out.println(cible.nomPersonnage()+" riposte contre "+courant.nomPersonnage());
-								mort[1] = cible.attaque(courant); //riposte
+								mort[1] = cible.attaque(courant); 
 								cible.setRiposte(cible.getRiposte()-1);
 								
 								if(mort[1]) {
@@ -92,6 +95,15 @@ public class IA implements IConfig{
 					}
 					if(best != null) {
 					jeu.Deplacement(courant.getPos(), best);
+
+					try {
+			                Thread.sleep(500);
+			        }
+			        catch (Exception e) {
+			            System.out.println(e);
+			        }
+					repaint();
+					
 					}
 					else {
 						courant.passeTour();
@@ -105,7 +117,9 @@ public class IA implements IConfig{
 			courant.regeneration();
 			courant.recupRiposte();
 			jouable=false;
+			
 		}
 
 	}
+	*/
 }
